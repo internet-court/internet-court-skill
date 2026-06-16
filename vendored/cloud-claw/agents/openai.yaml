@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cloud Claw"
+  short_description: "Launch and manage Cloud Claw VMs"
+  default_prompt: "Use $cloud-claw to work through user-facing Cloud Claw launch and VM management workflows."

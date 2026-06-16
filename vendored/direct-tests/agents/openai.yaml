@@ -1,0 +1,5 @@
+interface:
+  display_name: "Direct Tests"
+  short_description: "Fast in-memory GenLayer contract tests"
+  brand_color: "#00E88A"
+  default_prompt: "Use $direct-tests to add fast direct mode tests for this GenLayer contract."

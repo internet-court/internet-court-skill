@@ -1,0 +1,110 @@
+name: Claude Code
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  claude:
+    # Only allow repo members (admin/write/maintain permissions) to trigger
+    if: |
+      (
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+        (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    steps:
+      - name: Check user permissions
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get the username of the user who triggered the action
+          if [ "${{ github.event_name }}" == "issue_comment" ] || [ "${{ github.event_name }}" == "pull_request_review_comment" ]; then
+            ACTOR="${{ github.event.comment.user.login }}"
+          elif [ "${{ github.event_name }}" == "pull_request_review" ]; then
+            ACTOR="${{ github.event.review.user.login }}"
+          elif [ "${{ github.event_name }}" == "issues" ]; then
+            ACTOR="${{ github.event.issue.user.login }}"
+          else
+            ACTOR="${{ github.actor }}"
+          fi
+
+          echo "Checking permissions for: $ACTOR"
+
+          # Check user permission level
+          PERMISSION=$(gh api repos/${{ github.repository }}/collaborators/$ACTOR/permission --jq '.permission' 2>/dev/null || echo "none")
+          echo "Permission level: $PERMISSION"
+
+          # Only allow admin, write, maintain
+          if [[ "$PERMISSION" == "admin" || "$PERMISSION" == "write" || "$PERMISSION" == "maintain" ]]; then
+            echo "✅ Permission granted"
+          else
+            echo "❌ Permission denied - only repo members can use @claude"
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+
+          claude_args: |
+            --model claude-sonnet-4-5-20250929
+            --max-turns 40
+            --allowedTools "Bash(*)"
+            --system-prompt "You are a code review expert for the 0G Compute Skills project.
+
+            Project Background:
+            - This is a Claude Code skill package for the 0G Compute Network
+            - Contains documentation and examples for AI inference, fine-tuning, and account management
+            - Covers SDK usage (TypeScript, @0glabs/0g-serving-broker), CLI commands, and Web UI
+            - Key files: SKILL.md (main skill definition), inference.md, fine-tuning.md, account-management.md, examples.md
+
+            Follow these standards when reviewing:
+            1. Documentation accuracy - API signatures, parameter orders, and code examples must be correct
+            2. SDK pattern correctness - especially processResponse(providerAddress, chatID, receivedContent) parameter order
+            3. Consistency across documents - examples should match SKILL.md patterns
+            4. Completeness of examples - include imports, error handling, and environment variable usage
+            5. Markdown formatting and readability
+
+            In code reviews:
+            - Mark incorrect API usage or parameter order as [CRITICAL]
+            - Mark documentation inconsistencies as [WARNING]
+            - Mark formatting or style issues as [nit]
+            - Give positive feedback for good documentation patterns
+
+            When fixing content:
+            - Only use allowed tools
+            - Verify code examples are consistent with SKILL.md
+            - Ensure all API signatures match the canonical patterns
+            - Check that chatID retrieval follows the correct priority (ZG-Res-Key header first)"
+
+          settings: |
+            {
+              "env": {
+                "NODE_ENV": "development"
+              }
+            }

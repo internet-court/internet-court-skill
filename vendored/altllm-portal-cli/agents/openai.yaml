@@ -1,0 +1,4 @@
+interface:
+  display_name: "AltLLM Portal CLI"
+  short_description: "Run AltLLM Portal auth, history, key, and payment workflows"
+  default_prompt: "Use $altllm-portal-cli to run or update the local AltLLM Portal CLI for Portal auth, history, API keys, billing, and payments."

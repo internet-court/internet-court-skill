@@ -1,0 +1,5 @@
+interface:
+  display_name: "GenLayer CLI"
+  short_description: "Deploy and debug contracts with GenLayer CLI"
+  brand_color: "#00E88A"
+  default_prompt: "Use $genlayer-cli to deploy and debug this GenLayer contract."

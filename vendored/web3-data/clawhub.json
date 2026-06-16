@@ -1,0 +1,12 @@
+{
+  "name": "web3-data",
+  "tagline": "On-chain data + crypto social intelligence via Chainbase & Tops",
+  "description": "A Claude Code skill covering two Chainbase services: (1) Web3 on-chain data — query token holders, token prices, wallet analytics, DeFi portfolios, ENS domains, and custom SQL across Ethereum, BSC, Polygon, Arbitrum, Optimism, Base, Avalanche, zkSync, and more; (2) Crypto social intelligence via Tops — discover trending narratives, search topics, retrieve Twitter/X mentions, and monitor KOL signals. Tops requires no API key and is free to use.",
+  "category": "data",
+  "tags": ["web3", "blockchain", "chainbase", "ethereum", "onchain-data", "token-holders", "wallet-analytics", "defi", "sql", "tops", "crypto-social", "trending", "narrative", "twitter", "social-intelligence"],
+  "version": "1.1.0",
+  "license": "MIT",
+  "pricing": "free",
+  "support_url": "https://github.com/lxcong/web3-data-skill/issues",
+  "homepage": "https://github.com/lxcong/web3-data-skill"
+}

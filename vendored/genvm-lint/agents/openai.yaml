@@ -1,0 +1,5 @@
+interface:
+  display_name: "GenVM Lint"
+  short_description: "Validate contracts with the GenVM linter"
+  brand_color: "#00E88A"
+  default_prompt: "Use $genvm-lint to lint and fix this GenLayer contract."

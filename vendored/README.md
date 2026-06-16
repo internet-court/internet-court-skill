@@ -1,0 +1,39 @@
+# Vendored Skills
+
+Committed copies of publicly published agent skills, fetched from their
+official sources and pinned in `../skills-lock.json` (source, path, hash,
+fetch date, refresh command). Never edit these by hand — refresh from
+upstream with the lock file's `refreshCommand` and update the hash
+(workflow in `../CLAUDE.md`).
+
+| Source | Skills | Upstream |
+|---|---|---|
+| MetaMask | `smart-accounts-kit/` — smart accounts, ERC-4337/7710/7715 | [metamask/skills](https://github.com/metamask/skills) |
+| Coinbase | `agentic-wallet/` — x402: pay, search bazaars, monetize | [coinbase/agentic-wallet-skills](https://github.com/coinbase/agentic-wallet-skills) |
+| GenLayer | `write-contract/`, `genlayer-cli/`, `direct-tests/`, `integration-tests/`, `genvm-lint/` — Intelligent Contract development | [genlayerlabs/skills](https://github.com/genlayerlabs/skills) · [skills.genlayer.com](https://skills.genlayer.com/) — licensed per `LICENSE-genlayer-skills` |
+| Intelligent Oracle | `intelligent-oracle/` — web-evidence prediction markets (refetch the canonical URL before schema-sensitive work) | [intelligentoracle.com/skill.md](https://www.intelligentoracle.com/skill.md) |
+| Arkhai | `alkahest-user/` — EAS-based conditional escrow with arbiters | [arkhai-io/alkahest](https://github.com/arkhai-io/alkahest) |
+| BNB Chain | `bnbchain-mcp/` — chain ops, ERC-8004 registration, Greenfield storage | [bnb-chain/bnbchain-skills](https://github.com/bnb-chain/bnbchain-skills) |
+| OKX OnchainOS | 23 `okx-*` skills — `okx-agent-payments-protocol` (unified x402/MPP/a2a-pay), DEX swap/market/strategy, agentic wallet, onchain gateway, security, discovery, … | [okx/onchainos-skills](https://github.com/okx/onchainos-skills) |
+| 0G | `0g-compute/` — verifiable decentralized inference & fine-tuning | [0gfoundation/0g-compute-skills](https://github.com/0gfoundation/0g-compute-skills) |
+| AltLayer | `altllm-portal-{cli,auth,api-keys,billing,payments}/`, `cloud-claw/`, `cloud-claw-launch-agent/` — AltLLM portal + agent VM management | [alt-research/altllm-skills](https://github.com/alt-research/altllm-skills) |
+| ChainGPT | `chaingpt/`, `x402/`, `trustless-agents/` (ERC-8004), `agent-wallet/` (policy-gated) — selected from the 25-skill plugin | [ChainGPT-org/chaingpt-claude-skill](https://github.com/ChainGPT-org/chaingpt-claude-skill) |
+| Chainbase | `web3-data/` — 90-chain data, x402 pay-per-call | [lxcong/web3-data-skill](https://github.com/lxcong/web3-data-skill) (officially documented by Chainbase) |
+| LI.FI | `lifi/`, `lifi-stablecoin-swap/` — cross-chain swap/bridge routing | [lifinance/lifi-agent-skills](https://github.com/lifinance/lifi-agent-skills) |
+| AntSeed | `antseed-connect/` — P2P AI inference with USDC payment channels | [antseed.com/skill.md](https://antseed.com/skill.md) |
+| TerminalSkills (community) | `a2a-protocol/` — A2A agent cards, task lifecycle (no official a2aproject skill exists) | [TerminalSkills/skills](https://github.com/TerminalSkills/skills) |
+
+Notes:
+
+- Vendored copies are faithful to upstream, including file casing
+  (`smart-accounts-kit/skill.md` is lowercase) and any extra upstream files.
+- Several skills need provider credentials to act (OKX API keys,
+  `CHAINGPT_API_KEY`, `CHAINBASE_API_KEY`, …) — each skill documents its own.
+- Review refreshed copies like third-party code before committing: skills
+  run with full agent permissions.
+
+## Install into an agent
+
+Copy (or symlink) the skill folders you need into the agent's skills
+directory (for Claude Code: `.claude/skills/` in the project), or install
+fresh from upstream with the lock file's refresh command.
