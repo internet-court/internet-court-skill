@@ -23,8 +23,14 @@ self-contained: everything an agent needs ships inside it.
   will source it from the partner.
 - **Never hand-edit `vendored/*`.** Vendored skills are faithful upstream
   copies (including whatever extra files upstream ships, and upstream's
-  file casing — e.g. `vendored/smart-accounts-kit/skill.md` is lowercase).
+  file casing — e.g. `vendored/metamask/smart-accounts-kit/skill.md` is lowercase).
   Change them only by refreshing from upstream (workflow below).
+- **Vendored skills are grouped by owner.** Each one lives at
+  `vendored/<owner>/<skill>/`, where `<owner>` is the publishing
+  company/protocol (e.g. `vendored/metamask/smart-accounts-kit/`,
+  `vendored/okx/okx-dex-swap/`, `vendored/genlayer/write-contract/`). Each
+  entry's `vendoredPath` in `skills-lock.json` is the source of truth for
+  where a skill lives.
 - **Plain Agent Skills format** for first-party skills: a folder with a
   `SKILL.md` whose frontmatter has `name` (matching the folder) and
   `description`.
@@ -41,14 +47,14 @@ Every vendored skill is pinned in `skills-lock.json` with its `source`,
 one or all skills to the latest upstream version:
 
 1. Run the entry's `refreshCommand` from the repo root. Most are
-   `npx skills add <source>[/<path>] --agent claude-code -y && mv .claude/skills/<name> vendored/`
+   `npx skills add <source>[/<path>] --agent claude-code -y && mv .claude/skills/<name> vendored/<owner>/`
    (replace the existing folder); the rest are `git clone … && cp -R …` or
    `curl …` for skills published as a bare `skill.md` URL
    (`intelligent-oracle`, `antseed-connect`).
 2. Diff the new copy against the old one before accepting — upstream changes
    run with full agent permissions, so review them like third-party code.
 3. Update the lock entry: recompute the hash
-   (`shasum -a 256 vendored/<name>/SKILL.md`), set `fetchedAt` to today, and
+   (`shasum -a 256 vendored/<owner>/<name>/SKILL.md`), set `fetchedAt` to today, and
    update `sourceCommit` where present (`git rev-parse HEAD` in the clone).
    Note: entries created by the `npx skills` CLI use the CLI's own hash; the
    `hashAlgo: "sha256(SKILL.md)"` entries are plain file hashes.
@@ -66,8 +72,9 @@ Validation checks before any release:
 
 - Every first-party `SKILL.md` starts with `---`, has `name:` matching its
   folder, and a non-empty `description:`.
-- `python3 -m json.tool skills-lock.json` parses; every `vendored/` folder
-  has a lock entry and vice versa; `sha256(SKILL.md)` hashes match.
+- `python3 -m json.tool skills-lock.json` parses; every skill folder
+  (`vendored/<owner>/<name>/`) has a lock entry whose `vendoredPath` matches,
+  and vice versa; `sha256(SKILL.md)` hashes match.
 - Relative links in `SKILL.md` and `README.md` resolve to committed files
   (nothing may point into `references/`).
 
@@ -92,5 +99,5 @@ Validation checks before any release:
 | `integrations/genlayer-erc7710-connector/` | GenLayer decision → ERC-7710 revocation (relayer/controller pattern) |
 | `integrations/genlayer-intelligent-contracts/` | Review rubrics, evidence schemas, decision payload interface |
 | `integrations/x402-erc7710/` | x402 payments through delegated permissions (combined rail) |
-| `vendored/` | Pinned copies of official protocol skills (`skills-lock.json`) |
+| `vendored/<owner>/` | Pinned copies of official protocol skills, grouped by publisher (`skills-lock.json`) |
 | `references/` | Local-only working notes (gitignored, not part of releases) |

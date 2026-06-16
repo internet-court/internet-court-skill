@@ -19,12 +19,12 @@ perform agentic commerce.
 
 | # | Layer | Protocols | In this repo |
 |---|---|---|---|
-| 1 | Discovery, identity & reputation | ERC-8004, ERC-7857 | [`vendored/trustless-agents/`](vendored/trustless-agents/) (ERC-8004 registries); ERC-7857 has no public skill yet |
-| 2 | Negotiation | A2A | [`vendored/a2a-protocol/`](vendored/a2a-protocol/) |
-| 3 | Contracts & obligations | Arkhai/Alkahest, ERC-8183 | [`vendored/alkahest-user/`](vendored/alkahest-user/); ERC-8183 has no public skill yet |
-| 4 | Payment & escrow | x402, MPP, AP2, ERC-7710/7715 | [`vendored/agentic-wallet/`](vendored/agentic-wallet/), [`vendored/x402/`](vendored/x402/), [`vendored/mppx/`](vendored/mppx/), [`vendored/okx-agent-payments-protocol/`](vendored/okx-agent-payments-protocol/), [`vendored/smart-accounts-kit/`](vendored/smart-accounts-kit/), [`vendored/agent-wallet/`](vendored/agent-wallet/); connector [`integrations/x402-erc7710/`](integrations/x402-erc7710/); AP2 has no public skill yet |
-| 5 | Execution | compute, data & value rails | [`vendored/antseed-connect/`](vendored/antseed-connect/), [`vendored/0g-compute/`](vendored/0g-compute/), [`vendored/lifi/`](vendored/lifi/), [`vendored/web3-data/`](vendored/web3-data/), [`vendored/bnbchain-mcp/`](vendored/bnbchain-mcp/), OKX + AltLayer packs |
-| 6 | Verification & disputes | GenLayer | GenLayer dev skills + [`vendored/intelligent-oracle/`](vendored/intelligent-oracle/); connectors [`integrations/genlayer-intelligent-contracts/`](integrations/genlayer-intelligent-contracts/), [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/) |
+| 1 | Discovery, identity & reputation | ERC-8004, ERC-7857 | [`vendored/chaingpt/trustless-agents/`](vendored/chaingpt/trustless-agents/) (ERC-8004 registries); ERC-7857 has no public skill yet |
+| 2 | Negotiation | A2A | [`vendored/terminalskills/a2a-protocol/`](vendored/terminalskills/a2a-protocol/) |
+| 3 | Contracts & obligations | Arkhai/Alkahest, ERC-8183 | [`vendored/arkhai/alkahest-user/`](vendored/arkhai/alkahest-user/); ERC-8183 has no public skill yet |
+| 4 | Payment & escrow | x402, MPP, AP2, ERC-7710/7715 | [`vendored/coinbase/agentic-wallet/`](vendored/coinbase/agentic-wallet/), [`vendored/chaingpt/x402/`](vendored/chaingpt/x402/), [`vendored/tempo/mppx/`](vendored/tempo/mppx/), [`vendored/okx/okx-agent-payments-protocol/`](vendored/okx/okx-agent-payments-protocol/), [`vendored/metamask/smart-accounts-kit/`](vendored/metamask/smart-accounts-kit/), [`vendored/chaingpt/agent-wallet/`](vendored/chaingpt/agent-wallet/); connector [`integrations/x402-erc7710/`](integrations/x402-erc7710/); AP2 has no public skill yet |
+| 5 | Execution | compute, data & value rails | [`vendored/antseed/antseed-connect/`](vendored/antseed/antseed-connect/), [`vendored/0g/0g-compute/`](vendored/0g/0g-compute/), [`vendored/lifi/lifi/`](vendored/lifi/lifi/), [`vendored/chainbase/web3-data/`](vendored/chainbase/web3-data/), [`vendored/bnb-chain/bnbchain-mcp/`](vendored/bnb-chain/bnbchain-mcp/), OKX + AltLayer packs |
+| 6 | Verification & disputes | GenLayer | GenLayer dev skills + [`vendored/intelligent-oracle/intelligent-oracle/`](vendored/intelligent-oracle/intelligent-oracle/); connectors [`integrations/genlayer-intelligent-contracts/`](integrations/genlayer-intelligent-contracts/), [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/) |
 
 ## Repository layout
 

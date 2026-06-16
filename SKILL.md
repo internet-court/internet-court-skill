@@ -84,7 +84,7 @@ money, present the custody and enforcement difference honestly:
 - **Guarded** — the user keeps custody and approves a smart-account or wallet
   permission with explicit limits (allowed service, route, token, payee,
   per-request cap, period budget, expiry). The agent never receives the
-  user's private key. Load `vendored/smart-accounts-kit/skill.md` for the
+  user's private key. Load `vendored/metamask/smart-accounts-kit/skill.md` for the
   ERC-7710/7715 mechanics.
 - **Adjudicated** — Guarded, plus signed evidence and an independent review
   path that can continue, constrain, or revoke future permission use through
@@ -120,12 +120,12 @@ that owns it:
 
 | # | Layer | Protocols | Load |
 |---|---|---|---|
-| 1 | Discovery, identity & reputation | ERC-8004, ERC-7857 | `vendored/trustless-agents/SKILL.md` (ERC-8004 registries); ERC-7857 has no public skill yet |
-| 2 | Negotiation | A2A | `vendored/a2a-protocol/SKILL.md` (agent cards, task lifecycle) |
-| 3 | Contracts & obligations | Arkhai/Alkahest, ERC-8183 | `vendored/alkahest-user/SKILL.md` (conditional escrow, arbiters); ERC-8183 has no neutral public skill yet |
-| 4 | Payment & escrow | x402, MPP, AP2, ERC-7710/7715 | `vendored/agentic-wallet/SKILL.md` + `vendored/x402/SKILL.md` (x402), `vendored/mppx/SKILL.md` (MPP), `vendored/okx-agent-payments-protocol/SKILL.md` (unified x402/MPP/a2a-pay), `vendored/smart-accounts-kit/skill.md` (delegations), `vendored/agent-wallet/SKILL.md` (policy-gated wallet), `integrations/x402-erc7710/SKILL.md` (combined rail); AP2 has no public skill yet |
-| 5 | Execution | the transacting agents + compute/data/value rails | `vendored/antseed-connect/SKILL.md` + `vendored/0g-compute/SKILL.md` (paid inference), `vendored/lifi/SKILL.md` (cross-chain value movement), `vendored/web3-data/SKILL.md` (on-chain data/evidence), `vendored/bnbchain-mcp/SKILL.md`, `vendored/okx-*` and `vendored/altllm-*`/`cloud-claw*` packs |
-| 6 | Verification & disputes | GenLayer | `integrations/genlayer-intelligent-contracts/SKILL.md`, `vendored/intelligent-oracle/SKILL.md`, `integrations/genlayer-erc7710-connector/SKILL.md` |
+| 1 | Discovery, identity & reputation | ERC-8004, ERC-7857 | `vendored/chaingpt/trustless-agents/SKILL.md` (ERC-8004 registries); ERC-7857 has no public skill yet |
+| 2 | Negotiation | A2A | `vendored/terminalskills/a2a-protocol/SKILL.md` (agent cards, task lifecycle) |
+| 3 | Contracts & obligations | Arkhai/Alkahest, ERC-8183 | `vendored/arkhai/alkahest-user/SKILL.md` (conditional escrow, arbiters); ERC-8183 has no neutral public skill yet |
+| 4 | Payment & escrow | x402, MPP, AP2, ERC-7710/7715 | `vendored/coinbase/agentic-wallet/SKILL.md` + `vendored/chaingpt/x402/SKILL.md` (x402), `vendored/tempo/mppx/SKILL.md` (MPP), `vendored/okx/okx-agent-payments-protocol/SKILL.md` (unified x402/MPP/a2a-pay), `vendored/metamask/smart-accounts-kit/skill.md` (delegations), `vendored/chaingpt/agent-wallet/SKILL.md` (policy-gated wallet), `integrations/x402-erc7710/SKILL.md` (combined rail); AP2 has no public skill yet |
+| 5 | Execution | the transacting agents + compute/data/value rails | `vendored/antseed/antseed-connect/SKILL.md` + `vendored/0g/0g-compute/SKILL.md` (paid inference), `vendored/lifi/lifi/SKILL.md` (cross-chain value movement), `vendored/chainbase/web3-data/SKILL.md` (on-chain data/evidence), `vendored/bnb-chain/bnbchain-mcp/SKILL.md`, the `vendored/okx/*` and `vendored/altlayer/*` packs |
+| 6 | Verification & disputes | GenLayer | `integrations/genlayer-intelligent-contracts/SKILL.md`, `vendored/intelligent-oracle/intelligent-oracle/SKILL.md`, `integrations/genlayer-erc7710-connector/SKILL.md` |
 
 ## Skill Routing
 
@@ -133,30 +133,30 @@ Load these only when the task needs them:
 
 | Need | Skill |
 |---|---|
-| Pay an x402 service, search x402 bazaars, monetize an endpoint | `vendored/agentic-wallet/SKILL.md`, `vendored/x402/SKILL.md` |
-| Machine payments over HTTP 402 (Tempo/Stripe MPP: charges, sessions, streaming) | `vendored/mppx/SKILL.md` |
-| Unified agent-payment dispatch (x402 + MPP + a2a-pay via OKX OnchainOS) | `vendored/okx-agent-payments-protocol/SKILL.md` |
-| Smart accounts, ERC-7710 delegations, ERC-7715 permission requests, caveats, revocation | `vendored/smart-accounts-kit/skill.md` |
-| Custody-free agent wallet with policy gate (per-tx caps, velocity, session keys) | `vendored/agent-wallet/SKILL.md` |
+| Pay an x402 service, search x402 bazaars, monetize an endpoint | `vendored/coinbase/agentic-wallet/SKILL.md`, `vendored/chaingpt/x402/SKILL.md` |
+| Machine payments over HTTP 402 (Tempo/Stripe MPP: charges, sessions, streaming) | `vendored/tempo/mppx/SKILL.md` |
+| Unified agent-payment dispatch (x402 + MPP + a2a-pay via OKX OnchainOS) | `vendored/okx/okx-agent-payments-protocol/SKILL.md` |
+| Smart accounts, ERC-7710 delegations, ERC-7715 permission requests, caveats, revocation | `vendored/metamask/smart-accounts-kit/skill.md` |
+| Custody-free agent wallet with policy gate (per-tx caps, velocity, session keys) | `vendored/chaingpt/agent-wallet/SKILL.md` |
 | x402 payments executed through ERC-7710 delegated permissions (combined rail, spend/subscription policies) | `integrations/x402-erc7710/SKILL.md` |
-| Register/discover/trust agents on-chain (ERC-8004 identity, reputation, validation) | `vendored/trustless-agents/SKILL.md` |
-| Talk to another agent: agent cards, offers, task lifecycle (A2A) | `vendored/a2a-protocol/SKILL.md` |
-| Escrow funds that unlock on arbiter decisions (Alkahest) | `vendored/alkahest-user/SKILL.md` |
-| Write a GenLayer Intelligent Contract | `vendored/write-contract/SKILL.md` |
-| Deploy/call GenLayer contracts via CLI | `vendored/genlayer-cli/SKILL.md` |
-| Test GenLayer contracts | `vendored/direct-tests/SKILL.md`, `vendored/integration-tests/SKILL.md` |
-| Lint GenLayer contracts | `vendored/genvm-lint/SKILL.md` |
+| Register/discover/trust agents on-chain (ERC-8004 identity, reputation, validation) | `vendored/chaingpt/trustless-agents/SKILL.md` |
+| Talk to another agent: agent cards, offers, task lifecycle (A2A) | `vendored/terminalskills/a2a-protocol/SKILL.md` |
+| Escrow funds that unlock on arbiter decisions (Alkahest) | `vendored/arkhai/alkahest-user/SKILL.md` |
+| Write a GenLayer Intelligent Contract | `vendored/genlayer/write-contract/SKILL.md` |
+| Deploy/call GenLayer contracts via CLI | `vendored/genlayer/genlayer-cli/SKILL.md` |
+| Test GenLayer contracts | `vendored/genlayer/direct-tests/SKILL.md`, `vendored/genlayer/integration-tests/SKILL.md` |
+| Lint GenLayer contracts | `vendored/genlayer/genvm-lint/SKILL.md` |
 | Review rubrics, evidence schemas, decision payloads for agent supervision | `integrations/genlayer-intelligent-contracts/SKILL.md` |
 | Turn a GenLayer decision into ERC-7710 revocation/constraint (relayer/controller pattern) | `integrations/genlayer-erc7710-connector/SKILL.md` |
-| Binary public-web prediction markets / factual oracles | `vendored/intelligent-oracle/SKILL.md` (refetch `https://www.intelligentoracle.com/skill.md` before schema-sensitive work) |
-| Buy/sell P2P AI inference with USDC payment channels | `vendored/antseed-connect/SKILL.md` |
-| Decentralized compute, storage, verifiable inference (0G) | `vendored/0g-compute/SKILL.md` |
-| Cross-chain swaps/bridging to move value anywhere | `vendored/lifi/SKILL.md`, `vendored/lifi-stablecoin-swap/SKILL.md` |
-| On-chain data, balances, tx history, labels (evidence) | `vendored/web3-data/SKILL.md` |
-| BNB Chain ops incl. ERC-8004 registration & Greenfield storage | `vendored/bnbchain-mcp/SKILL.md` |
-| ChainGPT AI tools (contract gen/audit, news) + 140-tool MCP | `vendored/chaingpt/SKILL.md` |
-| OKX DEX/wallet/gateway/security pack | `vendored/okx-dex-swap/SKILL.md`, `vendored/okx-agentic-wallet/SKILL.md`, `vendored/okx-onchain-gateway/SKILL.md`, `vendored/okx-security/SKILL.md`, … |
-| AltLayer AltLLM portal + Cloud Claw agent VMs | `vendored/altllm-portal-cli/SKILL.md`, `vendored/cloud-claw/SKILL.md`, … |
+| Binary public-web prediction markets / factual oracles | `vendored/intelligent-oracle/intelligent-oracle/SKILL.md` (refetch `https://www.intelligentoracle.com/skill.md` before schema-sensitive work) |
+| Buy/sell P2P AI inference with USDC payment channels | `vendored/antseed/antseed-connect/SKILL.md` |
+| Decentralized compute, storage, verifiable inference (0G) | `vendored/0g/0g-compute/SKILL.md` |
+| Cross-chain swaps/bridging to move value anywhere | `vendored/lifi/lifi/SKILL.md`, `vendored/lifi/lifi-stablecoin-swap/SKILL.md` |
+| On-chain data, balances, tx history, labels (evidence) | `vendored/chainbase/web3-data/SKILL.md` |
+| BNB Chain ops incl. ERC-8004 registration & Greenfield storage | `vendored/bnb-chain/bnbchain-mcp/SKILL.md` |
+| ChainGPT AI tools (contract gen/audit, news) + 140-tool MCP | `vendored/chaingpt/chaingpt/SKILL.md` |
+| OKX DEX/wallet/gateway/security pack | `vendored/okx/okx-dex-swap/SKILL.md`, `vendored/okx/okx-agentic-wallet/SKILL.md`, `vendored/okx/okx-onchain-gateway/SKILL.md`, `vendored/okx/okx-security/SKILL.md`, … |
+| AltLayer AltLLM portal + Cloud Claw agent VMs | `vendored/altlayer/altllm-portal-cli/SKILL.md`, `vendored/altlayer/cloud-claw/SKILL.md`, … |
 
 The official GenLayer skill hub is `https://skills.genlayer.com/`; the
 vendored copies are pinned in `skills-lock.json`. Do not duplicate GenLayer
