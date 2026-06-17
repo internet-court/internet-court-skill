@@ -3,6 +3,3 @@ node_modules/
 *.log
 .env
 .env.*
-/references/
-/reports/
-/CLAUDE.local.md
