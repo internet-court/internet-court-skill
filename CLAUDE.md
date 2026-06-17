@@ -10,6 +10,13 @@ commerce stack to vendored protocol skills and Internet Court connector
 skills. `README.md` has the stack table and layout. The repo is
 self-contained: everything an agent needs ships inside it.
 
+Published at `https://github.com/internet-court/internet-court-skill`
+(public). `SKILL.md` routes to its sibling skills by repo-relative path
+(`vendored/<owner>/<skill>/`, `integrations/<connector>/`); when only the
+master skill is loaded, those paths resolve from the raw repo at
+`https://raw.githubusercontent.com/internet-court/internet-court-skill/main/<path>`.
+See SKILL.md's "Where this package lives".
+
 ## Hard rules
 
 - **Lightweight and portable.** This repo is a skill package only: no
@@ -68,6 +75,11 @@ one or all skills to the latest upstream version:
 To add a brand-new protocol/partner skill: confirm the verified upstream
 source, fetch it the same way, pin it, and add routing rows.
 
+When relocating vendored folders (e.g. regrouping by owner), note that an
+owner slug can equal a skill it contains (`chaingpt/chaingpt`, `lifi/lifi`,
+`intelligent-oracle/intelligent-oracle`). Move through a temporary staging
+dir outside `vendored/` so `git mv` never tries to move a folder into itself.
+
 Validation checks before any release:
 
 - Every first-party `SKILL.md` starts with `---`, has `name:` matching its
@@ -77,6 +89,22 @@ Validation checks before any release:
   and vice versa; `sha256(SKILL.md)` hashes match.
 - Relative links in `SKILL.md` and `README.md` resolve to committed files
   (nothing may point into `references/`).
+
+## Releasing
+
+- Canonical home: `https://github.com/internet-court/internet-court-skill`
+  (public). Local `main` tracks `origin/main`.
+- The published tree is only: `SKILL.md`, `integrations/`, `vendored/`,
+  `skills-lock.json`, `README.md`, `CLAUDE.md`, `.gitignore`. The gitignored
+  working directories never enter the published tree — or its history.
+- Keep history pristine: publish so gitignored working files have never
+  existed in any pushed commit. Do not push a tag whose commit predates the
+  current tree — an older tag can still contain files since removed.
+- Deleting/recreating the GitHub repo requires a maintainer with org admin on
+  `internet-court` plus the `gh` `delete_repo` scope
+  (`gh auth refresh -h github.com -s delete_repo`).
+- Tag releases (`v1`, `v2`, …) only when the user asks; run the validation
+  checks first.
 
 ## Design principles
 
