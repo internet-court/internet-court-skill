@@ -73,12 +73,15 @@ Copy or clone this repository into your agent's skills directory. For
 Claude Code:
 
 ```bash
-git clone <this-repo> .claude/skills/internet-court
+git clone https://github.com/internet-court/internet-court-skill .claude/skills/internet-court
 ```
 
 Then start a session and give the agent a task — the master skill routes to
 the sub-skills — or say "Install the Internet Court skill" for the guided
-introduction.
+introduction. Clone the whole repository, not just `SKILL.md`: the master
+skill routes to the vendored and connector skills by repo-relative path. If
+only `SKILL.md` is loaded, it falls back to fetching siblings from
+`https://raw.githubusercontent.com/internet-court/internet-court-skill/main/<path>`.
 
 Some vendored skills need their provider's credentials to act (e.g. OKX API
 keys, ChainGPT API key, Chainbase API key); each skill documents its own

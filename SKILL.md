@@ -28,6 +28,28 @@ This package contains two kinds of material. Route accordingly:
   `integrations/genlayer-intelligent-contracts/`, `integrations/x402-erc7710/`) — the Internet
   Court-specific glue that makes the protocols work together.
 
+## Where this package lives
+
+This is the entry skill of the Internet Court package, published at
+**`https://github.com/internet-court/internet-court-skill`**. Every path this
+file routes to — `vendored/<owner>/<skill>/SKILL.md`,
+`integrations/<connector>/SKILL.md` — is relative to that repository root.
+
+Resolve those paths before relying on a skill's contents:
+
+- **Installed as a whole** (normal case — `git clone …/internet-court-skill
+  .claude/skills/internet-court`): read the path directly from disk.
+- **Only this `SKILL.md` is present** (the master skill was loaded on its
+  own): the sibling skills are not local. Fetch the file from the raw
+  repository at
+  `https://raw.githubusercontent.com/internet-court/internet-court-skill/main/<path>`
+  — e.g. `…/main/vendored/okx/okx-dex-swap/SKILL.md` — or clone the repo
+  first. The pinned source and refresh command for each vendored skill live
+  in `skills-lock.json` at the repo root.
+
+Never invent a referenced skill's contents — load the real file (from disk or
+the raw URL) first.
+
 ## First Response Mode
 
 When a user asks to load, install, or introduce Internet Court, start broad.
