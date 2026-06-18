@@ -1,12 +1,14 @@
 ---
 name: altllm-portal-payments
-description: Use this skill when the user asks to create a crypto payment link, poll payment status, or execute a supported direct wallet payment through the AltLLM Portal CLI. Do NOT use for wallet login, API key management, or billing history.
+description: Use this skill when the user asks to create a NOWPayments crypto payment link, poll payment status, or execute a supported direct wallet payment through the AltLLM Portal CLI. Do NOT use for wallet login, API key management, billing history, or x402 credit top-ups.
 user-invocable: true
 ---
 
 # AltLLM Portal Payments
 
-Payment-link creation, settlement polling, and direct wallet payment flows for the local `altllm` CLI.
+NOWPayments payment-link creation, settlement polling, and direct wallet payment flows for the local `altllm` CLI.
+
+These payment links are separate from AltLLM Portal x402 credit top-ups. Use `altllm-x402` for `/api/billing/x402/quote` and `/settle` flows.
 
 ## Shared Setup
 

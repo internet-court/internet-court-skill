@@ -1,6 +1,18 @@
 # Cross-Chain Troubleshooting
 
-> Load this file when a cross-chain transaction fails or an edge case is encountered.
+> Load this file when a cross-chain transaction fails, an edge case is encountered, or the user asks a conceptual "how does it work" question (see Common Questions below).
+
+## Common Questions (FAQ)
+
+Conceptual questions that don't involve an error.
+
+| Question | Answer |
+|---|---|
+| Which bridges / chains are supported? | Decided at runtime — run `cross-chain bridges --from-chain <X> --to-chain <Y>`. No static list. Protocols seen so far: Stargate/LayerZero, Across V3, Relay, Gas.zip, Mayan, ButterSwap. |
+| What fees are there? | `crossChainFee` (bridge fee, source token) + source-chain gas; some bridges add `otherNativeFee`. |
+| What is a "transit token" / why was I offered one? | No direct route exists, so the backend routes source→transit→target via an intermediate token. See [transit-fallback.md](transit-fallback.md). |
+| Why must I provide a receive address sometimes? | Heterogeneous pairs (EVM↔non-EVM) can't infer the destination address from the sender. |
+| Is the bridge atomic / can I get a refund? | No atomicity guarantee, and `status` exposes no refund/failure sub-state. For stuck transfers, verify on the destination chain / bridge scan page first (below). |
 
 ## Failure Diagnostics
 
@@ -27,41 +39,47 @@ Diagnostic Summary:
 
 ## Error Code Reference
 
-| Code | HTTP | Meaning | Action |
-|---|---|---|---|
-| 0 | 200 | Success | Continue |
-| 50014 | 200 | Required parameter `{0}` missing | Surface which param is missing |
-| 50125 | 200 | Region restriction / no API access to this endpoint | Display generic "Service unavailable in your region" — do NOT show raw code |
-| 51000 | 200 | Param error `{0}` | Surface the offending param name to the user |
-| 81362 | 200 | Backend risk system flagged the broadcast | WARN, ask user to confirm. If they explicitly confirm, retry with `--force` |
-| 82000 | 200 | No liquidity / no available route. **Backend `msg` carries the human-readable reason** (e.g. "no available route for this token pair on this chain"). When the adapter is offline on an env, `msg` may be empty (CLI surfaces it as "unknown error"). | Surface the translated `msg` to the user; do NOT mention "82000". If `msg` is empty / "unknown error", trigger transit-token fallback (see SKILL.md "Fallback: No Direct Route"). When every transit also returns 82000 with empty `msg`, treat as "service unavailable on this environment" — do NOT loop further |
-| 82104 | 200 | Token not supported | Trigger transit-token fallback OR tell user the token isn't supported |
-| 82105 | 200 | Chain not supported | Tell user "This chain pair isn't currently supported by any bridge" — do NOT name protocols |
-| 82106 | 200 | Bridge id not supported / wrong | Re-run `quote` without `--bridge-id` to let server pick |
-| 82200 | 200 | Address blacklisted | BLOCK — tell user the address is flagged. Do NOT retry. |
-| 82201 | 200 | Wallet address format invalid | Check user's wallet address; convert EVM to lowercase if mixed-case |
-| 82202 | 200 | Receive address format invalid | Address doesn't match destination chain family. Ask user for correct format. |
-| 82500 | 200 | Calldata build failed | Bridge server-side failure — retry once; if persistent, escalate |
-| 5000 | 200 | System error, please retry | Retry once; if persistent, surface to user |
+**Never show raw error codes or CLI output to the user** — translate every failure into a plain-language message; the code stays in the Diagnostic Summary only.
+
+| Code | Meaning → action |
+|---|---|
+| 50014 | Required parameter `{0}` missing → surface which param is missing. |
+| 50125 | Region restriction / no API access → display "Service is not available in your region." |
+| 51000 | Param error `{0}` → surface the offending param name. |
+| 81362 | Backend risk system flagged the broadcast (potential honeypot) → WARN, ask user to confirm. Only on explicit confirm, retry with `--force`. |
+| 82000 | No liquidity / no available route. **Backend `msg` carries the reason** (e.g. "no available route for this token pair on this chain"); may be empty when the adapter is offline on an env → surface the translated `msg`. quote/execute auto-wrap no-route into `fallback` (see [transit-fallback.md](transit-fallback.md)); empty `msg` across all transits → `env_unavailable`. |
+| 82104 | Token not supported → trigger transit-token fallback OR tell user the token isn't supported. |
+| 82105 | Chain not supported → tell user "This chain pair isn't currently supported by any bridge." |
+| 82106 | Bridge id not supported / wrong → re-run `quote` without `--bridge-id` to let server pick. |
+| 82200 | Address blacklisted → BLOCK; tell user the address is flagged. Do NOT retry. |
+| 82201 | Wallet address format invalid → check the address; convert EVM to lowercase if mixed-case. |
+| 82202 | Receive address format invalid (doesn't match destination chain family) → ask for the correct format. |
+| 82500 | Calldata build failed (bridge server-side) → retry once; if persistent, escalate. |
+| 5000 | System error → retry once; if persistent, surface to user. |
 
 ## Edge Cases
 
-> The `Risk Controls` table in SKILL.md is the source of truth for price impact, receive-address, balance, gas, and blacklist action levels. The `Error Handling` section of SKILL.md covers heterogeneous chain pairs, region restriction (50125), and the 81362 risk warning. The cases below are deeper failure modes that require operator-level diagnosis.
+> The cases below are deeper failure modes requiring operator-level diagnosis (the in-flow gates — receive-address, risk-flag, balance/gas — are handled during the main flow).
 
-### Approval transaction failed
-- Check gas balance on source chain
-- Suggest retrying with `execute --confirm-approve`
-- For USDT-pattern tokens: confirm `needCancelApprove=true` was respected (CLI handles this automatically; if backend hasn't yet emitted the field, the revoke step is skipped)
+### Chain pair returns no bridges
+- Localize the gap with two single-flag queries: `cross-chain bridges --from-chain <X>` (is the source supported at all?), then `cross-chain bridges --to-chain <Y>` (is the destination reachable?). This separates source-unsupported / destination-unreachable / pair-simply-not-connected.
+- Suggest a supported chain, or a two-hop via a common chain (Ethereum / Arbitrum).
 
-### Approval confirmation timeout (30 polls = 60s)
-- Transaction may still be pending in mempool
-- Suggest: `onchainos wallet history --tx-hash <approveTxHash>` to manually check
-- For EVM stuck txs: user can submit a 0-value transaction with the same nonce (nonce 0 won't usually work — use the tx's actual nonce) to cancel
+### Approval failed inside one-shot `execute`
+- `execute` builds, broadcasts, and waits for the approval (and the USDT-pattern revoke) on-chain before swapping. A failure here means the approval/revoke tx did not confirm — nothing was bridged.
+- Check the source-chain gas balance, then re-run the same `execute` (it re-quotes and re-approves from scratch).
+- For USDT-pattern tokens the CLI does the revoke→approve automatically when `needCancelApprove=true`; if the backend hasn't yet emitted the field, the revoke step is skipped.
 
-### Execute fails after approval confirmed
-- TEE pre-execution may have failed (insufficient allowance not yet reflected, or price moved)
-- Retry: `execute --skip-approve` (will re-quote with fresh pricing internally)
-- If repeated failures, check on-chain allowance manually and re-run `quote --check-approve`
+### Approval wait timed out inside `execute`
+- The CLI polls each tx on-chain (per-chain timeout) and bails with a timeout error if it does not confirm in time. The tx may still be pending in the mempool.
+- Check manually: `onchainos wallet history --tx-hash <approveTxHash>` (or `--order-id <approveOrderId>` — pre-prod often returns an empty `approveTxHash`).
+- For EVM stuck txs: the user can submit a 0-value transaction with the same nonce (use the tx's actual nonce) to cancel.
+
+### Execute reverts at the swap step after approving
+- TEE pre-execution may have failed (insufficient allowance not yet reflected by the backend, or price moved).
+- Do NOT add `--force` (it bypasses the 81362 risk warning, not a TEE revert) and do NOT re-run `swap` + `gateway simulate` as a secondary diagnostic unless the user explicitly asks.
+- Wait 1–3 min for the backend allowance state to settle, then re-run the same `execute` (it re-quotes with fresh pricing internally). By then the allowance is on-chain, so the re-run's quote returns `needApprove=false` and `execute` skips the approve branch and goes straight to swap.
+- If repeated failures, check on-chain allowance manually and re-run `quote --check-approve`.
 
 ### fromTxHash not visible on public chain
 - Possible cause: agentic wallet stuck (transaction not actually broadcast)
@@ -76,92 +94,21 @@ Diagnostic Summary:
 
 ### `status` stuck at PENDING
 
-The `cross-chain status` endpoint is not a direct read of the destination chain. The backend has an internal listener that subscribes to each bridge's callback / fill event (ACROSS fill, Stargate `messageReceived`, Gas Zip deliver, …) and only flips its stored state from `PENDING` to `SUCCESS` after that event is parsed. The chain itself is the source of truth; `status` is a downstream projection of it.
+`status` reflects the backend's fill-event listener, not a direct read of the destination chain — so it lags. Decide which case applies:
 
-When `status` reports `PENDING`, decide which of the two cases applies before waiting further:
+- **In flight (normal)**: destination shows no fill yet. Wait up to `estimateTime × 10`; check the bridge's scan page for progress.
+- **Already filled, listener lagging (abnormal)**: destination balance already rose by ~`minimumReceived` (check `wallet balance --chain <toChain>` or the explorer). Funds have arrived — tell the user with that evidence and stop waiting; `status` reconciles later. Seen mainly on ACROSS V3.
 
-**Case 1 — bridging genuinely in flight (normal)**
-- Source TX confirmed; destination chain has **no** new balance / fill event yet.
-- This is the expected window between source-tx-confirmed and destination-tx-delivered.
-- Wait up to original `estimateTime × 10` before escalating.
-- Check the bridge's own scan page (LayerZero scan, ACROSS scan, Relay scan, Gas Zip scan) for delivery progress.
-
-**Case 2 — destination already filled on-chain, only the listener lagging (abnormal)**
-- Source TX confirmed AND destination chain already shows the fill — verifiable via `wallet balance --chain <toChain>` (balance increased by ~`minimumReceived`) or the destination explorer (incoming transfer from the bridge router).
-- This means the user's funds are already there. The `PENDING` is a backend-listener gap, not a missing fill.
-- **Do NOT make the user keep waiting.** Tell them the funds are already on the destination chain (cite the balance / explorer evidence), and that `status` will eventually reconcile but is not gating fund availability.
-- This pattern has been observed primarily on ACROSS V3 (the listener for that adapter is slower / occasionally not wired up); Gas Zip and Stargate generally reconcile within ETA.
-
-Other notes:
-- The status API does not return refund / failure sub-states. If long PENDING with no progress AND no destination fill is visible on-chain, support escalation is the path.
-- The `bridgeId` field in the `status` response has been observed to disagree with the `--bridge-id` you passed (server-side mapping inconsistency). Trust the bridge name from your own `quote` / `execute` record, not the one echoed by `status`.
-
-### Cross-chain failure with no `status` resolution
-- Status only emits SUCCESS / PENDING / NOT_FOUND. There's no explicit failure state.
-- Long-stuck NOT_FOUND or PENDING is the only failure signal we can surface.
-- Always provide source chain explorer link as fallback so users can verify the source tx state independently.
-
-### Multiple bridges available — which to pick
-`routerList[]` is a multi-bridge list. When it has more than one entry:
-- **Server-default sort (no `--bridge-id`, no `--sort`)**: top entry is the optimal route by `sort=0` (cheapest with reasonable speed). Recommend this as default.
-- **User wants fastest**: re-run `quote` with `--sort=1` (when CLI exposes it) or pin a faster bridge from the table via `--bridge-id`.
-- **User wants max output**: `--sort=2` or pin a low-fee bridge.
-- **Want to enumerate all bridges explicitly**: loop `quote --bridge-id <id>` over each `bridgeId` returned by `bridges` — useful for debugging.
+`status` has no refund/failure sub-state, and its echoed `bridgeId` can be wrong — trust your own `quote`/`execute` record. Long PENDING with no on-chain fill → escalate.
 
 ### Network error
 Retry once. If still fails, generate diagnostic summary and prompt user.
 
-## Approval polling pattern
+## Status Polling
 
-After `cross-chain execute --confirm-approve` returns `action=approved`, poll the approval tx in the main conversation. Reference loop:
+**Interactive chat: do NOT auto-loop.** Run `status` once per user request, report the current state, and — if not `SUCCESS` — tell the user when to ask again (use the route's `estimateTime`, e.g. "check back in ~1 min"). Never `sleep` in a blocking loop during a conversation.
 
-```bash
-for i in $(seq 1 30); do
-  out=$(ONCHAINOS_HOME=... onchainos --base-url ... wallet history \
-          --order-id <approveOrderId> --chain <fromChainIndex> 2>/dev/null)
-  st=$(echo "$out" | python3 -c "import sys,json; d=json.load(sys.stdin); print((d.get('data') or [{}])[0].get('txStatus',''))")
-  th=$(echo "$out" | python3 -c "import sys,json; d=json.load(sys.stdin); print((d.get('data') or [{}])[0].get('txHash',''))")
-  echo "Check #$i: status=${st:-pending} txHash=$th"
-  case "$st" in
-    SUCCESS) break;;
-    FAIL|FAILED) break;;
-  esac
-  sleep 2
-done
-```
-
-Pitfalls ("looks-stuck" loop):
-- **Identifier**: pre-prod `--confirm-approve` often returns `approveTxHash: ""` and only `approveOrderId`. Poll `--order-id` first, fall back to `--tx-hash`. `wallet history --order-id` returns `data` as an **array** — status is at `data[0].txStatus`; `data.txStatus` is always empty and the loop never breaks.
-- **Do NOT** capture all 30 responses into one variable and `echo` at the end — the Claude Code tool layer buffers output until the command exits, so the loop appears stuck.
-- **Do NOT** put `sleep 2` at the top of the loop body — it wastes 2 s before the first check.
-- **zsh trap**: never name the variable `status` — it is read-only in zsh (equivalent to `$?`) and assignment aborts the loop with `(eval):1: read-only variable: status`, even though the JSON is fine. Use `st` (or `tx_status` / `cc_status`); never lowercase `status=`.
-
-Stop on `txStatus=SUCCESS` / `FAIL`, or after 30 attempts (60 s timeout).
-
-## Status Polling Patterns
-
-```bash
-# Exponential backoff (recommended)
-# Note: --bridge-id and --from-chain are REQUIRED (server returns 50014 without them).
-# Use the bridgeId / fromChainIndex returned by `cross-chain execute` (selectedRoute) or pin from the user's quote choice.
-#
-# zsh trap: do NOT name the variable `status` — `status` is read-only in zsh
-# (equivalent to $?) and assignment will abort the loop with
-# `(eval):1: read-only variable: status`. Use `st` (or any other name).
-DELAYS=(10 20 40 60 60 60 60 60 60 60)
-for delay in "${DELAYS[@]}"; do
-  sleep "$delay"
-  resp=$(onchainos cross-chain status --tx-hash <fromTxHash> --bridge-id <bridgeId> --from-chain <chainIndex>)
-  st=$(echo "$resp" | python3 -c "import sys,json; print(json.load(sys.stdin)['data'][0]['status'])")
-  case "$st" in
-    SUCCESS) echo "Cross-chain complete"; break;;
-    PENDING) echo "Still bridging...";;
-    NOT_FOUND) echo "Bridge has not yet indexed the tx";;
-  esac
-done
-```
-
-Total polling window ≈ original `estimateTime × 5`. After that window, escalate to support.
+If the user explicitly asks for an automated polling script, use exponential backoff (10→20→40→60→60s) and stop after `SUCCESS` or `estimateTime × 5`. Two traps when writing it: (1) every `status` call still needs the full triple `(--tx-hash | --order-id) + --bridge-id + --from-chain` or it returns 50014; (2) in zsh do NOT name the loop variable `status` — it is read-only (`= $?`) and assignment aborts the loop; use `st`.
 
 ## Bridge Explorer References
 

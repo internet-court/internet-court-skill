@@ -1,6 +1,6 @@
 # Searching the x402 Bazaar
 
-Use the `npx awal@2.10.0 x402` commands to discover and inspect paid API endpoints available on the x402 bazaar marketplace. **No authentication or balance is required for searching.**
+Use the `npx awal@2.12.0 x402` commands to discover and inspect paid API endpoints available on the x402 bazaar marketplace. **No authentication or balance is required for searching.**
 
 ## Commands
 
@@ -9,7 +9,7 @@ Use the `npx awal@2.10.0 x402` commands to discover and inspect paid API endpoin
 Find paid services by keyword using CDP's vector search:
 
 ```bash
-npx awal@2.10.0 x402 bazaar search <query> [-k <n>] [--network <network>] [--scheme <scheme>] [--max-price <price>] [--json]
+npx awal@2.12.0 x402 bazaar search <query> [-k <n>] [--network <network>] [--scheme <scheme>] [--max-price <price>] [--json]
 ```
 
 | Option                  | Description                                                              |
@@ -28,7 +28,7 @@ npx awal@2.10.0 x402 bazaar search <query> [-k <n>] [--network <network>] [--sch
 Browse all available resources:
 
 ```bash
-npx awal@2.10.0 x402 bazaar list [--network <network>] [--full] [--refresh] [--json]
+npx awal@2.12.0 x402 bazaar list [--network <network>] [--full] [--refresh] [--json]
 ```
 
 | Option             | Description                                                          |
@@ -43,7 +43,7 @@ npx awal@2.10.0 x402 bazaar list [--network <network>] [--full] [--refresh] [--j
 Inspect an endpoint's x402 payment requirements without paying:
 
 ```bash
-npx awal@2.10.0 x402 details <url> [--json]
+npx awal@2.12.0 x402 details <url> [--json]
 ```
 
 Auto-detects the correct HTTP method (GET, POST, PUT, DELETE, PATCH) by trying each until it gets a 402 response, then displays price, accepted payment schemes, network, and input/output schemas.
@@ -52,16 +52,16 @@ Auto-detects the correct HTTP method (GET, POST, PUT, DELETE, PATCH) by trying e
 
 ```bash
 # Search for weather-related paid APIs
-npx awal@2.10.0 x402 bazaar search "weather"
+npx awal@2.12.0 x402 bazaar search "weather"
 
 # Search with more results
-npx awal@2.10.0 x402 bazaar search "sentiment analysis" -k 10
+npx awal@2.12.0 x402 bazaar search "sentiment analysis" -k 10
 
 # Browse all bazaar resources with full details
-npx awal@2.10.0 x402 bazaar list --full
+npx awal@2.12.0 x402 bazaar list --full
 
 # Check what an endpoint costs
-npx awal@2.10.0 x402 details https://example.com/api/weather
+npx awal@2.12.0 x402 details https://example.com/api/weather
 ```
 
 ## Next Steps

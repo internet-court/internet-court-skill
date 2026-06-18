@@ -4,7 +4,7 @@ description: "AUTHORITATIVE source for OKX Agentic Wallet and its Gas Station fe
 license: MIT
 metadata:
   author: okx
-  version: "3.3.12"
+  version: "3.3.13"
   homepage: "https://web3.okx.com"
 ---
 
@@ -45,6 +45,8 @@ Policy `--help` does NOT carry (always applies on top of CLI syntax):
 - `wallet send` validates the recipient format; on simulation failure show `executeErrorMsg` and do NOT broadcast.
 - Run `onchainos security tx-scan` before any `wallet contract-call`.
 
+> **X Layer Testnet faucet**: when the user asks for testnet tokens, or `wallet balance --chain xlayer_test` shows OKB = 0, point them to https://web3.okx.com/xlayer/faucet (claim OKB / USDC / USDT / USDG with their wallet address).
+
 <MUST>
 **`wallet contract-call` is for non-swap interactions only** (approvals, deposits, withdrawals, etc.). Never use it to broadcast a DEX swap — use `swap execute` instead.
 </MUST>
@@ -69,7 +71,9 @@ The `--force` flag MUST ONLY be added when ALL of the following conditions are m
 >
 > If the intent is ambiguous, **always ask the user to clarify** before proceeding. Never guess.
 
-### D-GS — Gas Station (Solana)
+---
+
+## Gas Station (Solana)
 
 Gas Station lets the user pay gas with stablecoins (USDT / USDC / USDG) on Solana when SOL is insufficient. The backend dispatches it inside `wallet send` / `wallet contract-call` responses — you never enable it manually per call.
 
@@ -85,6 +89,13 @@ It pulls in `gas-station-faq.md` (FAQ answers) and `gas-station-edge.md` (edge c
 On a FIRST `wallet send` / `wallet contract-call` call (before `gas-station.md` is loaded): NEVER pass `--gas-token-address` / `--relayer-id` / `--enable-gas-station`, and NEVER fabricate token addresses or relayer IDs — these are second-phase values that come only from a Confirming response.
 </NEVER>
 
+### Third-Party Plugin Pre-flight (Solana)
+
+When dispatching a third-party Solana DeFi plugin (kamino-plugin, raydium-plugin, etc.) that internally calls `onchainos wallet contract-call --force`, the plugin is a black box that may swallow Gas Station Confirming responses. Two patterns apply, read both before invoking any Solana write-path plugin:
+
+- **Proactive pre-flight** (before invoking the plugin) — checklist, `gas-station status` recommendation branch, and skip conditions live in [`references/plugin-preflight.md`](references/plugin-preflight.md).
+- **Reactive bail recovery** (after the plugin returns exit 2 + `confirming` JSON, or a vague failure) — scene-recovery decision tree, post-failure diagnosis, and `--force` exit-code matrix live in [`references/gas-station.md`](references/gas-station.md) → "Plugin Bail Recovery".
+
 ---
 
 ## Confirming Response
@@ -94,13 +105,6 @@ Some commands return **confirming** (exit code **2**) when the backend needs use
 1. **Display** `message` and ask for confirmation.
 2. **Confirms** → follow `next` (usually: re-run the same command with `--force` appended).
 3. **Declines** → do NOT proceed; tell the user it was cancelled.
-
-## Third-Party Plugin Pre-flight (Solana)
-
-When dispatching a third-party Solana DeFi plugin (kamino-plugin, raydium-plugin, etc.) that internally calls `onchainos wallet contract-call --force`, the plugin is a black box that may swallow Gas Station Confirming responses. Two patterns apply, read both before invoking any Solana write-path plugin:
-
-- **Proactive pre-flight** (before invoking the plugin) — checklist, `gas-station status` recommendation branch, and skip conditions live in [`references/plugin-preflight.md`](references/plugin-preflight.md).
-- **Reactive bail recovery** (after the plugin returns exit 2 + `confirming` JSON, or a vague failure) — scene-recovery decision tree, post-failure diagnosis, and `--force` exit-code matrix live in [`references/gas-station.md`](references/gas-station.md) → "Plugin Bail Recovery".
 
 ## User-Facing Message Templates
 
@@ -122,7 +126,7 @@ When the user gives an email, run `onchainos wallet login <email> [--locale <loc
 
 When the user replies with the code, run `onchainos wallet verify <code>`.
 
-> `--locale`: infer from the conversation, underscore form (e.g. `zh_CN` / `en_US` / `ja_JP`). If the language is unclear, **omit it — never force `en_US`**. Full rule in cli-reference.md → A1.
+> `--locale`: infer from the conversation, underscore form (e.g. `zh_CN` / `en_US` / `ja_JP`). If the language is unclear, **omit it — never force `en_US`**. 
 
 **3. API Key login** (user declines email). Re-offer the API Key option (the second line of the step 2 message); if they accept, run `onchainos wallet login` with no email — the CLI reads `OKX_API_KEY` / `OKX_SECRET_KEY` / `OKX_PASSPHRASE` from env. On success, tell them they are logged in via API Key.
 

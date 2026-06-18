@@ -459,9 +459,7 @@ Response (example):
     "insufficientAll": false,
     "tokenList": [
       { "symbol": "USDT", "feeTokenAddress": "<mint>", "relayerId": "1",
-        "balance": "120.0", "serviceCharge": "0.8", "sufficient": true },
-      { "symbol": "USDC", "feeTokenAddress": "<mint>", "relayerId": "1",
-        "balance": "5.0",   "serviceCharge": "0.8", "sufficient": true }
+        "balance": "120.0", "serviceCharge": "0.8", "sufficient": true }
     ]
   }
 }

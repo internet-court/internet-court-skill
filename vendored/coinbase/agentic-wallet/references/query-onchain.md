@@ -7,7 +7,7 @@ If the wallet is not authenticated, see `references/auth.md`.
 ## Executing a Query
 
 ```bash
-npx awal@2.10.0 x402 pay https://x402.cdp.coinbase.com/platform/v2/data/query/run -X POST -d '{"sql": "<YOUR_QUERY>"}' --json
+npx awal@2.12.0 x402 pay https://x402.cdp.coinbase.com/platform/v2/data/query/run -X POST -d '{"sql": "<YOUR_QUERY>"}' --json
 ```
 
 **IMPORTANT**: Always single-quote the `-d` JSON string to prevent bash variable expansion.
@@ -150,19 +150,19 @@ LIMIT 10
 ### Get transactions from a specific address
 
 ```bash
-npx awal@2.10.0 x402 pay https://x402.cdp.coinbase.com/platform/v2/data/query/run -X POST -d '{"sql": "SELECT transaction_hash, to_address, value, gas, timestamp FROM base.transactions WHERE from_address = lower('\''0xYOUR_ADDRESS'\'') AND timestamp >= now() - INTERVAL 1 DAY LIMIT 10"}' --json
+npx awal@2.12.0 x402 pay https://x402.cdp.coinbase.com/platform/v2/data/query/run -X POST -d '{"sql": "SELECT transaction_hash, to_address, value, gas, timestamp FROM base.transactions WHERE from_address = lower('\''0xYOUR_ADDRESS'\'') AND timestamp >= now() - INTERVAL 1 DAY LIMIT 10"}' --json
 ```
 
 ### Count events by type for a contract in the last hour
 
 ```bash
-npx awal@2.10.0 x402 pay https://x402.cdp.coinbase.com/platform/v2/data/query/run -X POST -d '{"sql": "SELECT event_signature, count(*) as cnt FROM base.events WHERE address = lower('\''0xCONTRACT_ADDRESS'\'') AND block_timestamp >= now() - INTERVAL 1 HOUR GROUP BY event_signature ORDER BY cnt DESC LIMIT 20"}' --json
+npx awal@2.12.0 x402 pay https://x402.cdp.coinbase.com/platform/v2/data/query/run -X POST -d '{"sql": "SELECT event_signature, count(*) as cnt FROM base.events WHERE address = lower('\''0xCONTRACT_ADDRESS'\'') AND block_timestamp >= now() - INTERVAL 1 HOUR GROUP BY event_signature ORDER BY cnt DESC LIMIT 20"}' --json
 ```
 
 ### Get latest block info
 
 ```bash
-npx awal@2.10.0 x402 pay https://x402.cdp.coinbase.com/platform/v2/data/query/run -X POST -d '{"sql": "SELECT block_number, timestamp, transaction_count, gas_used FROM base.blocks ORDER BY block_number DESC LIMIT 1"}' --json
+npx awal@2.12.0 x402 pay https://x402.cdp.coinbase.com/platform/v2/data/query/run -X POST -d '{"sql": "SELECT block_number, timestamp, transaction_count, gas_used FROM base.blocks ORDER BY block_number DESC LIMIT 1"}' --json
 ```
 
 ## Common Contract Addresses (Base)
@@ -184,8 +184,8 @@ npx awal@2.10.0 x402 pay https://x402.cdp.coinbase.com/platform/v2/data/query/ru
 
 ## Prerequisites
 
-- Must be authenticated (`npx awal@2.10.0 status` to check; see `references/auth.md`)
-- Wallet must have sufficient USDC balance (`npx awal@2.10.0 balance` to check; see `references/fund.md`)
+- Must be authenticated (`npx awal@2.12.0 status` to check; see `references/auth.md`)
+- Wallet must have sufficient USDC balance (`npx awal@2.12.0 balance` to check; see `references/fund.md`)
 - Each query costs $0.10 (100000 USDC atomic units)
 
 ## Error Handling

@@ -2,8 +2,6 @@
 
 Gas Station enables paying gas fees with stablecoins (USDT / USDC / USDG) when the user lacks native SOL. On Solana the Relayer is the native fee payer (signature index 0); the user is the business authority signer (signature index 1). The stablecoin gas fee is collected via an SPL Token Transfer inside the same transaction — **no account upgrade, no per-chain setup, no 7702**.
 
-**Supported chain**: Solana only.
-
 **Supported gas tokens**: USDT, USDC, USDG.
 
 **Supported scenarios**: all SPL token transfers and contract interactions (swaps, DeFi supply / borrow / redeem / claim, cross-chain bridge initiation, and any other SPL / program interaction). Native SOL transfers do NOT trigger Gas Station.
@@ -247,9 +245,9 @@ After any successful Gas Station broadcast, the reply MUST contain all four elem
 - Do NOT call Gas Station "free" or hide the service charge.
 </universal-success-reply>
 
-### Example replies
+### Example reply
 
-**Scenario: plain wallet send (SPL transfer) that used Gas Station**
+The same four-element structure applies regardless of which command triggered the Gas Station broadcast (`wallet send`, `wallet contract-call`, `swap`, `bridge`, any DeFi plugin) — only the leading action line changes (e.g. `Sent 100 USDC to CYXWm...`, `Deposited 0.01 USDT into Kamino.`):
 
 ```
 Sent 100 USDC to CYXWm...
@@ -259,18 +257,6 @@ Sent 100 USDC to CYXWm...
 - txHash: submitted, on-chain hash will be returned asynchronously by the Relayer — check again shortly.
 
 You can tell me: **check order ord_ghi789rst** to check the status.
-```
-
-**Scenario: DeFi supply via plugin that used Gas Station**
-
-```
-Deposited 0.01 USDT into Kamino.
-
-- Network fee: 0.12 USDT (≈ $0.12, paid via Gas Station)
-- orderId: ord_def456uvw
-- txHash: submitted, on-chain hash will be returned asynchronously by the Relayer — check again shortly.
-
-You can tell me: **check order ord_def456uvw** to check the status.
 ```
 
 ### Checking the order later
@@ -292,9 +278,8 @@ When the user replies with any wording meaning "check order {orderId}" or "what'
 | 2 | Jito Bundler HARD BLOCK | user wants Jito Bundle + stablecoin gas |
 | 3 | txHash not yet returned | user asks for the hash before the Relayer publishes it |
 | 4 | Pending GS tx blocking | CLI `scene: gs_pending_tx` |
-| 5 | Order status query | user says "check order {orderId}" |
-| 6 | Native SOL transfer | user sends native SOL (GS does not apply) |
-| 7 | History display rules | listing / detailing a GS tx in `wallet history` |
+| 5 | Native SOL transfer | user sends native SOL (GS does not apply) |
+| 6 | History display rules | listing / detailing a GS tx in `wallet history` |
 
 ---
 
@@ -310,21 +295,9 @@ Translate to the user's language at output time; the semantic content must not d
 
 > "Once disabled, transactions on Solana will pay Gas with SOL again. You can re-enable any time. If you only want to switch the Gas-payment token, use 'change default Gas token' instead of disabling. Confirm disabling?"
 
-**After `wallet gas-station disable` succeeds**
+**After any management command succeeds** (`enable` / `disable` / `update-default-token`)
 
-> "Gas Station is now disabled on Solana. The chain will pay Gas with SOL; you can re-enable any time."
-
-**Before running `wallet gas-station enable`**
-
-> "Enable Gas Station on Solana? Once enabled, you can pay Gas with stablecoins."
-
-**After `wallet gas-station enable` succeeds**
-
-> "Gas Station is now enabled on Solana. The chain will pay Gas with stablecoins."
-
-**After `wallet gas-station update-default-token` succeeds**
-
-> "Default Gas token on Solana updated to {new_token}. The chain will pay Gas with {new_token} by default."
+> Render `data.message` verbatim (the CLI fills the success copy, incl. the token symbol for `update-default-token`). Translate per the global locale rule.
 
 ---
 
@@ -336,7 +309,6 @@ Users may express Gas Station-related needs in various ways and in any language.
 **Agent output vocabulary (authoritative)**: refer to the feature only as "Gas Station" and to the choice only as "which stablecoin to pay gas".
 
 **Never surface** in user-facing replies:
-- `7702` / `EIP-7702` / `delegation` / `upgrade` / `authorization` / `revoke` — these do NOT apply to Solana, but the user may still input these terms; recognize the intent and respond using only the sanctioned vocabulary.
 - Internal field names: `gasStationFirstTimePrompt`, `gasStationUsed`, `autoSelectedToken`, `hasPendingTx`, `insufficientAll`, `signType`, `multiSignerTx`, `unsignedInfo`, `Phase 1` / `Phase 2`, `DB flag`.
 - Error codes: any numeric code.
 - Debug references: debug flags, log file paths, audit log paths.
@@ -348,21 +320,19 @@ Users may **input** any equivalent phrasing in any language — recognize the in
 |---|---|
 | Wants to send but lacks SOL (any wording in any language) | Proceed with `wallet send` — Gas Station activates automatically. |
 | Asks whether stablecoins can pay Gas (capability question) | Explain Gas Station briefly (use `gas-station-faq.md` verbatim), then proceed with the transaction if the user provides one. |
-| Asks what Gas Station is / how it works (FAQ) | Answer from `gas-station-faq.md` — verbatim. |
-| Asks why a small amount of SOL was received in the transaction (FAQ) | Answer from `gas-station-faq.md` — verbatim (the "Why did I receive a small amount of SOL" Q). |
+| Any Gas Station FAQ — what it is / how it works / fees / supported tokens / which scenarios don't trigger / why a small amount of SOL was received | Answer from `gas-station-faq.md` — verbatim (pick the matching Q). |
 | Wants to change the default Gas token | Call `wallet gas-station update-default-token --chain solana --gas-token-address <addr>`. |
 | Wants to enable Gas Station | Call `wallet gas-station enable --chain solana`. Use the confirmation and success templates above. |
 | Wants to disable Gas Station, or stop paying Gas with stablecoin | Call `wallet gas-station disable --chain solana`. Use the confirmation and success templates above. If the user only wants to change the gas-payment token, suggest `update-default-token` instead. |
 | Wants to use Jito Bundle together with stablecoin Gas | Conflicting intent (hard block). Render Edge Case 2 (Jito Bundler) from `gas-station-edge.md`. |
-| Asks why Gas Station did not kick in for this transaction | Blocked-scenario inquiry | Check: pending tx? amount over 100,000 U? Jito Bundle? native SOL transfer? Respond with the matching verbatim template. |
-| Asks for the hash of the just-broadcast Gas Station transaction | Hash not yet returned | Render Edge Case 3 from `gas-station-edge.md`. |
-| Asks why this transaction's hash is slower than others | Async Hash explanation | Render Edge Case 3 follow-up from `gas-station-edge.md`. |
+| Asks why Gas Station did not kick in for this transaction (blocked-scenario inquiry) | Check: pending tx? amount over 100,000 U? Jito Bundle? native SOL transfer? Respond with the matching verbatim template. |
+| Asks for the just-broadcast tx hash (not yet returned), or why its hash is slower than other transactions | Render Edge Case 3 (and its follow-up) from `gas-station-edge.md`. |
 
 ---
 
-## Plugin Bail Recovery (Agent Orchestration)
+## Plugin Bail Recovery
 
-Third-party plugins like `kamino-plugin`, `raydium-plugin`, etc., invoke `onchainos wallet contract-call` as a subprocess. When CLI returns a **CliConfirming** (exit code 2) for Scene A / Scene C, the plugin's subprocess wrapper typically treats non-zero exit as a failure and bails out of its own flow. The **Agent (Claude Code)** can catch this, resolve the Gas Station setup, and re-invoke the **same plugin command** — the plugin will re-organize its calldata from scratch and this time CLI will hit the auto path.
+Third-party plugins like `kamino-plugin`, `raydium-plugin`, etc., invoke `onchainos wallet contract-call` as a subprocess. When the CLI emits a Confirming response (exit code 2, `"confirming": true` in stdout) for Scene A / Scene C, the plugin's subprocess wrapper typically treats non-zero exit as a failure and bails out of its own flow. The **Agent** can catch this, resolve the Gas Station setup, and re-invoke the **same plugin command** — the plugin will re-organize its calldata from scratch and this time CLI will hit the auto path.
 
 ### When does this pattern trigger
 
@@ -377,7 +347,7 @@ Markers:
 - Exit code **2** (non-zero, subprocess marked as failure)
 - stdout contains a JSON with `"confirming": true`
 
-If these match → recoverable Gas Station CliConfirming, not a real failure.
+If these match → a recoverable Gas Station Confirming, not a real failure.
 
 ### Recovery
 

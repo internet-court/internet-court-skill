@@ -140,3 +140,38 @@ When listing or detailing a Gas Station transaction in `wallet history`:
 - **Show user intent only** — display the user's intended transfer (e.g., "100 USDC → CYXWm..."). Do NOT display the Relayer's fee-payer address.
 - **Network fee** — display the actual token used by Gas Station (e.g., `0.8 USDC`), not SOL.
 - **From address** — display the user's address, not the Relayer's.
+
+---
+
+## Failure & Backend-Bug Handling
+
+> **Diagnosis content, not user-facing templates.** Backend errors and bugs surfaced during the two-phase `wallet send` / `wallet contract-call` flow, plus management-command API errors. The flow, scene dispatch, and product copy live in `gas-station.md`; the edge-case templates above cover the expected branches; this section covers what neither does.
+>
+> **Scene dispatch reminder** — read the CLI `scene` discriminator and dispatch via the gas-station.md "Outcome → render map". Do NOT re-derive the scene from raw backend booleans (`gasStationUsed` / `hasPendingTx` / `insufficientAll` / `hash`).
+
+### Phase 2 failures (after the user picked a token / CLI filled params)
+
+| Failure | How to detect | Agent response |
+|---|---|---|
+| Backend rejects token selection | Non-2xx response, or `gasStationUsed=false` with error | Tell user the selection failed; ask to retry. Causes: balance changed between calls, `relayerId` expired, token no longer supported. Re-run Phase 1 to refresh `gasStationTokenList`. |
+| Invalid `gasTokenAddress` | Backend returns error | Do NOT fabricate. Re-run Phase 1 and use values from the Confirming response's `next` field. |
+| Simulation failure (`executeResult=false`) | CLI bails with `transaction simulation failed: <msg>` | Show `<msg>` to user. Do NOT broadcast. Causes: insufficient token balance for `amount`, recipient invalid, program revert. |
+| Balance changed between Phase 1 and Phase 2 | Phase 2 returns `insufficientAll` or simulation fails | Re-run Phase 1 to refresh `gasStationTokenList`. |
+| `hash` empty on Phase 2 | Backend bug | Surface backend error. Do NOT attempt to sign. |
+| `signType` ≠ `multiSignerTx` on a Gas Station response | Backend bug | Fatal — CLI cannot construct the multi-signer transaction. Surface error. |
+
+### Broadcast & history bugs (should-not-happen)
+
+Broadcast is asynchronous (`orderId` returned, `txHash` eventual). For the normal async-hash / Relayer-timeout / order-status / history-display copy, use Edge Case 3 / 5 / 7 above and the Universal Gas Station Success Reply in `gas-station.md`. Treat the following as **backend bugs** if observed:
+
+| Symptom | Agent response |
+|---|---|
+| Network fee shown in SOL instead of the stablecoin actually used | Report as backend bug. Do NOT manually convert. |
+| `from` / history shows the Relayer address instead of the user's | Report as backend bug. |
+
+### Management command failures
+
+| Command | Failure mode | Agent response |
+|---|---|---|
+| `wallet gas-station update-default-token` | API error | Show the error message; do NOT retry automatically. Common causes: invalid token address, chain not supported, not logged in. |
+| `wallet gas-station enable` / `disable` | API error | Show the error message; do NOT retry automatically. (Agent-internal: `disable` is DB-only and re-enabling later is instant — never paraphrase this to the user; see `gas-station.md` User-Facing Reply Templates.) |

@@ -4,7 +4,7 @@ description: "Use this skill to swap, trade, buy, sell, exchange, or convert tok
 license: MIT
 metadata:
   author: okx
-  version: "3.3.12"
+  version: "3.3.13"
   homepage: "https://web3.okx.com"
 ---
 

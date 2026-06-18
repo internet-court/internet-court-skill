@@ -23,6 +23,7 @@ Wallet login and session bootstrap for the local `altllm` CLI, including externa
 | `login-wallet --private-key <hex> --allow-unsafe-private-key-argv` | Sign in with an inline private key when argv exposure is explicitly accepted |
 | `login-wallet --prepare` | Fetch a challenge for external signing |
 | `login-wallet --nonce <nonce> --signature <sig>` | Verify an externally signed challenge and save the session |
+| `status` | Show saved Portal session user and target URL status without exposing the token |
 | `logout` | Remove the local saved Portal session file |
 
 ## Rules
@@ -35,6 +36,7 @@ Wallet login and session bootstrap for the local `altllm` CLI, including externa
 - For non-default, non-loopback API hosts, prefer `--prepare` and external signing instead of local auto-signing.
 - Current backend support is still limited to EVM addresses and Ethereum-style signatures.
 - Save the resulting session to `~/.altllm/portal-cli-session.json` unless overridden.
+- Use `status` or its `whoami` alias to confirm the saved user and target URL before running live commands.
 - `logout` only removes the local session file. It does not revoke API keys.
 
 ## Reference

@@ -5,18 +5,12 @@
 <faq-scope>
 **"Gas Station" always means the OKX Agentic Wallet feature shipped by this CLI + skill (Solana variant).** When the user asks any FAQ-style question:
 
-- DO NOT pull from general training knowledge about ERC-4337, Paymaster, Biconomy, Gelato, Pimlico, Alchemy Account Kit, meta-transactions, or any third-party gas-abstraction protocol.
-- DO NOT answer in a "category explainer" style.
 - DO use the verbatim templates below.
 </faq-scope>
 
 <faq-no-extras>
 **Output the template alone. Nothing before, nothing after.**
 
-- NEVER append any section headers after the template, e.g.: `Note:`, `Tip:`, `Caveat:`, `Warning:`, `Heads up:`, `Additional notes`, or their equivalents in any other language.
-- NEVER add bullets summarising supported networks, supported stablecoins, activation flow, network fee, service charge, or anything not already inside the verbatim copy.
-- NEVER add follow-up prompts like "Anything else you want to know about X / Y / Z?" or "Need help with anything else?" at the end.
-- NEVER prefix the template with a setup line like "Sure, let me explain…" / "Here's how it works…".
 - If the template doesn't already contain the fact you want to add, the answer is: don't add it. The PRD copy is intentionally curated; extra context dilutes it.
 
 **Do NOT layer the "never call Gas Station free" rule onto FAQ answers.** That rule governs successful broadcast replies (where a `serviceCharge` is present in the response) and does NOT mean every FAQ answer must add a service-charge caveat. Transaction-time fee disclosure happens at transaction time, not at FAQ time.

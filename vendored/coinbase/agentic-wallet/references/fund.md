@@ -7,7 +7,7 @@ If the wallet is not authenticated, see `references/auth.md`.
 ## Opening the Funding Interface
 
 ```bash
-npx awal@2.10.0 show
+npx awal@2.12.0 show
 ```
 
 This opens the wallet companion window where users can:
@@ -30,17 +30,17 @@ This opens the wallet companion window where users can:
 You can also ask your human to send USDC on Base to your wallet address. Get the address with:
 
 ```bash
-npx awal@2.10.0 address
+npx awal@2.12.0 address
 ```
 
 ## Prerequisites
 
-- Must be authenticated (`npx awal@2.10.0 status` to check)
+- Must be authenticated (`npx awal@2.12.0 status` to check)
 - Coinbase Onramp is available in supported regions (US, etc.)
 
 ## Flow
 
-1. Run `npx awal@2.10.0 show` to open the wallet UI
+1. Run `npx awal@2.12.0 show` to open the wallet UI
 2. Instruct the user to click the Fund button
 3. User selects amount and payment method in the UI
 4. User completes payment through Coinbase Pay (opens in browser)
@@ -50,7 +50,7 @@ npx awal@2.10.0 address
 
 ```bash
 # Check updated balance
-npx awal@2.10.0 balance
+npx awal@2.12.0 balance
 ```
 
 ## Notes

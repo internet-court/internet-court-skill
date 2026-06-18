@@ -1,6 +1,6 @@
 ---
 name: altllm-portal-cli
-description: Use this umbrella skill when the request spans multiple AltLLM Portal CLI domains, or when you need to navigate the local altllm CLI in this repository across auth, API keys, billing history, and payments.
+description: Use this umbrella skill when the request spans multiple AltLLM Portal CLI domains, or when you need to navigate the local altllm CLI in this repository across auth, API keys, billing history, NOWPayments payment links, and related x402 Portal top-up guidance.
 user-invocable: true
 ---
 
@@ -28,7 +28,8 @@ This skill family is specifically about the **Portal CLI workflow** in this repo
 | `altllm-portal-auth` | Wallet login and session bootstrap | Wallet challenge, signature verification, login troubleshooting |
 | `altllm-portal-api-keys` | Portal API key lifecycle | Create, inspect, disable, re-enable, or revoke API keys |
 | `altllm-portal-billing` | Balance, promo, transactions, and usage analytics | Credit balance, promo redemption, billing history, usage views |
-| `altllm-portal-payments` | Payment-link creation, polling, and direct payment execution | Crypto top-up, payment status, direct wallet payment |
+| `altllm-portal-payments` | NOWPayments link creation, polling, and direct payment execution | Crypto top-up links, payment status, direct wallet payment |
+| `altllm-x402` | Portal x402 credit top-up guidance | BSC/USDT x402 quotes, discount top-ups, wallet signing, settlement, facilitator errors |
 
 ## Plan Awareness
 
@@ -43,6 +44,7 @@ This skill family is specifically about the **Portal CLI workflow** in this repo
   - login -> create API key -> verify gateway use
   - credit -> transactions -> usage analytics
   - top-up -> payment-status -> pay-payment-link
+  - x402 quote -> wallet signing -> settlement -> balance verification
 - Keep implementation and docs aligned when behavior changes.
 
 ## Reference

@@ -1,13 +1,13 @@
 # Sending Tokens
 
-Use the `npx awal@2.10.0 send` command to transfer tokens from the wallet to any address on Base, Polygon, or Solana.
+Use the `npx awal@2.12.0 send` command to transfer tokens from the wallet to any address on Base, Polygon, or Solana.
 
 If the wallet is not authenticated, see `references/auth.md`.
 
 ## Command Syntax
 
 ```bash
-npx awal@2.10.0 send <amount> <recipient> [--chain <chain>] [--asset <asset>] [--json]
+npx awal@2.12.0 send <amount> <recipient> [--chain <chain>] [--asset <asset>] [--json]
 ```
 
 ## Arguments
@@ -40,25 +40,25 @@ Do not pass unvalidated user input into the command.
 
 ```bash
 # Send $1.00 USDC to an address on Base (default)
-npx awal@2.10.0 send 1 0x1234...abcd
+npx awal@2.12.0 send 1 0x1234...abcd
 
 # Send $0.50 USDC to an ENS name
-npx awal@2.10.0 send 0.50 vitalik.eth
+npx awal@2.12.0 send 0.50 vitalik.eth
 
 # Send with dollar sign prefix (note the single quotes)
-npx awal@2.10.0 send '$5.00' 0x1234...abcd
+npx awal@2.12.0 send '$5.00' 0x1234...abcd
 
 # Send ETH on Base
-npx awal@2.10.0 send 0.01 0x1234...abcd --asset eth
+npx awal@2.12.0 send 0.01 0x1234...abcd --asset eth
 
 # Send USDC on Polygon
-npx awal@2.10.0 send 1 0x1234...abcd --chain polygon
+npx awal@2.12.0 send 1 0x1234...abcd --chain polygon
 
 # Send USDC to a Solana address
-npx awal@2.10.0 send 1 AxW7...5fGz --chain solana
+npx awal@2.12.0 send 1 AxW7...5fGz --chain solana
 
 # Get JSON output
-npx awal@2.10.0 send 1 vitalik.eth --json
+npx awal@2.12.0 send 1 vitalik.eth --json
 ```
 
 ## ENS Resolution
@@ -71,15 +71,15 @@ ENS names are automatically resolved to addresses via Ethereum mainnet. The comm
 
 ## Prerequisites
 
-- Must be authenticated (`npx awal@2.10.0 status` to check; see `references/auth.md`)
-- Wallet must have sufficient balance (`npx awal@2.10.0 balance` to check; see `references/fund.md` to top up)
+- Must be authenticated (`npx awal@2.12.0 status` to check; see `references/auth.md`)
+- Wallet must have sufficient balance (`npx awal@2.12.0 balance` to check; see `references/fund.md` to top up)
 
 ## Error Handling
 
 Common errors:
 
 - "Not authenticated" - See `references/auth.md`
-- "Insufficient balance" - Check balance with `npx awal@2.10.0 balance`; see `references/fund.md`
+- "Insufficient balance" - Check balance with `npx awal@2.12.0 balance`; see `references/fund.md`
 - "Could not resolve ENS name" - Verify the ENS name exists
 - "Invalid recipient" - Must be valid 0x address, ENS name, or Solana Base58 address
 - "SOL only supported on Solana chains" - Use `--chain solana` when sending SOL

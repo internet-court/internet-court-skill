@@ -1,16 +1,16 @@
 # Trading Tokens
 
-Use the `npx awal@2.10.0 trade` command to swap tokens on Base or Polygon via the CDP Swap API. You must be authenticated to trade.
+Use the `npx awal@2.12.0 trade` command to swap tokens on Base or Polygon via the CDP Swap API. You must be authenticated to trade.
 
 If the wallet is not authenticated, see `references/auth.md`.
 
 ## Command Syntax
 
 ```bash
-npx awal@2.10.0 trade <amount> <from> <to> [options]
+npx awal@2.12.0 trade <amount> <from> <to> [options]
 ```
 
-The command is also available as `npx awal@2.10.0 swap` (alias).
+The command is also available as `npx awal@2.12.0 swap` (alias).
 
 ## Arguments
 
@@ -67,33 +67,33 @@ Do not pass unvalidated user input into the command.
 
 ```bash
 # Swap $1 USDC for ETH (dollar prefix — note the single quotes)
-npx awal@2.10.0 trade '$1' usdc eth
+npx awal@2.12.0 trade '$1' usdc eth
 
 # Swap 0.50 USDC for ETH (decimal format)
-npx awal@2.10.0 trade 0.50 usdc eth
+npx awal@2.12.0 trade 0.50 usdc eth
 
 # Swap 500000 atomic units of USDC for ETH
-npx awal@2.10.0 trade 500000 usdc eth
+npx awal@2.12.0 trade 500000 usdc eth
 
 # Swap 0.01 ETH for USDC
-npx awal@2.10.0 trade 0.01 eth usdc
+npx awal@2.12.0 trade 0.01 eth usdc
 
 # Swap with custom slippage (2%)
-npx awal@2.10.0 trade '$5' usdc eth --slippage 200
+npx awal@2.12.0 trade '$5' usdc eth --slippage 200
 
 # Swap using contract addresses (decimals read from chain)
-npx awal@2.10.0 trade 100 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 0x4200000000000000000000000000000000000006
+npx awal@2.12.0 trade 100 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 0x4200000000000000000000000000000000000006
 
 # Get JSON output
-npx awal@2.10.0 trade '$1' usdc eth --json
+npx awal@2.12.0 trade '$1' usdc eth --json
 
 # Swap USDC for POL on Polygon
-npx awal@2.10.0 trade '$1' usdc pol --chain polygon
+npx awal@2.12.0 trade '$1' usdc pol --chain polygon
 ```
 
 ## Prerequisites
 
-- Must be authenticated (`npx awal@2.10.0 status` to check; see `references/auth.md`)
+- Must be authenticated (`npx awal@2.12.0 status` to check; see `references/auth.md`)
 - Wallet must have sufficient balance of the source token
 
 ## Error Handling

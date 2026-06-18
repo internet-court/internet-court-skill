@@ -32,7 +32,7 @@ Before a plugin command that performs an on-chain write (`--confirm` / `execute`
 
 ## Reactive recovery (plugin already failed)
 
-When a plugin returns a vague error, follow `references/gas-station.md` → "Plugin Bail Recovery" (the authoritative procedure). If the plugin swallowed stdout so no Confirming JSON is visible, fall back to running `onchainos wallet gas-station status --chain solana [--from <addr>]` and branch per the Pre-flight checklist above. The exit-code quick-reference:
+When a plugin returns a vague error, follow `references/gas-station.md` → "Plugin Bail Recovery" (authoritative). If the plugin swallowed stdout so no Confirming JSON is visible, run `onchainos wallet gas-station status --chain solana [--from <addr>]` and branch per the Pre-flight checklist above. Exit-code quick-reference:
 
 ## Exit codes (seen through a plugin)
 

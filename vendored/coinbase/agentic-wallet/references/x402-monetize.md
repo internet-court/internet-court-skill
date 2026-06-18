@@ -13,7 +13,7 @@ If the wallet is not authenticated, see `references/auth.md`.
 Run this to get the wallet address that will receive payments:
 
 ```bash
-npx awal@2.10.0 address
+npx awal@2.12.0 address
 ```
 
 Use this address as the `payTo` value.
@@ -366,10 +366,10 @@ Once the server is running, test payments using the commands in `references/x402
 
 ```bash
 # Check the endpoint's payment requirements
-npx awal@2.10.0 x402 details http://localhost:3000/api/example
+npx awal@2.12.0 x402 details http://localhost:3000/api/example
 
 # Make a paid request
-npx awal@2.10.0 x402 pay http://localhost:3000/api/example
+npx awal@2.12.0 x402 pay http://localhost:3000/api/example
 ```
 
 ## Pricing Guidelines
@@ -383,11 +383,11 @@ npx awal@2.10.0 x402 pay http://localhost:3000/api/example
 
 ## Checklist
 
-- [ ] Get wallet address with `npx awal@2.10.0 address`
+- [ ] Get wallet address with `npx awal@2.12.0 address`
 - [ ] Install `express`, `@x402/express`, `@x402/core`, `@x402/evm`, and `@x402/extensions`
 - [ ] Create `x402ResourceServer` with facilitator client and register `ExactEvmScheme` for `eip155:8453`
 - [ ] Define routes with prices, descriptions, and discovery extensions (Bazaar auto-registers when routes declare it)
 - [ ] Register payment middleware before protected routes
 - [ ] Keep health/status endpoints before payment middleware
-- [ ] Test with `curl` (should get 402) and `npx awal@2.10.0 x402 pay` (should get 200)
+- [ ] Test with `curl` (should get 402) and `npx awal@2.12.0 x402 pay` (should get 200)
 - [ ] Announce your service so other agents can find and use it

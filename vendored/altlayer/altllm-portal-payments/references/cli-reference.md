@@ -64,6 +64,7 @@ Direct `--private-key` usage requires `--allow-unsafe-private-key-argv` because 
 
 ## Notes
 
+- NOWPayments payment links are not x402. Use `altllm-x402` for AltLLM Portal `/api/billing/x402/quote` and `/settle` credit top-ups.
 - `payment-status` and `pay-payment-link` currently only search the newest `100` Portal payment links.
 - Older payment links are not reachable from these CLI flows until the backend supports lookup by ID or older-page pagination.
 - Automatic payment requires `pay_address`, `pay_amount`, and `pay_currency` to be present in the API response.

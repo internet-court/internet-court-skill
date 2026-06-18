@@ -1,13 +1,13 @@
 # Making Paid x402 Requests
 
-Use the `npx awal@2.10.0 x402 pay` command to call paid API endpoints with automatic USDC payment on Base.
+Use the `npx awal@2.12.0 x402 pay` command to call paid API endpoints with automatic USDC payment on Base.
 
 If the wallet is not authenticated, see `references/auth.md`.
 
 ## Command Syntax
 
 ```bash
-npx awal@2.10.0 x402 pay <url> [-X <method>] [-d <json>] [-q <params>] [-h <json>] [--max-amount <n>] [--json]
+npx awal@2.12.0 x402 pay <url> [-X <method>] [-d <json>] [-q <params>] [-h <json>] [--max-amount <n>] [--json]
 ```
 
 ## Options
@@ -49,19 +49,19 @@ Do not pass unvalidated user input into the command.
 
 ```bash
 # Make a GET request (auto-pays)
-npx awal@2.10.0 x402 pay https://example.com/api/weather
+npx awal@2.12.0 x402 pay https://example.com/api/weather
 
 # Make a POST request with body
-npx awal@2.10.0 x402 pay https://example.com/api/sentiment -X POST -d '{"text": "I love this product"}'
+npx awal@2.12.0 x402 pay https://example.com/api/sentiment -X POST -d '{"text": "I love this product"}'
 
 # Limit max payment to $0.10
-npx awal@2.10.0 x402 pay https://example.com/api/data --max-amount 100000
+npx awal@2.12.0 x402 pay https://example.com/api/data --max-amount 100000
 ```
 
 ## Prerequisites
 
-- Must be authenticated (`npx awal@2.10.0 status` to check; see `references/auth.md`)
-- Wallet must have sufficient USDC balance (`npx awal@2.10.0 balance` to check; see `references/fund.md` to top up)
+- Must be authenticated (`npx awal@2.12.0 status` to check; see `references/auth.md`)
+- Wallet must have sufficient USDC balance (`npx awal@2.12.0 balance` to check; see `references/fund.md` to top up)
 - If you don't know the endpoint URL, see `references/x402-search.md` to find services first
 
 ## Error Handling

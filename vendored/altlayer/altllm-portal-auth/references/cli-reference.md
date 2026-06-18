@@ -68,6 +68,16 @@ Representative stdout:
 
 This flow is intended for wallets or wallet providers that sign externally, such as Privy.
 
+### Inspect saved session
+
+```bash
+node dist/cli.js status
+```
+
+Alias: `node dist/cli.js whoami`
+
+`status` prints the saved Portal user, saved session origin, requested target origin, and whether the CLI would be allowed to forward the saved session token to that target. It never prints the session token.
+
 ### Verify externally signed challenge
 
 ```bash

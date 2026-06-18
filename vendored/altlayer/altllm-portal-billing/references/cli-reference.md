@@ -55,24 +55,21 @@ This endpoint currently returns the current calendar-month summary.
 
 ```bash
 node dist/cli.js usage-timeline \
-  --base-url https://platform-api.altllm.ai \
-  --month 2026-03
+  --base-url https://platform-api.altllm.ai
 ```
 
 ### Usage by model
 
 ```bash
 node dist/cli.js usage-by-model \
-  --base-url https://platform-api.altllm.ai \
-  --month 2026-03
+  --base-url https://platform-api.altllm.ai
 ```
 
 ### Usage by key
 
 ```bash
 node dist/cli.js usage-by-key \
-  --base-url https://platform-api.altllm.ai \
-  --month 2026-03
+  --base-url https://platform-api.altllm.ai
 ```
 
 ## Notes
@@ -80,5 +77,5 @@ node dist/cli.js usage-by-key \
 - `credit` and `redeem-promo` pass through the API response body unchanged.
 - This repo does not implement plan billing logic or bypass Portal/Gateway model-access checks.
 - Transaction history and usage analytics are useful for validating gateway metering behavior.
-- `usage-timeline` and `usage-by-model` accept either `--month` or a complete `--start-date` / `--end-date` range, but not both.
-- `usage-by-key` accepts either `--month` or a complete `--start-date` / `--end-date` range, but not both.
+- `usage-timeline`, `usage-by-model`, and `usage-by-key` default to the current UTC month.
+- Usage commands accept either `--month` or a complete `--start-date` / `--end-date` range, but not both.

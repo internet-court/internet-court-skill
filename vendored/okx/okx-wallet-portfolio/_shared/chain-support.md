@@ -30,4 +30,3 @@ Authoritative matrix for Gas Station. Use this when the Agent needs chain displa
 | `501` | Solana | SOL | ✓ | ✓ | ✓ |
 
 > **Always derive the per-tx token set from the response's `gasStationTokenList`** — it's backend-authoritative. The table above is for reference only (FAQ answers, unsupported-chain detection).
-

@@ -1,13 +1,13 @@
 # Checking Wallet Balances
 
-Use the `npx awal@2.10.0 balance` command to fetch token balances across chains. By default it returns balances for **USDC + the native gas token** on **Base, Polygon, and Solana** in a single call.
+Use the `npx awal@2.12.0 balance` command to fetch token balances across chains. By default it returns balances for **USDC + the native gas token** on **Base, Polygon, and Solana** in a single call.
 
 If the wallet is not authenticated, see `references/auth.md`. The CLI reads the address from the local wallet session — you do not pass an address argument.
 
 ## Command Syntax
 
 ```bash
-npx awal@2.10.0 balance [--chain <chain>] [--asset <asset>] [--json]
+npx awal@2.12.0 balance [--chain <chain>] [--asset <asset>] [--json]
 ```
 
 ## Options
@@ -57,26 +57,26 @@ Token decimals: USDC = 6, ETH = 18, POL = 18, SOL = 9.
 
 ```bash
 # Default — all chains, all native assets + USDC
-npx awal@2.10.0 balance
+npx awal@2.12.0 balance
 
 # One chain only (mainnet Base)
-npx awal@2.10.0 balance --chain base
+npx awal@2.12.0 balance --chain base
 
 # Testnet balance (Base Sepolia)
-npx awal@2.10.0 balance --chain base-sepolia
+npx awal@2.12.0 balance --chain base-sepolia
 
 # Just USDC, across every chain
-npx awal@2.10.0 balance --asset usdc
+npx awal@2.12.0 balance --asset usdc
 
 # Just ETH on Base
-npx awal@2.10.0 balance --chain base --asset eth
+npx awal@2.12.0 balance --chain base --asset eth
 
 # Solana SOL balance
-npx awal@2.10.0 balance --chain solana --asset sol
+npx awal@2.12.0 balance --chain solana --asset sol
 
 # Machine-readable JSON
-npx awal@2.10.0 balance --json
-npx awal@2.10.0 balance --chain base --asset usdc --json
+npx awal@2.12.0 balance --json
+npx awal@2.12.0 balance --chain base --asset usdc --json
 ```
 
 ## Output Format
@@ -179,7 +179,7 @@ When passing `--max-amount` to `x402 pay`, or atomic amounts to `send`/`trade`, 
 
 ```bash
 # Check whether the wallet has enough USDC on Base before paying / sending
-npx awal@2.10.0 balance --chain base --asset usdc --json
+npx awal@2.12.0 balance --chain base --asset usdc --json
 ```
 
 If `formatted` is below the required amount, see `references/fund.md` to top up.
@@ -187,14 +187,14 @@ If `formatted` is below the required amount, see `references/fund.md` to top up.
 ### Check spendable USDC across all chains
 
 ```bash
-npx awal@2.10.0 balance --asset usdc --json
+npx awal@2.12.0 balance --asset usdc --json
 ```
 
 ### Confirm gas (ETH on Base, POL on Polygon) is available before a swap
 
 ```bash
-npx awal@2.10.0 balance --chain base --asset eth --json
-npx awal@2.10.0 balance --chain polygon --asset pol --json
+npx awal@2.12.0 balance --chain base --asset eth --json
+npx awal@2.12.0 balance --chain polygon --asset pol --json
 ```
 
 ETH/POL are only required when the swap or send is on that chain — most USDC sends/trades on Base are gasless via paymaster, but trades may require small ETH for gas.
@@ -205,13 +205,13 @@ If you only need the address (not balances), prefer the cheaper `address` comman
 
 ```bash
 # Human-readable, all chains
-npx awal@2.10.0 address
+npx awal@2.12.0 address
 
 # Machine-readable, all chains
-npx awal@2.10.0 address --json
+npx awal@2.12.0 address --json
 
 # Single-chain (returns just the bare address string with no label)
-npx awal@2.10.0 address --chain base
+npx awal@2.12.0 address --chain base
 ```
 
 **Output shapes — important:**
@@ -224,11 +224,11 @@ npx awal@2.10.0 address --chain base
 
   If you need separate EVM and Solana addresses programmatically, prefer `balance --json` and read the per-chain `address` field, or split the string on the newline and the `EVM (...): ` / `Solana: ` prefixes.
 
-- `address --chain <chain>` prints just the raw address for that chain with no label or JSON wrapper, even without `--json`. Useful for shell substitution: `ADDR=$(npx awal@2.10.0 address --chain base)`.
+- `address --chain <chain>` prints just the raw address for that chain with no label or JSON wrapper, even without `--json`. Useful for shell substitution: `ADDR=$(npx awal@2.12.0 address --chain base)`.
 
 ## Prerequisites
 
-- Must be authenticated (`npx awal@2.10.0 status` to check; see `references/auth.md`).
+- Must be authenticated (`npx awal@2.12.0 status` to check; see `references/auth.md`).
 - Server reachable — `balance` calls the local wallet companion which talks to CDP.
 
 ## Error Handling
@@ -236,7 +236,7 @@ npx awal@2.10.0 address --chain base
 | Symptom                                                                       | Resolution                                                                                                                                                                |
 | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `Not authenticated` / `not signed in`                                         | Run the sign-in flow in `references/auth.md`.                                                                                                                             |
-| Hangs on `Fetching balances...`                                               | The wallet companion may be unreachable. Run `npx awal@2.10.0 status` to verify server health.                                                                            |
+| Hangs on `Fetching balances...`                                               | The wallet companion may be unreachable. Run `npx awal@2.12.0 status` to verify server health.                                                                            |
 | `balances` object empty for a chain                                           | The asset filter has no match on that chain (e.g. `--asset eth --chain polygon`). Drop the filter or use a supported asset.                                               |
 | Inline `Unsupported Solana asset: "ETH"` (or similar) printed in output       | You passed an incompatible `--asset` for that chain (e.g. `--asset eth --chain solana`). Use a supported asset for the chain — see "Asset / Chain Compatibility" above.   |
 | Non-zero `POL` on Base or `SOL` on Base                                       | CLI bug: it's reporting the ETH balance under the wrong symbol. Re-query with the correct chain (`--asset pol --chain polygon`, `--asset sol --chain solana`).            |

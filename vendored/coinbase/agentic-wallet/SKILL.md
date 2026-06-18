@@ -3,7 +3,7 @@ name: agentic-wallet
 description: "Crypto wallet operations via the awal CLI — sign in, check balances, send USDC/ETH/POL/SOL, trade tokens, fund the wallet, and use the x402 payment protocol to discover paid services, pay for API calls, monetize an API, or query onchain data. Use whenever the user mentions signing in, login, authentication, wallet status, balance, address, sending money, paying someone, transferring tokens, ENS names, swapping/trading/converting tokens, funding/topping up/onramp, USDC, ETH, POL, SOL, the x402 bazaar, paid APIs, monetizing an endpoint, or querying onchain data on Base."
 user-invocable: true
 disable-model-invocation: false
-allowed-tools: ["Bash(npx awal@2.10.0 *)", "Bash(npm *)", "Bash(node *)", "Bash(curl *)", "Bash(mkdir *)"]
+allowed-tools: ["Bash(npx awal@2.12.0 *)", "Bash(npm *)", "Bash(node *)", "Bash(curl *)", "Bash(mkdir *)"]
 ---
 
 # Agentic Wallet
@@ -15,7 +15,7 @@ Operate a crypto wallet through the `awal` CLI. This skill is a router: read the
 Before any wallet operation that requires authentication (everything except x402 search/details), check status:
 
 ```bash
-npx awal@2.10.0 status
+npx awal@2.12.0 status
 ```
 
 If the wallet is not authenticated, read `references/auth.md` and complete sign-in first.
@@ -50,15 +50,15 @@ If no clear match and the user wants an external capability, search the x402 baz
 
 | Command | Purpose |
 | --- | --- |
-| `npx awal@2.10.0 status` | Server health + auth status |
-| `npx awal@2.10.0 address` | Get wallet address |
-| `npx awal@2.10.0 balance` | Get balances across Base, Polygon, Solana (use `--chain` for one chain) |
-| `npx awal@2.10.0 show` | Open the wallet companion window (used for funding) |
-| `npx awal@2.10.0 auth login <email>` | Send OTP code |
-| `npx awal@2.10.0 auth verify <otp>` | Complete sign-in |
-| `npx awal@2.10.0 send <amount> <recipient>` | Send tokens |
-| `npx awal@2.10.0 trade <amount> <from> <to>` | Swap tokens |
-| `npx awal@2.10.0 x402 bazaar search <query>` | Search paid services |
-| `npx awal@2.10.0 x402 bazaar list` | List bazaar resources |
-| `npx awal@2.10.0 x402 details <url>` | Inspect payment requirements |
-| `npx awal@2.10.0 x402 pay <url>` | Pay and call an x402 endpoint |
+| `npx awal@2.12.0 status` | Server health + auth status |
+| `npx awal@2.12.0 address` | Get wallet address |
+| `npx awal@2.12.0 balance` | Get balances across Base, Polygon, Solana (use `--chain` for one chain) |
+| `npx awal@2.12.0 show` | Open the wallet companion window (used for funding) |
+| `npx awal@2.12.0 auth login <email>` | Send OTP code |
+| `npx awal@2.12.0 auth verify <otp>` | Complete sign-in |
+| `npx awal@2.12.0 send <amount> <recipient>` | Send tokens |
+| `npx awal@2.12.0 trade <amount> <from> <to>` | Swap tokens |
+| `npx awal@2.12.0 x402 bazaar search <query>` | Search paid services |
+| `npx awal@2.12.0 x402 bazaar list` | List bazaar resources |
+| `npx awal@2.12.0 x402 details <url>` | Inspect payment requirements |
+| `npx awal@2.12.0 x402 pay <url>` | Pay and call an x402 endpoint |
