@@ -4,7 +4,7 @@ description: "Use this skill to bridge tokens, cross-chain swap/transfer, move a
 license: MIT
 metadata:
   author: okx
-  version: "3.3.13"
+  version: "3.3.15"
   homepage: "https://web3.okx.com"
 ---
 

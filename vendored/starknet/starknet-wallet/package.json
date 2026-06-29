@@ -1,0 +1,18 @@
+{
+  "name": "starknet-wallet-skill",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check-balance": "tsx scripts/check-balance.ts",
+    "check-balances": "tsx scripts/check-balances.ts"
+  },
+  "dependencies": {
+    "@avnu/avnu-sdk": "^4.0.1",
+    "starknet": "^9.2.1",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.9.0"
+  }
+}

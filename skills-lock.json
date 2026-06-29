@@ -54,12 +54,12 @@
       "source": "arkhai-io/alkahest",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "f01e3021a7d23f17a50c54da6eec62ea77a1e291",
+      "sourceCommit": "2a37e23a2e02bb0293629a8b82643af143f31d49",
       "skillPath": "docs/skills/alkahest-user",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/arkhai/alkahest-user",
-      "computedHash": "dde67cf89d435e50948f326750db80b61a07fb336deba109e9547d1513c51ad0",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "dbee5b852ac362dda828c661c70b8f052c9b2003343bb806a49bc57449063623",
+      "fetchedAt": "2026-06-25"
     },
     "altllm-portal-api-keys": {
       "owner": "altlayer",
@@ -129,8 +129,8 @@
       "skillPath": "SKILL.md",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/antseed/antseed-connect",
-      "computedHash": "3d4b65f824d9ddd0c7e5cfacee33500e175a278b6f278b421578b3da3e85d3fa",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "f292c1cfa38b3a4741fc37247630665490f7a44652496e8c1a8acc93b1140eba",
+      "fetchedAt": "2026-06-23"
     },
     "bnbchain-mcp": {
       "owner": "bnb-chain",
@@ -216,6 +216,29 @@
       "computedHash": "e462f90f8788a86e7827da3ecb7a73456507577dfcceaf3495c4def4c024a2b2",
       "fetchedAt": "2026-06-17"
     },
+    "heurist-mesh-skill": {
+      "owner": "heurist",
+      "source": "heurist-network/heurist-mesh-skill",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "f116a8423010e06f500b89c94d490ed79ad12945",
+      "skillPath": "",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/heurist/heurist-mesh-skill",
+      "computedHash": "508a77bbf938aebfe0d05a403c70b474b490301d2b785d4ceb62ac11e0d2b093",
+      "fetchedAt": "2026-06-18"
+    },
+    "humanode-agentlink": {
+      "owner": "humanode",
+      "source": "https://agentlink.id/skill.md",
+      "sourceType": "https",
+      "fetch": "curl",
+      "skillPath": "SKILL.md",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/humanode/humanode-agentlink",
+      "computedHash": "6530623a2c2f990a3f1e920f217d91d18c613e8ff86df17626be502d849ce130",
+      "fetchedAt": "2026-06-23"
+    },
     "integration-tests": {
       "owner": "genlayer",
       "source": "genlayerlabs/skills",
@@ -238,6 +261,30 @@
       "vendoredPath": "vendored/intelligent-oracle/intelligent-oracle",
       "computedHash": "c57cb8fa0572a7ec9868309a20f608301efb0611f5cf40aa70e97554319294cb",
       "fetchedAt": "2026-06-17"
+    },
+    "kleros-curate": {
+      "owner": "kleros",
+      "source": "kleros/kleros-skills",
+      "sourceType": "github",
+      "fetch": "git",
+      "sourceCommit": "bd369515f1baa596f53eedc008973f11b9a230d8",
+      "skillPath": "kleros-curate",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/kleros/kleros-curate",
+      "computedHash": "cff2d7df96981e6999ad82a008247f01d3032427a19608961b486855d77f9afd",
+      "fetchedAt": "2026-06-25"
+    },
+    "kleros-ipfs-upload": {
+      "owner": "kleros",
+      "source": "kleros/kleros-skills",
+      "sourceType": "github",
+      "fetch": "git",
+      "sourceCommit": "bd369515f1baa596f53eedc008973f11b9a230d8",
+      "skillPath": "kleros-ipfs-upload",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/kleros/kleros-ipfs-upload",
+      "computedHash": "1f9fe26def1b0391887f76b2cd5f25103dc2c585d783ef481cdfc5250cd99059",
+      "fetchedAt": "2026-06-25"
     },
     "lifi": {
       "owner": "lifi",
@@ -268,12 +315,96 @@
       "source": "tempoxyz/mpp",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "43638c6378a45a20db7eb5a64cc359b4f02c0e57",
+      "sourceCommit": "f0c9e2964825e780f9d0f9d886b49714056008d8",
       "skillPath": "skills/mppx",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/tempo/mppx",
       "computedHash": "5bcf052becef3c1263819552701604129280054631cca9f143b9a08ec1ea9e4b",
       "fetchedAt": "2026-06-17"
+    },
+    "nansen-general-search": {
+      "owner": "nansen",
+      "source": "nansen-ai/nansen-cli",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "6875bb3d63ac3fcb4acb25c5e7955884a1e560b1",
+      "skillPath": "skills/nansen-general-search",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/nansen/nansen-general-search",
+      "computedHash": "79a30407c906cf713de0889f67d680c426997ea7a5af6eccb6914df9842633f2",
+      "fetchedAt": "2026-06-18"
+    },
+    "nansen-holder-analysis": {
+      "owner": "nansen",
+      "source": "nansen-ai/nansen-cli",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "6875bb3d63ac3fcb4acb25c5e7955884a1e560b1",
+      "skillPath": "skills/nansen-holder-analysis",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/nansen/nansen-holder-analysis",
+      "computedHash": "d2d950f7caedc651ce613b86f8622a31002d07816d893bc31d891114ec83f3bf",
+      "fetchedAt": "2026-06-18"
+    },
+    "nansen-mpp-payment": {
+      "owner": "nansen",
+      "source": "nansen-ai/nansen-cli",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "6875bb3d63ac3fcb4acb25c5e7955884a1e560b1",
+      "skillPath": "skills/nansen-mpp-payment",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/nansen/nansen-mpp-payment",
+      "computedHash": "18409e3a77ef976da626033b177f14f095dd574b168fc7fd677a59239c6be6ef",
+      "fetchedAt": "2026-06-18"
+    },
+    "nansen-prediction-markets": {
+      "owner": "nansen",
+      "source": "nansen-ai/nansen-cli",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "6875bb3d63ac3fcb4acb25c5e7955884a1e560b1",
+      "skillPath": "skills/nansen-prediction-markets",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/nansen/nansen-prediction-markets",
+      "computedHash": "c64fb26a6f6b0f02b087a5ce75efe355bbefb63e3e6453fa61c5d7dd453744c9",
+      "fetchedAt": "2026-06-18"
+    },
+    "nansen-smart-money-tracker": {
+      "owner": "nansen",
+      "source": "nansen-ai/nansen-cli",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "6875bb3d63ac3fcb4acb25c5e7955884a1e560b1",
+      "skillPath": "skills/nansen-smart-money-tracker",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/nansen/nansen-smart-money-tracker",
+      "computedHash": "5f503fa64753fad0dee1a5607e9fb159cfabcd8558c94a0d43d100bceefa1b49",
+      "fetchedAt": "2026-06-18"
+    },
+    "nansen-token-research": {
+      "owner": "nansen",
+      "source": "nansen-ai/nansen-cli",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "6875bb3d63ac3fcb4acb25c5e7955884a1e560b1",
+      "skillPath": "skills/nansen-token-research",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/nansen/nansen-token-research",
+      "computedHash": "69cf61383f8e07c05110cf547bb6358d6cc381b6d044e6f87925dc6a0b37224e",
+      "fetchedAt": "2026-06-18"
+    },
+    "nansen-wallet-profiler": {
+      "owner": "nansen",
+      "source": "nansen-ai/nansen-cli",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "6875bb3d63ac3fcb4acb25c5e7955884a1e560b1",
+      "skillPath": "skills/nansen-wallet-profiler",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/nansen/nansen-wallet-profiler",
+      "computedHash": "14b6190de82e7be0eb0ca89f1c68713beead28fb142819d02f289c5fa97b19c0",
+      "fetchedAt": "2026-06-18"
     },
     "okx-a2a-payment": {
       "owner": "okx",
@@ -292,252 +423,252 @@
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-agent-payments-protocol",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-agent-payments-protocol",
-      "computedHash": "fb2b5ae8ffc20e6de0f0676ff4051cc843d8446dd4337b1770a8dfcf900164d8",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "2a2dad2944a2832670d05acc7cb7dc5c5b4a18d9f4d9403d1f8bf4471c82fc11",
+      "fetchedAt": "2026-06-25"
     },
     "okx-agentic-wallet": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-agentic-wallet",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-agentic-wallet",
-      "computedHash": "fbbae798c71faa8376a2ee277d90b6908836b8f6a460ace1860ac5c662146436",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "14de0e965840869b0e0291cc9a3c0acf5c99593e04c32965ce20ffcc35467074",
+      "fetchedAt": "2026-06-25"
     },
     "okx-ai-support": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-ai-support",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-ai-support",
-      "computedHash": "bc1155beaeb010a1c1ef99c6eca47e7ecbd491d95f884905b90597c5e2b7814e",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "8e37a9947b10f174330c300acbcdfb36bfa9c46ba448cb5781554f6d3a3a26a3",
+      "fetchedAt": "2026-06-25"
     },
     "okx-audit-log": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-audit-log",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-audit-log",
-      "computedHash": "cac55362272113a3483f4c277b957f1790d5710eb57e3cae981d3f3b32653506",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "95757f3808a83965615e619bfea09375aeae84e2e6551130c5882a9f3a077f03",
+      "fetchedAt": "2026-06-25"
     },
     "okx-dapp-discovery": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-dapp-discovery",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-dapp-discovery",
-      "computedHash": "959a293d5aab5bb1ae703726aea3fcf1b7c5664011aff0941ad0789c0d3e1a57",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "00af25889e70d587d61edce2734412d44fb5c7fa2372e49b55f5f3bec811de92",
+      "fetchedAt": "2026-06-25"
     },
     "okx-defi-invest": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-defi-invest",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-defi-invest",
-      "computedHash": "d1e6a3b21c3b43b88190da47fd702ac85884ed795ac91538fadb7fce3932d21f",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "516f5fcf81690189c80a49d859c9fb1ec5a143179d78c5c5a096ec17ffa9084a",
+      "fetchedAt": "2026-06-25"
     },
     "okx-defi-portfolio": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-defi-portfolio",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-defi-portfolio",
-      "computedHash": "c1cbd3a7a48af3a720fba17c650bd99da00e2aed1a7bf21bd5584873afc901f4",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "30ae578c0e054cd0f1f23b3e7aea05e4436b18795fc6bd0cdd3524ee45a28c24",
+      "fetchedAt": "2026-06-25"
     },
     "okx-dex-bridge": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-dex-bridge",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-dex-bridge",
-      "computedHash": "c65947e3af406c0b58e0e63f2ebf48abc3742344beb27711f5917ba2731fa042",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "41c019d177a4b5f4530a0a9437cd20969f35da16d73e5f1ef6a337e74dba24c4",
+      "fetchedAt": "2026-06-25"
     },
     "okx-dex-market": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-dex-market",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-dex-market",
-      "computedHash": "2445ed41999910c06b6318ac8ea2705bd65572e6a4cc360eb034272dd93f44bb",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "ec195547225ac9c92250739338c1680a4c7d7ae45b395f919f223e6bf496fd4a",
+      "fetchedAt": "2026-06-25"
     },
     "okx-dex-signal": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-dex-signal",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-dex-signal",
-      "computedHash": "27624079d3e42ab7e60a83478fc374cd009aa44eb63d28be945d66cc31e5002f",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "35852095d2eb3b342ae1228adbb7ab82dab7b8ba3ab6d47d2a6421682b1bafef",
+      "fetchedAt": "2026-06-25"
     },
     "okx-dex-social": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-dex-social",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-dex-social",
-      "computedHash": "2d054e1838914eba6505328990e3540e72ad485c29d136b6216a20cd1bd36b24",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "37164a77baa00c6f30539b09ed984fd70cab4dcf3a211a457bd352c741f8c5c7",
+      "fetchedAt": "2026-06-25"
     },
     "okx-dex-strategy": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-dex-strategy",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-dex-strategy",
-      "computedHash": "836d4b60163dcf3cd22f00aea536dfdf3f4582aa582e17d903850eb78bab6f2c",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "45efe21dcbd1e03168f0b9fd601ebefd3a91c18f9b3bb003a8480b50cd4be514",
+      "fetchedAt": "2026-06-25"
     },
     "okx-dex-swap": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-dex-swap",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-dex-swap",
-      "computedHash": "009d2deb772b26dd2713ebcd0c8aa121e86e7f67166ff2cbe58ea4481625004d",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "4be814b945bb0a4fb2aaff1377dd4a65e4beec2e91da952304572a838752cca6",
+      "fetchedAt": "2026-06-25"
     },
     "okx-dex-token": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-dex-token",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-dex-token",
-      "computedHash": "f9ce61f38174ea157b22d5106f6bee1ade829813bc1494bf2fd5b34e64d9fb61",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "f1f6a7dac14df92c2552ad01232372124b7ef8bb78e593479df8f9037210b666",
+      "fetchedAt": "2026-06-25"
     },
     "okx-dex-trenches": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-dex-trenches",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-dex-trenches",
-      "computedHash": "3aa3dc34b26417a7011a086e5a26c6f8bce1d54245a7f04489e339aad60c7952",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "eff90926baabf8038ce8f1bf9c44b312ebf4c61412f7e786dc5eb5aff23112de",
+      "fetchedAt": "2026-06-25"
     },
     "okx-dex-ws": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-dex-ws",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-dex-ws",
-      "computedHash": "2e73a96124307ed9f8b288d9662277b2135751a9f5a249d0040e8fabf74b4eaf",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "cc720ca4a11c6894e327f5f412bbe4f6a63bb460b0daa61f0de0390b9385dbdc",
+      "fetchedAt": "2026-06-25"
     },
     "okx-growth-competition": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-growth-competition",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-growth-competition",
-      "computedHash": "35deaa82143174c30198cc3563f238f062d832a95eb11fba19a684976ada3ab3",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "b6cb5a22f5e04d9c3e42b4f36560f96f1d412dacec165d7d95a5b1c518bfb1d3",
+      "fetchedAt": "2026-06-25"
     },
     "okx-how-to-play": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-how-to-play",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-how-to-play",
-      "computedHash": "e195729940e5d1ceb88a80e8def879af58ae4489de95ab04ac7ca844876358e1",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "47e54fc38130fd003278ef7b70dfaeec2c18a29347d37205a40fe7dd8d001fcf",
+      "fetchedAt": "2026-06-25"
     },
     "okx-onchain-gateway": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-onchain-gateway",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-onchain-gateway",
-      "computedHash": "576a22fd667bb316a82d49842226044a77d14701bbbb73cd0e3ba327df326bf1",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "459a3a2f3619a30226a0d85eef64b18f06bd02ac078e1c6fa6d98feb851e88fa",
+      "fetchedAt": "2026-06-25"
     },
     "okx-security": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-security",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-security",
-      "computedHash": "808d0f69cf5c8a7684b47bac877e304af6515da78b59f7bbc6b25e57295546f2",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "c884bdc5ce5799636e0a9e9e9d08e77b1494e2e8847f59b8cb3fb6fe5f347dcf",
+      "fetchedAt": "2026-06-25"
     },
     "okx-wallet-portfolio": {
       "owner": "okx",
       "source": "okx/onchainos-skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "68338dbb522938313c9ffbc1ed305816fc0b2ca0",
+      "sourceCommit": "ee6d5434239d4cc2269090b7423fe1e42de507d0",
       "skillPath": "skills/okx-wallet-portfolio",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/okx/okx-wallet-portfolio",
-      "computedHash": "9a130587608f396c6041c7d536cf43488c288bddba777c251a37a1c437055566",
-      "fetchedAt": "2026-06-17"
+      "computedHash": "462419db45c32b7945c6e577509ef28f99b9e32dd75228e853082d820b23fe03",
+      "fetchedAt": "2026-06-25"
     },
     "okx-x402-payment": {
       "owner": "okx",
@@ -551,17 +682,136 @@
       "computedHash": "e937b64a3f8430605080c7b689894f6f08399b27a447cf43a1da933906fd4803",
       "fetchedAt": "2026-06-17"
     },
+    "openserv-agent-sdk": {
+      "owner": "openserv",
+      "source": "openserv-labs/skills",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "263bfa94dae8be3a5ca1135a5a0ec3b9abe9eeaa",
+      "skillPath": "skills/openserv-agent-sdk",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/openserv/openserv-agent-sdk",
+      "computedHash": "11889e6dcecacff187f6490c6638695bb546e2a3254df44bb11e0a05e29c36e1",
+      "fetchedAt": "2026-06-18"
+    },
+    "openserv-client": {
+      "owner": "openserv",
+      "source": "openserv-labs/skills",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "263bfa94dae8be3a5ca1135a5a0ec3b9abe9eeaa",
+      "skillPath": "skills/openserv-client",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/openserv/openserv-client",
+      "computedHash": "3c97cd4e38dc336b8dd1439aa78276f3d2b2fa8594476c70ee7b4f69cf731f35",
+      "fetchedAt": "2026-06-18"
+    },
+    "openserv-ideaboard-api": {
+      "owner": "openserv",
+      "source": "openserv-labs/skills",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "263bfa94dae8be3a5ca1135a5a0ec3b9abe9eeaa",
+      "skillPath": "skills/openserv-ideaboard-api",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/openserv/openserv-ideaboard-api",
+      "computedHash": "70d132a2be77d1bcc140422d851d2a868052b191b9bd62ffa68f2473b314e867",
+      "fetchedAt": "2026-06-18"
+    },
+    "openserv-launch": {
+      "owner": "openserv",
+      "source": "openserv-labs/skills",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "263bfa94dae8be3a5ca1135a5a0ec3b9abe9eeaa",
+      "skillPath": "skills/openserv-launch",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/openserv/openserv-launch",
+      "computedHash": "f02a169c208a8f4df0914b61e42d163272757a91f71dd9aee852a68ee0213732",
+      "fetchedAt": "2026-06-18"
+    },
+    "openserv-multi-agent-workflows": {
+      "owner": "openserv",
+      "source": "openserv-labs/skills",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "263bfa94dae8be3a5ca1135a5a0ec3b9abe9eeaa",
+      "skillPath": "skills/openserv-multi-agent-workflows",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/openserv/openserv-multi-agent-workflows",
+      "computedHash": "6c2489a7b1b00be42739b237340155c76dde707f16256c749262fa0c692c8a11",
+      "fetchedAt": "2026-06-18"
+    },
+    "privy": {
+      "owner": "privy",
+      "source": "https://docs.privy.io/skill.md",
+      "sourceType": "https",
+      "fetch": "curl",
+      "skillPath": "SKILL.md",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/privy/privy",
+      "computedHash": "07e05843707d8ac4eab8dec69ccb34e08093c2a953b95d8d38db1850163c5cdd",
+      "fetchedAt": "2026-06-25"
+    },
     "smart-accounts-kit": {
       "owner": "metamask",
       "source": "metamask/skills",
       "sourceType": "github",
       "fetch": "skills",
-      "sourceCommit": "58b5df4d24cbfd99568351c6f872a1530ade4216",
+      "sourceCommit": "0daac8fb48547cb8a087f152c93110897454185b",
       "skillPath": "domains/web3-tools/skills/smart-accounts-kit",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/metamask/smart-accounts-kit",
       "computedHash": "000a94e7c9e862e70a987a3924517d662f72c1a2bffa9a992f86e6d342633343",
       "fetchedAt": "2026-06-17"
+    },
+    "starknet-defi": {
+      "owner": "starknet",
+      "source": "keep-starknet-strange/starknet-agentic",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "39dc3cf6c0b5cad074107840fe444cef510c1800",
+      "skillPath": "skills/starknet-defi",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/starknet/starknet-defi",
+      "computedHash": "16e6c4a44ae92ee8fc036dc52102e4ee5c47fec1ece5b053bb39da74762a31de",
+      "fetchedAt": "2026-06-23"
+    },
+    "starknet-identity": {
+      "owner": "starknet",
+      "source": "keep-starknet-strange/starknet-agentic",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "39dc3cf6c0b5cad074107840fe444cef510c1800",
+      "skillPath": "skills/starknet-identity",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/starknet/starknet-identity",
+      "computedHash": "5df564fc5b62d00cedafdd101bc44e2edb9f376cad1c83b3b8dbbee731ec0405",
+      "fetchedAt": "2026-06-23"
+    },
+    "starknet-js": {
+      "owner": "starknet",
+      "source": "keep-starknet-strange/starknet-agentic",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "39dc3cf6c0b5cad074107840fe444cef510c1800",
+      "skillPath": "skills/starknet-js",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/starknet/starknet-js",
+      "computedHash": "f180f2766f26444b72c5fcd4bb9bf9259658278a71e89e9a7a2d5af70caa317c",
+      "fetchedAt": "2026-06-23"
+    },
+    "starknet-wallet": {
+      "owner": "starknet",
+      "source": "keep-starknet-strange/starknet-agentic",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "39dc3cf6c0b5cad074107840fe444cef510c1800",
+      "skillPath": "skills/starknet-wallet",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/starknet/starknet-wallet",
+      "computedHash": "32e315eca7023c17758cde1ced93c5642311d531018800debfd7eb5dc33252fe",
+      "fetchedAt": "2026-06-23"
     },
     "trustless-agents": {
       "owner": "chaingpt",

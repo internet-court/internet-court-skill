@@ -15,7 +15,7 @@ Alkahest is an EAS-based (Ethereum Attestation Service) escrow protocol for trus
 - **Oracle arbitration** — off-chain validation with on-chain decision submission
 - **Commit-reveal** — frontrunning protection for self-contained fulfillment data
 
-Supported chains: Base Sepolia, Sepolia, Filecoin Calibration, Ethereum mainnet.
+Supported chains: Base Sepolia, Sepolia, Ethereum mainnet.
 
 ## Roles
 
@@ -49,7 +49,7 @@ Provide a wallet via one of (in priority order):
 ### Global Flags
 
 ```
---chain <name>          base-sepolia (default) | sepolia | filecoin-calibration | ethereum
+--chain <name>          base-sepolia (default) | sepolia | ethereum
 --rpc-url <url>         Custom RPC URL (overrides chain default)
 --human                 Human-readable output (default: JSON)
 ```
@@ -172,15 +172,17 @@ alkahest --private-key 0xKEY barter create \
   --bid-type erc20 --ask-type erc20 \
   --bid-token 0xBID_TOKEN --bid-amount 1000000000000000000 \
   --ask-token 0xASK_TOKEN --ask-amount 2000000000000000000 \
-  --expiration 1735689600
+  --expiration 1735689600 \
+  --approve
 
 # Counterparty fulfills the barter
 alkahest --private-key 0xCOUNTERPARTY_KEY barter fulfill \
   --uid 0xBARTER_UID \
-  --bid-type erc20 --ask-type erc20
+  --bid-type erc20 --ask-type erc20 \
+  --approve
 ```
 
-Supported barter pairs: `erc20/erc20`, `erc20/erc721`, `erc20/erc1155`. Use `--permit` for gasless approval.
+Supported barter pairs: `erc20/erc20`, `erc20/erc721`, `erc20/erc1155`. `--permit` is only supported when fulfilling an ERC20 ask.
 
 ## Oracle Workflow: Arbitrate
 
@@ -216,7 +218,8 @@ alkahest --private-key 0xKEY commit-reveal compute-commitment \
 
 # 2. Commit (sends bond as ETH)
 alkahest --private-key 0xKEY commit-reveal commit \
-  --commitment 0xCOMMITMENT_HASH
+  --commitment 0xCOMMITMENT_HASH \
+  --bond-amount 10000000000000000
 
 # 3. Wait at least 1 block, then reveal
 alkahest --private-key 0xKEY commit-reveal reveal \
@@ -226,11 +229,7 @@ alkahest --private-key 0xKEY commit-reveal reveal \
   --ref-uid 0xESCROW_UID
 # Returns: { uid: "0xOBLIGATION_UID", ... }
 
-# 4. Reclaim bond after successful reveal
-alkahest --private-key 0xKEY commit-reveal reclaim-bond \
-  --uid 0xOBLIGATION_UID
-
-# Check bond amount and deadline
+# Check deadline and slashed bond recipient
 alkahest --private-key 0xKEY commit-reveal info
 
 # Slash an unrevealed commitment's bond
@@ -247,10 +246,6 @@ The `arbiter encode-demand` command encodes demand data for any arbiter type:
 alkahest arbiter encode-demand --type trusted-oracle \
   --oracle 0xORACLE --data 0x
 
-# IntrinsicsArbiter2 (schema check)
-alkahest arbiter encode-demand --type intrinsics2 \
-  --schema 0xSCHEMA_UID
-
 # Attestation property arbiters
 alkahest arbiter encode-demand --type recipient --recipient 0xADDRESS
 alkahest arbiter encode-demand --type attester --attester 0xADDRESS
@@ -265,7 +260,7 @@ alkahest arbiter encode-demand --type any \
   --demands '[{"arbiter":"0xARB1","demand":"0xDEM1"},{"arbiter":"0xARB2","demand":"0xDEM2"}]'
 ```
 
-Available `--type` values: `trusted-oracle`, `intrinsics2`, `all`, `any`, `recipient`, `attester`, `schema`, `uid`, `ref-uid`, `revocable`, `time-after`, `time-before`, `time-equal`, `expiration-time-after`, `expiration-time-before`, `expiration-time-equal`.
+Available `--type` values: `trusted-oracle`, `all`, `any`, `recipient`, `attester`, `schema`, `uid`, `ref-uid`, `revocable`, `time-after`, `time-before`, `time-equal`, `expiration-time-after`, `expiration-time-before`, `expiration-time-equal`.
 
 ### Decoding demands
 

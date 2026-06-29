@@ -1,0 +1,6 @@
+interface:
+  display_name: "Starknet DeFi"
+  short_description: "Starknet swaps, DCA, staking, and lending workflows with execution-risk controls."
+  default_prompt: "Execute this Starknet DeFi flow with quote validation, slippage bounds, and robust failure handling."
+policy:
+  allow_implicit_invocation: false

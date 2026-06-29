@@ -280,6 +280,7 @@ When the user replies with any wording meaning "check order {orderId}" or "what'
 | 4 | Pending GS tx blocking | CLI `scene: gs_pending_tx` |
 | 5 | Native SOL transfer | user sends native SOL (GS does not apply) |
 | 6 | History display rules | listing / detailing a GS tx in `wallet history` |
+| 8 | Tx type not supported | `wallet send` / `contract-call` bails "does not support this transaction type" (e.g. deposit / staking via a plugin) |
 
 ---
 
@@ -325,7 +326,9 @@ Users may **input** any equivalent phrasing in any language — recognize the in
 | Wants to enable Gas Station | Call `wallet gas-station enable --chain solana`. Use the confirmation and success templates above. |
 | Wants to disable Gas Station, or stop paying Gas with stablecoin | Call `wallet gas-station disable --chain solana`. Use the confirmation and success templates above. If the user only wants to change the gas-payment token, suggest `update-default-token` instead. |
 | Wants to use Jito Bundle together with stablecoin Gas | Conflicting intent (hard block). Render Edge Case 2 (Jito Bundler) from `gas-station-edge.md`. |
-| Asks why Gas Station did not kick in for this transaction (blocked-scenario inquiry) | Check: pending tx? amount over 100,000 U? Jito Bundle? native SOL transfer? Respond with the matching verbatim template. |
+| Asks which transaction types Gas Station supports (capability question) | Answer from `gas-station-faq.md` → "Which transaction types does Gas Station support?" — verbatim (transfers + swaps). |
+| Transaction blocked because its type is not supported by Gas Station (`wallet send` / `contract-call` bails "does not support this transaction type") | Render **Edge Case 8** from `gas-station-edge.md`. Bail — do NOT re-run via Gas Station. |
+| Asks why Gas Station did not kick in for this transaction (blocked-scenario inquiry) | Check: pending tx? amount over 100,000 U? Jito Bundle? native SOL transfer? unsupported tx type (deposit / staking)? Respond with the matching verbatim template. |
 | Asks for the just-broadcast tx hash (not yet returned), or why its hash is slower than other transactions | Render Edge Case 3 (and its follow-up) from `gas-station-edge.md`. |
 
 ---

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Starknet Wallet"
+  short_description: "Wallet lifecycle, balances, transfers, session keys, and gasless Starknet operations."
+  default_prompt: "Implement this Starknet wallet workflow with account-abstraction checks, transfer safety, deterministic error handling, and explicit user confirmation before any state-changing operation."
+policy:
+  allow_implicit_invocation: false

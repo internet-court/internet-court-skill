@@ -1,0 +1,6 @@
+interface:
+  display_name: "starknet.js SDK"
+  short_description: "starknet.js v9.x patterns for provider, account, contract, and transaction flows."
+  default_prompt: "Implement this Starknet integration with starknet.js v9.x using robust provider, account, and transaction handling."
+policy:
+  allow_implicit_invocation: true

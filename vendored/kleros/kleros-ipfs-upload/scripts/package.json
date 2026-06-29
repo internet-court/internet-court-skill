@@ -1,0 +1,12 @@
+{
+  "name": "kleros-ipfs-upload-script",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@coinbase/cdp-sdk": "^1.29.0",
+    "x402-fetch": "^1.2.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0"
+  }
+}

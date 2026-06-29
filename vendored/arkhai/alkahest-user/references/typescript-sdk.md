@@ -1,6 +1,6 @@
 # TypeScript SDK Reference
 
-For complex workflows that go beyond the CLI (e.g., auto-arbitration listeners, custom barter combinations, bundle escrows), use the TypeScript SDK directly.
+For complex workflows that go beyond the CLI (e.g., auto-arbitration listeners, custom token-trade combinations, bundle escrows), use the TypeScript SDK directly.
 
 ## Setup
 
@@ -47,8 +47,8 @@ const demand = {
 ### 3. Create the escrow
 
 ```typescript
-const { hash, attested } = await client.erc20.escrow.nonTierable.doObligation(
-  client.erc20.escrow.nonTierable.encodeObligationRaw({
+const { hash, attested } = await client.erc20.escrow.default.doObligation(
+  client.erc20.escrow.default.encodeObligationRaw({
     token: TOKEN_ADDRESS,
     amount: parseEther("1.0"),
     arbiter: demand.arbiter,
@@ -86,14 +86,10 @@ await client.arbiters.general.trustedOracle.arbitrate(
 );
 ```
 
-### Using direct payment (token-for-token barter)
+### Settling a token-for-token escrow
 
 ```typescript
-const { hash } = await client.erc20.barter.buyErc20ForErc20(
-  { address: BID_TOKEN, value: bidAmount },
-  { address: ASK_TOKEN, value: askAmount },
-  BigInt(Math.floor(Date.now() / 1000) + 3600),
-);
+const { hash } = await client.erc20.payment.payErc20AndCollect(escrowUid);
 ```
 
 ## Oracle Workflow: Arbitrate
@@ -128,8 +124,8 @@ const commitment = await client.commitReveal.computeCommitment(
   { payload: "0x...", salt: "0x...", schema: "0x..." },
 );
 
-// 2. Commit with bond
-await client.commitReveal.commit(commitment);
+// 2. Commit with bond and the demand's commit deadline
+await client.commitReveal.commit(commitment, bondAmount, commitDeadline);
 
 // 3. Wait at least 1 block, then reveal
 const { attested } = await client.commitReveal.doObligation(

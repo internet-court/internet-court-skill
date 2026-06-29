@@ -3,7 +3,7 @@
 Arbiters are contracts that validate whether a fulfillment satisfies an escrow's demand. Every arbiter implements:
 
 ```solidity
-function checkObligation(
+function check(
     Attestation memory obligation,
     bytes memory demand,
     bytes32 fulfilling
@@ -35,21 +35,6 @@ Validates attestation is not expired and not revoked.
 const demand = {
   arbiter: client.contractAddresses.intrinsicsArbiter,
   demand: "0x",
-};
-```
-
-### IntrinsicsArbiter2
-
-Validates intrinsics (not expired, not revoked) AND that the fulfillment's schema matches.
-
-**Demand data:** `{ schema: bytes32 }`
-
-```typescript
-const demand = {
-  arbiter: client.contractAddresses.intrinsicsArbiter2,
-  demand: client.arbiters.general.intrinsics2.encodeDemand({
-    schema: "0x...", // required schema UID
-  }),
 };
 ```
 
@@ -91,7 +76,9 @@ await client.arbiters.general.trustedOracle.arbitrateMany({
 
 Validates against an ERC-8004 ValidationRegistry.
 
-**Demand data:** `{ validationRegistry: address, validatorAddress: address, minResponse: uint8 }`
+**Demand data:** `{ validationRegistry: address, validatorAddress: address, minResponse: uint8, data: bytes }`
+
+The ERC-8004 validation request hash is `keccak256(abi.encode(fulfillmentUid, data))`.
 
 ## Attestation Property Arbiters
 

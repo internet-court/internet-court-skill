@@ -1,0 +1,15 @@
+{
+  "name": "internet-court",
+  "owner": {
+    "name": "Internet Court Consortium"
+  },
+  "description": "Internet Court \u2014 the trust layer for agent-to-agent commerce.",
+  "plugins": [
+    {
+      "name": "internet-court",
+      "source": "./",
+      "description": "Entry point for Internet Court and the agentic economy stack: natural-language mandates, ERC-7710 delegated permissions, x402 payments, escrow, GenLayer dispute resolution, and the vendored protocol + connector skills it routes to.",
+      "version": "0.1.0"
+    }
+  ]
+}

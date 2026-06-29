@@ -66,10 +66,20 @@ You can also pin a specific token as the default Gas token.
 Solana only, for now.
 ```
 
+### Q: Which transaction types does Gas Station support?
+
+```
+Gas Station currently lets you pay gas with a stablecoin for two transaction types:
+- Transfers
+- Swaps
+Other types (e.g. deposits, staking) are not supported yet and must pay gas with SOL.
+```
+
 ### Q: Which scenarios do NOT trigger Gas Station?
 
 ```
 - Native SOL transfers (Gas Station only covers SPL token transfers and contract interactions).
+- Transaction types other than transfers and swaps (e.g. deposits, staking).
 - Transactions sent via Jito Bundle.
 - A single transaction value above 100,000 U.
 - A previous Gas Station transaction is still being processed.

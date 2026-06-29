@@ -142,12 +142,12 @@ that owns it:
 
 | # | Layer | Protocols | Load |
 |---|---|---|---|
-| 1 | Discovery, identity & reputation | ERC-8004, ERC-7857 | `vendored/chaingpt/trustless-agents/SKILL.md` (ERC-8004 registries); ERC-7857 has no public skill yet |
-| 2 | Negotiation | A2A | `vendored/terminalskills/a2a-protocol/SKILL.md` (agent cards, task lifecycle) |
+| 1 | Discovery, identity & reputation | ERC-8004, ERC-7857 | `vendored/chaingpt/trustless-agents/SKILL.md` (ERC-8004 registries), `vendored/openserv/openserv-multi-agent-workflows/SKILL.md` (mints ERC-8004 agent identities), `vendored/privy/privy/SKILL.md` (embedded/server wallet identity & auth), `vendored/humanode/humanode-agentlink/SKILL.md` (human-backed agent identity), `vendored/starknet/starknet-identity/SKILL.md` (ERC-8004 on Starknet); ERC-7857 has no public skill yet |
+| 2 | Negotiation | A2A | `vendored/terminalskills/a2a-protocol/SKILL.md` (agent cards, task lifecycle), `vendored/openserv/openserv-multi-agent-workflows/SKILL.md` (multi-agent orchestration) |
 | 3 | Contracts & obligations | Arkhai/Alkahest, ERC-8183 | `vendored/arkhai/alkahest-user/SKILL.md` (conditional escrow, arbiters); ERC-8183 has no neutral public skill yet |
 | 4 | Payment & escrow | x402, MPP, AP2, ERC-7710/7715 | `vendored/coinbase/agentic-wallet/SKILL.md` + `vendored/chaingpt/x402/SKILL.md` (x402), `vendored/tempo/mppx/SKILL.md` (MPP), `vendored/okx/okx-agent-payments-protocol/SKILL.md` (unified x402/MPP/a2a-pay), `vendored/metamask/smart-accounts-kit/skill.md` (delegations), `vendored/chaingpt/agent-wallet/SKILL.md` (policy-gated wallet), `integrations/x402-erc7710/SKILL.md` (combined rail); AP2 has no public skill yet |
-| 5 | Execution | the transacting agents + compute/data/value rails | `vendored/antseed/antseed-connect/SKILL.md` + `vendored/0g/0g-compute/SKILL.md` (paid inference), `vendored/lifi/lifi/SKILL.md` (cross-chain value movement), `vendored/chainbase/web3-data/SKILL.md` (on-chain data/evidence), `vendored/bnb-chain/bnbchain-mcp/SKILL.md`, the `vendored/okx/*` and `vendored/altlayer/*` packs |
-| 6 | Verification & disputes | GenLayer | `integrations/genlayer-intelligent-contracts/SKILL.md`, `vendored/intelligent-oracle/intelligent-oracle/SKILL.md`, `integrations/genlayer-erc7710-connector/SKILL.md` |
+| 5 | Execution | the transacting agents + compute/data/value rails | `vendored/antseed/antseed-connect/SKILL.md` + `vendored/0g/0g-compute/SKILL.md` + `vendored/heurist/heurist-mesh-skill/SKILL.md` (paid/decentralized inference), `vendored/lifi/lifi/SKILL.md` (cross-chain value movement), `vendored/chainbase/web3-data/SKILL.md` + `vendored/nansen/nansen-token-research/SKILL.md` (on-chain data/evidence), `vendored/starknet/starknet-defi/SKILL.md` (Starknet L2 contracts/DeFi), `vendored/bnb-chain/bnbchain-mcp/SKILL.md`, the `vendored/okx/*` and `vendored/altlayer/*` packs |
+| 6 | Verification & disputes | GenLayer (Kleros is an alternative) | `integrations/genlayer-intelligent-contracts/SKILL.md`, `vendored/intelligent-oracle/intelligent-oracle/SKILL.md`, `integrations/genlayer-erc7710-connector/SKILL.md`. Alternative third-party arbitration (disclose; not GenLayer's own): `vendored/kleros/kleros-curate/SKILL.md` (token-curated registries / challenges) |
 
 ## Skill Routing
 
@@ -179,6 +179,13 @@ Load these only when the task needs them:
 | ChainGPT AI tools (contract gen/audit, news) + 140-tool MCP | `vendored/chaingpt/chaingpt/SKILL.md` |
 | OKX DEX/wallet/gateway/security pack | `vendored/okx/okx-dex-swap/SKILL.md`, `vendored/okx/okx-agentic-wallet/SKILL.md`, `vendored/okx/okx-onchain-gateway/SKILL.md`, `vendored/okx/okx-security/SKILL.md`, … |
 | AltLayer AltLLM portal + Cloud Claw agent VMs | `vendored/altlayer/altllm-portal-cli/SKILL.md`, `vendored/altlayer/cloud-claw/SKILL.md`, … |
+| Embedded & server (agentic) wallets, auth, policy-gated signing across chains (Privy) | `vendored/privy/privy/SKILL.md` |
+| Decentralized AI inference + Heurist Mesh crypto agents (x402 pay-per-call) | `vendored/heurist/heurist-mesh-skill/SKILL.md` |
+| On-chain intelligence/evidence: token research, wallet profiling, smart-money, holders, prediction markets (Nansen) | `vendored/nansen/nansen-token-research/SKILL.md`, `vendored/nansen/nansen-wallet-profiler/SKILL.md`, `vendored/nansen/nansen-smart-money-tracker/SKILL.md`, … |
+| Multi-agent orchestration & agent SDK; mint ERC-8004 agent identities (OpenServ) | `vendored/openserv/openserv-multi-agent-workflows/SKILL.md`, `vendored/openserv/openserv-agent-sdk/SKILL.md`, … |
+| Human-backed agent identity: sign HTTP requests, on-chain registry, partner endpoints (Humanode AgentLink) | `vendored/humanode/humanode-agentlink/SKILL.md` |
+| Build on Starknet L2 (Cairo, native AA): identity (ERC-8004), starknet.js SDK, DeFi, wallet | `vendored/starknet/starknet-identity/SKILL.md`, `vendored/starknet/starknet-js/SKILL.md`, `vendored/starknet/starknet-defi/SKILL.md`, `vendored/starknet/starknet-wallet/SKILL.md` |
+| Token-curated registries / challenges + IPFS evidence upload via Kleros (third-party arbitration — alternative to GenLayer disputes, disclose) | `vendored/kleros/kleros-curate/SKILL.md`, `vendored/kleros/kleros-ipfs-upload/SKILL.md` |
 
 The official GenLayer skill hub is `https://skills.genlayer.com/`; the
 vendored copies are pinned in `skills-lock.json`. Do not duplicate GenLayer

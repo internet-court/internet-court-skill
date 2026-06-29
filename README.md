@@ -69,19 +69,85 @@ and [`vendored/README.md`](vendored/README.md).
 
 ## Install
 
-Copy or clone this repository into your agent's skills directory. For
-Claude Code:
+Internet Court is **one catch-all skill**. Whatever harness you use, only the
+root `SKILL.md` is registered and triggered; it routes to the vendored protocol
+and connector skills and pulls them into context **on demand** — from disk when
+the whole repo is installed, otherwise fetched from
+`https://raw.githubusercontent.com/internet-court/internet-court-skill/main/<path>`.
+Installing the whole repository (not just `SKILL.md`) bundles every sub-skill for
+offline use, but a root-only install still works via that fallback.
+
+Pick your harness:
+
+### Claude Code (plugin — recommended)
 
 ```bash
-git clone https://github.com/internet-court/internet-court-skill .claude/skills/internet-court
+# in a Claude Code session:
+/plugin marketplace add internet-court/internet-court-skill
+/plugin install internet-court@internet-court
+# update later:  /plugin marketplace update internet-court
 ```
 
-Then start a session and give the agent a task — the master skill routes to
-the sub-skills — or say "Install the Internet Court skill" for the guided
-introduction. Clone the whole repository, not just `SKILL.md`: the master
-skill routes to the vendored and connector skills by repo-relative path. If
-only `SKILL.md` is loaded, it falls back to fetching siblings from
-`https://raw.githubusercontent.com/internet-court/internet-court-skill/main/<path>`.
+Or load it locally without the marketplace — `claude --plugin-dir <path-to-clone>`
+— or just clone it as a plain skill:
+
+```bash
+git clone https://github.com/internet-court/internet-court-skill ~/.claude/skills/internet-court
+```
+
+### npx skills (skills.sh)
+
+```bash
+npx skills add internet-court/internet-court-skill   # installs the root skill
+# update later:  npx skills update
+```
+
+### Codex
+
+```bash
+git clone https://github.com/internet-court/internet-court-skill ~/.agents/skills/internet-court
+# or, per-repo:  .agents/skills/internet-court   ·   or:  npx skills add internet-court/internet-court-skill
+```
+
+Codex scans recursively, so it will also surface the bundled sub-skills as
+separate skills; the root skill is the intended entry point.
+
+### opencode
+
+```bash
+git clone https://github.com/internet-court/internet-court-skill ~/.config/opencode/skills/internet-court
+```
+
+opencode also reads `~/.claude/skills/` and `~/.agents/skills/`, so a single
+clone into any of those is enough.
+
+### OpenClaw
+
+```bash
+openclaw skills install git:internet-court/internet-court-skill
+# update later:  openclaw skills update
+```
+
+OpenClaw installs the root skill; sub-skills are fetched on demand via the
+raw-URL fallback above.
+
+### Hermes
+
+```bash
+git clone https://github.com/internet-court/internet-court-skill ~/.hermes/skills/internet-court
+# or as a tap:  hermes skills tap add internet-court/internet-court-skill
+```
+
+Prefer the clone/tap over `hermes skills install <url>`, which currently fetches
+only `SKILL.md` and misses bundled reference files.
+
+---
+
+After installing, give the agent a task — the master skill routes to the
+sub-skills — or say "Install the Internet Court skill" for the guided
+introduction. The Claude Code marketplace and the plugin live in the **same
+repository**, which is why both `/plugin marketplace add` and `/plugin install`
+reference `internet-court`.
 
 Some vendored skills need their provider's credentials to act (e.g. OKX API
 keys, ChainGPT API key, Chainbase API key); each skill documents its own

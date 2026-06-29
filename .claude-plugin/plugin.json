@@ -1,0 +1,25 @@
+{
+  "name": "internet-court",
+  "description": "Entry point for Internet Court \u2014 the trust layer for agent-to-agent commerce. Use whenever an agent needs to transact with another agent or a paid service, or a user mentions agent payments, paid APIs (HTTP 402/x402), wallet custody or trust concerns, spending mandates, delegated permissions (ERC-7710/7715), escrow, agent identity or reputation (ERC-8004), negotiation between agents (A2A), agent jobs (ERC-8183), machine payments (MPP, AP2), supervision of agent behavior, revocation, verification, or dispute resolution (GenLayer) \u2014 even if they never say \"Internet Court\". Routes to the vendored protocol skills and connector skills in this package.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Internet Court Consortium",
+    "url": "https://internetcourt.org"
+  },
+  "homepage": "https://internetcourt.org",
+  "repository": "https://github.com/internet-court/internet-court-skill",
+  "keywords": [
+    "agent-payments",
+    "x402",
+    "erc-7710",
+    "erc-8004",
+    "escrow",
+    "genlayer",
+    "dispute-resolution",
+    "a2a",
+    "agentic-commerce"
+  ],
+  "skills": [
+    "./"
+  ]
+}

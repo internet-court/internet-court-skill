@@ -1,10 +1,10 @@
 ---
 name: okx-agent-payments-protocol
-description: "Unified payment dispatcher for agent-to-service payments. Covers x402 (`exact`, `exact+Permit2`, `upto`, `aggr_deferred` schemes), MPP (`charge` / `session` intents), and a2a-pay (`a2a_charge` paymentId flow). Detects HTTP 402 from response headers and routes to the matching scheme reference; also handles a2a paymentId mentions without a 402. Loads references/{exact,aggr_deferred,upto,charge,session,a2a_charge}.md. Returns a ready-to-paste authorization header (x402/MPP) or a tx-hash + status (a2a). Triggers (EN): 402, payment required, x402, x402Version, X-PAYMENT, PAYMENT-REQUIRED, PAYMENT-SIGNATURE, permit2, upto, metered billing, open/close/topup/settle channel, voucher, session payment, channelId, channel_id, paymentId, a2a_, create payment link, payment link, payment status. Triggers (中文): 按量计费、支付上限、支付通道、关闭/充值/续费/结算通道、关闭会话、结算会话、凭证、会话支付、付款链接、创建支付、支付状态. Any close/topup/settle/voucher/refund near a channel_id or session context = MPP mid-session op → load references/session.md."
+description: "Use when an agent hits HTTP 402 / payment-required, or the user mentions x402, x402Version, X-PAYMENT, PAYMENT-REQUIRED, PAYMENT-SIGNATURE, WWW-Authenticate: Payment, permit2, upto, metered billing, a payment channel / voucher / session, channelId / channel_id, opening / closing / topping up / settling / refunding a channel, a paymentId or a2a_ link, or creating / checking a payment link. Covers x402 (exact, exact+Permit2, upto, aggr_deferred), MPP (charge / session), and a2a-pay paymentId flows. Any close / topup / settle / voucher / refund near a channel_id or session is an MPP mid-session op. The full bilingual trigger list (including Chinese) lives in the skill body."
 license: MIT
 metadata:
   author: okx
-  version: "3.3.13"
+  version: "3.3.15"
   homepage: "https://web3.okx.com"
 ---
 
@@ -16,7 +16,7 @@ metadata:
 >
 > Exactly **one** confirmation card runs per payment: A3.5's recommendation card (2+ candidates and user picks `yes`) OR A4's confirmation card (single candidate, OR user picked an alternative from A3.5's expanded list). Do NOT skip the applicable card under the pretext of "past user preference" / "streamlining" / "already confirmed once" — those preferences do not exist. Do NOT render both cards back-to-back with the same info — after `yes` on A3.5.5, go straight to Step A5. The next user-visible text after detection MUST be one of the two cards.
 
-Unified entry point for three payment paths, distinguished by HTTP signature: **`accepts`-based 402** (challenge in body for v1 or `PAYMENT-REQUIRED` header for v2), **`WWW-Authenticate: Payment` 402** (channel-capable, with `intent="charge"` or `"session"`), and **a2a-pay** (paymentId-based agent-to-agent links, no 402 required). This file owns the shared steps — protocol detection, payload decode, user confirmation gate, wallet status check — then dispatches into the right scheme/intent reference.
+Three payment paths, distinguished by HTTP signature: **`accepts`-based 402** (challenge in body for v1 or `PAYMENT-REQUIRED` header for v2), **`WWW-Authenticate: Payment` 402** (channel-capable, `intent="charge"` or `"session"`), and **a2a-pay** (paymentId-based, no 402). Shared steps below (detect → decode → confirm → wallet check), then dispatch to a reference.
 
 > **User-facing terminology — IMPORTANT**
 >
@@ -35,62 +35,51 @@ Unified entry point for three payment paths, distinguished by HTTP signature: **
 
 > **Progress narration counts as user-visible — Rules 1-3 still apply.**
 >
-> Long-running flows (decode → confirm → wallet check → sign → header assembly → replay) tempt status updates. Every `"正在…"` / `"I'm now…"` line is user-facing. Step labels in this SKILL.md (`Step A3-Accepts`, `Step A3-WWW-Authenticate`) and reference files (`exact` / `aggr_deferred` schemes, `charge` / `session` intents) are internal — do NOT echo them in narration.
+> Long-running flows (decode → confirm → wallet check → sign → replay) tempt status updates. Every `"正在…"` / `"I'm now…"` line is user-facing; Step labels and reference/scheme names are internal — do NOT echo them. The anchors:
 >
 > | ❌ Don't say | ✅ Say |
 > |---|---|
-> | "正在处理 `accepts`-based 流程" / "Processing the `accepts`-based path" | "正在通过 **OKX Agent Payments Protocol** 处理本次支付" / "Processing the payment via the **OKX Agent Payments Protocol**" |
-> | "CLI 自动选择 `exact` 方案" / "CLI selected the `exact` scheme" / "走 `aggr_deferred` 路径" | "签名完成" / "Signing done" |
-> | "组装 `PAYMENT-SIGNATURE` / `X-PAYMENT` 头" / "Assembling the `PAYMENT-SIGNATURE` header" | "正在重放请求" / "Replaying the request" |
-> | "检测到 `WWW-Authenticate: Payment` / `PAYMENT-REQUIRED` 协议" / "Detected the channel-based protocol" | _(silent — go straight to the confirmation prompt)_ |
-> | "加载 `references/exact.md`" / "Loading the `exact` playbook" | _(silent — internal routing)_ |
-> | "进入 `session` 模式 / `charge` 模式" / "Entering `session` intent" | "支付通道已开" / "Channel opened" — describe the user-visible effect, not the internal mode |
-> | "TEE 路径 / 本地 key 路径" / "Using TEE signing path" | _(silent — signing path is internal)_ |
-> | "This is an HTTP 402 with two payment-protocol headers offering multiple schemes" / "Both indicators present, entering Step A3.5" | _(silent — protocol detection is internal)_ |
-> | "收到 HTTP 402,触发 OKX Agent Payments Protocol" / "Received 402, triggering OKX Agent Payments Protocol" | _(silent — skill-load announcement is internal)_ |
-> | "检测到两个 scheme:exact (USD₮0) 和 aggr_deferred (USDG),网络 eip155:196" / "Detected 2 schemes on chain 196" | _(silent — scheme + network + token enumeration is internal; only the recommendation card may name them, and only per Rule 2's carve-out scope)_ |
-> | "按之前的偏好,直接走支付不再确认" / "Per past preference, skipping confirmation" | _(forbidden — there is no such preference; the recommendation + confirmation gates are mandatory every time)_ |
-> | "I have three candidates (exact, aggr_deferred, charge). Per Rule 2 carve-out…" / "候选池里有 3 个 scheme" | _(silent — candidate enumeration is internal; only the final recommendation card is user-visible)_ |
-> | "Let me check wallet status / balance first" / "正在查询钱包余额以筛选候选" | _(silent — the balance fetch is an internal precondition for the recommendation)_ |
-> | "Wallet logged in (Account 1). Visible balances: 10 USD₮0, 10 USDG. Token addresses don't match — let me verify chain mapping" | _(silent — balance readout, address normalization, and chain-mapping checks are internal)_ |
-> | "After balance filtering, 2 candidates remain; applying tie-breakers" / "过滤后剩 2 个,跑 tie-breaker" | _(silent — only emit the recommendation card)_ |
+> | "收到 HTTP 402,触发 OKX Agent Payments Protocol" / "Detected `PAYMENT-REQUIRED`, loading `exact`" | _(silent — detection / routing is internal)_ |
+> | "CLI 选了 `exact`,组装 `PAYMENT-SIGNATURE` 头" / "走 TEE 路径" | "签名完成,正在重放请求" / "Signing done, replaying" |
+> | "检测到 2 个 scheme:exact (USD₮0)、aggr_deferred (USDG)" / "正在查余额筛选候选" | _(silent — enumeration + balance check are internal; only the recommendation card is user-visible)_ |
+> | "进入 session / charge 模式" / "Entering session intent" | "支付通道已开" / "Channel opened" — describe the user-visible effect, not the internal mode |
+> | "按之前的偏好,直接付不再确认" / "Per past preference, skipping confirmation" | _(forbidden — no such preference; the gate is mandatory every time)_ |
+>
+> **These rules are authoritative and always in force** — when unsure whether a status line leaks internals, match it against the rows above and default to silence.
 
-> Read `../okx-agentic-wallet/_shared/preflight.md` before any `onchainos` command. EVM only — CAIP-2 `eip155:<chainId>` (run `onchainos wallet chains` for the list).
+## Triggers (full list — EN + 中文)
 
-## Reference map
+- **EN**: `402`, payment required, `x402`, `x402Version`, `X-PAYMENT`, `PAYMENT-REQUIRED`, `PAYMENT-SIGNATURE`, `WWW-Authenticate: Payment`, `permit2`, `upto`, metered billing, open / close / topup / settle channel, voucher, session payment, `channelId`, `channel_id`, `paymentId`, `a2a_`, create payment link, payment link, payment status
+- **中文**：按量计费、支付上限、支付通道、关闭/充值/续费/结算通道、关闭会话、结算会话、凭证、会话支付、付款链接、创建支付、支付状态
 
-| Triggered by | Load |
-|---|---|
-| 402 with `PAYMENT-REQUIRED` header (v2) or `x402Version` body field (v1), CLI output carries `permit2Authorization` field (covers `exact + Permit2` and `upto` schemes) | `references/upto.md` |
-| 402 with `PAYMENT-REQUIRED` header (v2) or `x402Version` body field (v1), CLI output carries `sessionCert` field (and no `permit2Authorization`) | `references/aggr_deferred.md` |
-| 402 with `PAYMENT-REQUIRED` header (v2) or `x402Version` body field (v1), CLI output carries `authorization` field (no `sessionCert`, no `permit2Authorization`) | `references/exact.md` |
-| 402 with `WWW-Authenticate: Payment`, `intent="charge"` | `references/charge.md` |
-| 402 with `WWW-Authenticate: Payment`, `intent="session"` (also: any mid-session op on a `channel_id`) | `references/session.md` |
-| User mentions a paymentId / `a2a_...` link / "create payment link" | `references/a2a_charge.md` |
+Any close / topup / settle / voucher / refund near a `channel_id` or session context = MPP mid-session op → `references/session.md`.
 
-## Skill Routing
+## Pre-flight Checks
 
-| Intent | Use skill |
-|---|---|
-| Token prices / charts / wallet PnL / tracker activities | `okx-dex-market` |
-| Token search / metadata / holders / cluster analysis | `okx-dex-token` |
-| Smart money / whale / KOL signals | `okx-dex-signal` |
-| Meme / pump.fun token scanning | `okx-dex-trenches` |
-| Token swaps / trades / buy / sell | `okx-dex-swap` |
-| Authenticated wallet (balance / send / tx history) | `okx-agentic-wallet` |
-| Public address holdings | `okx-wallet-portfolio` |
-| Tx broadcasting (`feePayer=false` hash mode) | `okx-onchain-gateway` |
-| Security scanning (token / DApp / tx / signature) | `okx-security` |
+Read `../okx-agentic-wallet/_shared/preflight.md` (fallback: `_shared/preflight.md`).
 
-**Channel mid-session ops** (close / topup / settle / voucher / refund mentioned with an active `channel_id`, regardless of fresh 402) → stay here, jump straight into `references/session.md` at the matching phase. **Do NOT** search for a separate `close-channel` / `topup-channel` / `settle-channel` tool — they're all `onchainos payment session ...` subcommands.
+## Command Routing & Reference map
+
+Each 402 signal (or paymentId) → CLI command → reference. Detailed gating + decode/confirm steps are in Path A / Path B below.
+
+| Signal | Command | Reference |
+|---|---|---|
+| 402 + `PAYMENT-REQUIRED` (v2) / body `x402Version` (v1) | `payment pay --payload [--selected-index]` | **Success (v2): none** — replay the returned `authorization_header` directly (Step A6). On error / legacy v1, load `references/accepts-schemes.md` (covers `exact` / `aggr_deferred` / `upto` + Permit2; the CLI-output field tells you which scheme — `permit2Authorization` = `upto` / `exact`+Permit2, `sessionCert` = `aggr_deferred`, `authorization` = `exact`) |
+| 402 + `WWW-Authenticate: Payment`, `intent="charge"` | `payment charge --challenge` | `references/charge.md` |
+| 402 + `WWW-Authenticate: Payment`, `intent="session"` (or mid-session `channel_id`) | `payment session open/voucher/topup/close` | `references/session.md` |
+| paymentId / `a2a_…` link / create-or-check payment link | `payment a2a-pay create/pay/status` | `references/a2a_charge.md` |
+
+> **Don't load a reference on the success path.** When `onchainos payment pay` returns an `authorization_header` (x402 v2 — the normal `exact` / `aggr_deferred` / `upto` outcome), replay directly per Step A6 and skip `references/accepts-schemes.md` entirely. Load it only on a **failure / legacy** path: `Permit2 allowance insufficient` → `references/accepts-schemes.md` (one-time approve), or a legacy x402 v1 raw proof → its "Legacy: x402 v1" section. `charge` / `session` / `a2a_charge` are always loaded — those are multi-phase flows.
+
+> **Channel mid-session ops** (close / topup / settle / voucher / refund mentioned with an active `channel_id`, regardless of fresh 402) → stay here, jump straight into `references/session.md` at the matching phase. **Do NOT** search for a separate `close-channel` / `topup-channel` / `settle-channel` tool — they're all `onchainos payment session ...` subcommands.
 
 ---
 
 # Path A: HTTP 402
 
-## Step A1: Send the original request
+## Step A1: Start from the original response
 
-Make the HTTP request the user asked for. If status is **not 402**, return the body directly — no payment, no wallet check, no other tool calls.
+You already have the original HTTP response. If it is **not 402**, return the body directly. Otherwise → Step A2.
 
 ## Step A2: Detect the protocol
 
@@ -119,27 +108,23 @@ Otherwise                       → not a supported payment protocol, stop
 
 ## Step A3-Accepts: Decode
 
-**v2** — payload is in the `PAYMENT-REQUIRED` response **header** (base64-encoded JSON):
+Decode the 402 payload **yourself** for **display + recommendation only** — no CLI round-trip:
 
 ```
-headerValue = response.headers['PAYMENT-REQUIRED']
-decoded     = JSON.parse(atob(headerValue))
+raw_402 = response.headers['PAYMENT-REQUIRED']   // v2 (base64-encoded JSON)
+       or response.body                          // v1 (already plain JSON)
+
+decoded = JSON.parse(atob(raw_402))              // v2; for v1 it's already JSON: JSON.parse(response.body)
 ```
 
-**v1** — payload is in the response **body** (direct JSON, not base64):
+Extract for display:
 
 ```
-decoded = JSON.parse(response.body)
-```
-
-Extract:
-
-```
-accepts = decoded.accepts          // pass full array to the CLI later
+accepts = decoded.accepts
 option  = decoded.accepts[0]       // for display only
 ```
 
-Save `decoded` for header assembly later — you will need `decoded.x402Version` and `decoded.resource` (v2).
+**Keep `raw_402` verbatim** — Step A6 passes it straight to `onchainos payment pay --payload` (the CLI re-decodes and signs). The local decode is display-only; never re-encode or assemble anything.
 
 ## Step A3-WWW-Authenticate: Decode
 
@@ -171,83 +156,21 @@ unitType            optional — "request" | "second" | "byte" etc.
 
 **Challenge expiry** — if `expires=...` (ISO-8601) is in the past, the challenge is dead: re-send the original request to get a fresh 402 before signing. Stale challenges fail with `30001 incorrect params`.
 
-Convert `amount` from base units to human-readable using the token's decimals (typically 6 for USDC/USD₮, 18 for native).
+Convert `amount` from base units to human-readable (see `_shared/amount-display.md`).
 
 ## Step A3.5: Multi-scheme recommendation (when applicable)
 
 **Applies only when** the combined candidate pool contains **2 or more** of `{exact, aggr_deferred, charge}`. Otherwise skip straight to Step A4 with the single available candidate.
 
-> **🔇 Silence rule for A3.5 internals.** Substeps A3.5.1–A3.5.4 (candidate enumeration, wallet-status check, balance fetch, address/chain-mapping normalization, balance filtering, tie-breaker application) are **internal** — produce **no user-facing narration** during them. The only A3.5 output the user sees is (a) the login prompt in A3.5.2 *if* the wallet isn't logged in, and (b) the recommendation card / alternatives list in A3.5.5. Do **not** announce "I'm checking your balance", "Let me verify the chain mapping", "After filtering, X candidates remain", "Per Rule 2 carve-out…", or any other progress chatter between Step A3 finishing and the recommendation card appearing. Just go silent and emit the card.
->
-> **🚫 Exactly one user gate per payment, mandatory.** Per payment, the user sees exactly one confirmation surface: A3.5's recommendation card (when 2+ candidates and the user accepts with `yes`), OR A4's per-payment confirmation card (when there's only 1 candidate, OR when the user picked an alternative from A3.5's expanded list). Do not skip the applicable gate on your own initiative — no "past preference", "streamlining", or "they confirmed once before" shortcuts; those preferences do not exist. Equally, do not duplicate gates: after a `yes` on A3.5.5, do NOT also render A4 with the same info.
-
-### A3.5.1: Build the candidate pool
-
-- Each entry in `accepts[]` → one candidate. Scheme = `accepts[i].scheme` (`exact` or `aggr_deferred`).
-- A `WWW-Authenticate: Payment` 402 with `intent="charge"` → one candidate. Scheme = `charge`.
-- `WWW-Authenticate: Payment` with `intent="session"` is **never** part of this pool — it's handled by the session-vs-one-shot branch in Step A2.
-
-Each candidate carries `{scheme, chainId, tokenAddress, tokenSymbol, amount (atomic), amountHuman, isMainnet}`. Determine `isMainnet` from the chain registry (`onchainos wallet chains` lists chain metadata).
-
-### A3.5.2: Get wallet balance
-
-- If a recent wallet-balance snapshot already exists in conversation context (from an earlier `onchainos wallet balance` call this session), **reuse it** — do not re-query.
-- Otherwise, check login first via `onchainos wallet status`:
-  - **Not logged in** → ask the user to log in (the recommendation depends on knowing their balance). Don't fall back silently.
-  - **Logged in** → query balance:
-
-    ```bash
-    onchainos wallet balance
-    ```
-
-### A3.5.3: Filter by has-balance
-
-Keep only candidates where the wallet has a non-zero balance for the matching `(chainId, tokenAddress)`.
-
-**Edge case — zero candidates pass the filter**: list **all original candidates** to the user (no recommendation badge, no tie-breakers applied). User picks one; carry it to Step A4.
-
-### A3.5.4: Tie-breakers (apply in order; stop when one wins)
-
-If more than one candidate remains after A3.5.3:
-
-1. **Smallest required payment amount — same-symbol only.** Group remaining candidates by `tokenSymbol`. If they all share a single symbol, the one with the smallest `amountHuman` wins. If the remaining set spans multiple symbols, skip this rule.
-2. **Mainnet over testnet.** Drop testnet candidates if any mainnet candidate remains. Different mainnets are equal — no preference between e.g. Ethereum, Base, X Layer.
-3. **Scheme priority:** `aggr_deferred` > `exact` > `charge`.
-
-The survivor is the **recommended candidate**. The rest are **alternatives**.
-
-### A3.5.5: Display the recommendation
-
-**Carve-out scoping** — the recommendation card itself does **NOT** contain a `Scheme:` line, and the "N other methods" summary line does **NOT** preview their schemes / amounts / tokens. Scheme literals appear **only** inside the expanded alternatives list, and only when the user explicitly asks for it. Render the card with `N = number_of_alternatives`:
-
-> We recommend paying via the **OKX Agent Payments Protocol**:
->
-> - **Network**: `<chain name>` (`eip155:<chainId>`)
-> - **Token**: `<symbol>` (`<token address>`)
-> - **Amount**: `<human> (<atomic>)`
-> - **Pay to**: `<recipient>`
->
-> `<N == 0 ? "No other methods available." : "There are <N> other supported method(s) you could use instead.">` Use the recommended method? (yes / show others)
-
-**⚠️ Do NOT inline alternatives in the summary line.** Forbidden: ❌ "There are 2 other methods (exact 0.001 USD₮0, charge 0.0005 USD₮0)". Required: ✅ "There are 2 other supported methods you could use instead." Detail only appears after the user picks "show others".
-
-- **yes** (or `N == 0`) → the recommended candidate becomes the **selected candidate**; continue at Step A4.
-- **show others** → only now expand the alternatives list, each row as `<index>. scheme=<exact | aggr_deferred | charge>, network=<…>, token=<…>, amount=<…>`. User picks one by index → that becomes the selected candidate; continue at Step A4.
-
-### A3.5.6: Carry the selection forward
-
-- **`accepts`-based selection** (`exact` or `aggr_deferred` from `accepts[]`) → in Step A6, pass a single-entry accepts array (`'[selected_accept]'`) to `onchainos payment pay` so the CLI cannot deviate from the user's choice.
-- **`charge` selection** (from WWW-Authenticate) → in Step A6, take the WWW-Authenticate / `references/charge.md` path; ignore the accepts-based candidates entirely.
-
-Step A4 below now describes the **selected candidate**. Step A5's wallet-status check is already satisfied if A3.5.2 ran the login flow — skip the re-check; just continue to A6.
+When it applies → **load `references/multi-scheme.md`** and follow it end to end. It returns the **selected candidate** and tells you where to resume: Step A4 (user picked an alternative) or straight to Step A6 (user accepted with `yes` — A5's wallet check already satisfied).
 
 ## Step A4: Display payment details and STOP
 
-**🟢 Skip this step entirely if** the user accepted the recommendation in A3.5.5 with `yes`. The recommendation card already showed network / token / amount / recipient at the same fidelity A4 would — re-rendering them is pure redundancy. Go straight to Step A5 (a no-op if A3.5.2 already handled login) → A6.
+**🟢 Skip this step entirely if** the user accepted the recommendation in A3.5.5 with `yes` (the card already showed network / token / amount / recipient). Go straight to Step A5 (a no-op if A3.5.2 already handled login) → A6.
 
 **🔴 Run this step normally if** either:
-- Step A3.5 did not run at all (single-candidate path — server only offered one scheme), OR
-- The user picked an alternative from A3.5's expanded list. The alternatives list is one-line-per-row overview, so the picked candidate still needs full-detail confirmation here.
+- Step A3.5 did not run (single-candidate path), OR
+- The user picked an alternative from A3.5's expanded list (the picked candidate still needs full-detail confirmation).
 
 **⚠️ MANDATORY (when run): Display details and STOP to wait for explicit user confirmation. Do NOT call `onchainos wallet status` or any other tool until the user confirms.**
 
@@ -285,18 +208,19 @@ onchainos wallet status
 ```
 
 - **Logged in** → Step A6.
-- **Not logged in (`accepts`-based path)** → ask the user to choose between (1) wallet login (TEE signing) or (2) local private key (`onchainos payment pay-local`, `exact` scheme only). Don't read files or check env vars until the user picks.
+- **Not logged in (`accepts`-based path)** → ask the user to choose between (1) wallet login (TEE signing) or (2) local private key (`onchainos payment pay-local`, supports `exact + EIP-3009`, `exact + Permit2`, and `upto` — `aggr_deferred` not supported, requires TEE session key). Don't read files or check env vars until the user picks.
 - **Not logged in (`WWW-Authenticate: Payment` path)** → ask the user to log in via email OTP or AK. **TEE-only — no local-key fallback for this path** (only the `accepts`-based path has one).
 
 ## Step A6: Hand off to the scheme/intent reference
 
 | Path | Action |
 |---|---|
-| **`accepts`-based** (`PAYMENT-REQUIRED` header v2 / `x402Version` body v1) | Run `onchainos payment pay --accepts '<JSON.stringify(accepts_to_pass)>'`. Build `accepts_to_pass` from Step A3.5's outcome: if A3.5 ran and the user selected an accepts-based candidate, pass a **single-entry array** containing just that accept (`'[selected_accept]'`); otherwise pass the full `decoded.accepts` array. When the response comes back, branch by which field is present in the CLI output (check in this order — `upto` carries both `permit2Authorization` and `sessionCert`):<br>• `permit2Authorization` present → load **`references/upto.md`** for header assembly + replay (covers both `exact + Permit2` and `upto` scheme)<br>• `sessionCert` present (and no `permit2Authorization`) → load **`references/aggr_deferred.md`** for header assembly + replay (Ed25519 session-key path)<br>• otherwise (`authorization` present) → load **`references/exact.md`** for header assembly + replay (EIP-3009 path)<br>If the user picked the local-key fallback, run `onchainos payment pay-local` instead and load **`references/exact.md`** (only scheme this fallback supports). |
+| **`accepts`-based** (`PAYMENT-REQUIRED` header v2 / `x402Version` body v1) | Run `onchainos payment pay --payload '<raw_402 from Step A3>'`. If Step A3.5 ran and the user picked an accepts-based candidate, add `--selected-index <index in decoded.accepts>` so the CLI signs exactly that entry; omit it for a single candidate (CLI auto-selects). The CLI decodes, signs from the selected account, and returns `{authorization_header, header_name, scheme, wallet}` — **no hand-assembly**.<br>**Success (normal path)** — `authorization_header` present → go straight to Replay below; do **NOT** load any scheme reference.<br>If the user picked the local-key fallback, run `onchainos payment pay-local --payload '<raw_402>'` instead (same success rule; supports `exact + EIP-3009`, `exact + Permit2`, and `upto` — `aggr_deferred` is TEE-only).<br>**`Permit2 allowance insufficient` error** (`upto` / `exact`+permit2, first payment for that token) → load **`references/accepts-schemes.md`** for the one-time approve, then retry the pay.<br>**Legacy v1** — CLI returns a raw proof (`signature`+`authorization`, no `authorization_header`) → load **`references/accepts-schemes.md`** and follow its "Legacy: x402 v1" section to assemble the `X-PAYMENT` header. |
+
 | **`WWW-Authenticate: Payment`, `intent="charge"`** | Load **`references/charge.md`** at "Decide mode". |
 | **`WWW-Authenticate: Payment`, `intent="session"`** | Load **`references/session.md`** at "Phase S1: Open Channel" (or jump to S2 / S2b / S3 if the user is mid-session with an active `channel_id`). |
 
-After the reference returns the assembled `X-PAYMENT` / `PAYMENT-SIGNATURE` header or `authorization_header`, replay the original request and surface the response to the user. Suggest follow-ups conversationally — never expose internal field names or skill IDs.
+**Replay (success path — no reference needed):** resend the original request with the returned header (`<header_name>: <authorization_header>`, or the `X-PAYMENT` you assembled for legacy v1), expect `HTTP 200`, and decode any `PAYMENT-RESPONSE` header locally (`echo '<value>' | base64 -d | jq .`) to read `status` / `transaction` / `amount` / `payer`. Surface the settlement details to the user; suggest follow-ups conversationally — never expose internal field names or skill IDs.
 
 ---
 
@@ -323,7 +247,7 @@ Both `create` and `pay` require a live wallet session. Run `onchainos wallet sta
 
 ## Step B3: Hand off to `references/a2a_charge.md`
 
-The reference contains the full create/pay/status flow including the auto-poll-to-terminal logic and trust-delegation note. Buyer-side trust is delegated to the upstream caller — the buyer signs whatever the on-server challenge declares. Cross-checking the paymentId against the agreed terms is the upstream's responsibility, NOT this dispatcher's.
+The reference has the full create/pay/status flow (incl. auto-poll and the trust-delegation note). Buyer-side trust is delegated upstream — the buyer signs whatever the on-server challenge declares.
 
 ---
 
@@ -347,16 +271,7 @@ Format:
 
 ## Amount display
 
-All user-facing amounts in BOTH human and atomic form: `<human> (<atomic>)`, e.g. `0.0004 USDC (400)`, `1.5 ETH (1500000000000000000)`. Compute via `amount / 10^decimals` from the challenge `currency` token.
-
-| Token | Decimals | 1 unit in minimal | Example |
-|---|---|---|---|
-| USDC | 6 | `1000000` | `1000000` → 1.00 USDC |
-| USDT | 6 | `1000000` | `2500000` → 2.50 USDT |
-| USDG | 6 | `1000000` | `500000`  → 0.50 USDG |
-| ETH | 18 | `1000000000000000000` | `10000000000000000` → 0.01 ETH |
-
-For any symbol not in the table: never assume — query `okx-dex-token` for the token's decimals first. If you cannot resolve them, render `<minimal> <symbol>` and append `unknown decimals — please double-check the seller-provided amount`. Do not block the flow.
+All user-facing amounts in BOTH human and atomic form: `<human> (<atomic>)`, e.g. `0.0004 USDC (400)`. Decimals table + unknown-symbol fallback → `_shared/amount-display.md`.
 
 ## Suggest next steps
 

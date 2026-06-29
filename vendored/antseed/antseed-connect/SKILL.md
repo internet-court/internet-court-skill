@@ -36,10 +36,10 @@ OpenAI/Anthropic-compatible endpoint** — point a `base_url` at it and you are 
   a display name, and a list of services. List with `antseed network browse`.
 - **Service** — a single model id like `claude-sonnet-4-6` or `deepseek-v4-flash`.
   *This is what you pass as `model` in your tool's config.* Each service has its
-  own `protocols` array and its own `in` / `cachedIn` / `out` pricing.
+  own native protocol list and its own `in` / `cachedIn` / `out` pricing.
 - **Protocols** (per service) — the wire formats a service accepts *natively*,
-  advertised on each peer in `providerServiceApiProtocols` (and surfaced per service
-  in `matchingServices[].protocols`). Values are `anthropic-messages`,
+  advertised on each peer in `providerServiceApiProtocols[provider].services[service]`.
+  Values are `anthropic-messages`,
   `openai-chat-completions`, `openai-responses`, `openai-completions`. **This is
   the field to match your tool's wire format against.** If your tool's wire format
   is in this list, the request passes through untouched; if not, the api-adapter
@@ -108,18 +108,30 @@ antseed network browse --json --top 5 \
       ]
     })'
 
-# 5. Inspect one peer in detail. The shape of `matchingServices[]` is the same
-#    as the per-service rows above, with `tags` (capability hints) included.
+# 5. Inspect one peer in detail. Use `matchingServices[]` for pricing/tags and
+#    `peer.providerServiceApiProtocols` for native protocol support.
 #    `cachedIn` is typically 4–10× cheaper than `in` and often dominates the
 #    cost line for long-running agents and chatbots — always include it when
 #    comparing peers.
 antseed network peer <peerId> --json \
-  | jq '.matchingServices[] | {
-      service, protocols,
-      in:       .inputUsdPerMillion,
-      cachedIn: .cachedInputUsdPerMillion,
-      out:      .outputUsdPerMillion,
-      tags
+  | jq '{
+      peer: (.peer | { peerId, name: .displayName,
+                       sessions: .onChainChannelCount,
+                       ghosts:   .onChainGhostCount }),
+      services: [
+        (.peer.providerServiceApiProtocols | to_entries[]) as $p
+        | ($p.value.services | to_entries[]) as $s
+        | (.matchingServices[] | select(.provider == $p.key and .service == $s.key)) as $m
+        | {
+            provider: $p.key,
+            service: $s.key,
+            protocols: $s.value,
+            in:       $m.inputUsdPerMillion,
+            cachedIn: $m.cachedInputUsdPerMillion,
+            out:      $m.outputUsdPerMillion,
+            tags:     $m.tags
+          }
+      ]
     }'
 
 # 6. Pin a peer (session-wide). Until you do, every request returns
@@ -339,7 +351,7 @@ _Manual equivalent if you want to run `claude` directly instead of through `ants
 
 - **Wire format sent by Claude Code:** Anthropic Messages (hits `/v1/messages` on the buyer proxy).
 - **Best-fit services:** any service whose `protocols` array contains `anthropic-messages` — that is what the peer advertises as natively-supported, so traffic passes through with zero translation overhead.
-- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `matchingServices[].protocols` for each model. The browse command shows the same data per peer in `providerServiceApiProtocols`.
+- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `peer.providerServiceApiProtocols[provider].services[service]` for each model. The browse command exposes the same field per peer.
 - **When protocols differ:** AntSeed's `@antseed/api-adapter` translates between Anthropic Messages and the service's native protocol on the fly. So a request from Claude Code can still reach a service that only advertises a different protocol — just with a small transform step.
 - **Caveat:** services whose only advertised protocol is `openai-responses` require streaming. If Claude Code sends a non-streaming request and the proxy routes it to one of those services, the call fails with `HTTP 400: Stream must be set to true`. Pick a service whose `protocols` includes `anthropic-messages` (or another non-responses protocol) to avoid this.
 
@@ -453,7 +465,7 @@ Pass the peer service id to `antseed codex --model <service-id>`. For a manual p
 
 - **Wire format sent by OpenAI Codex CLI:** OpenAI Chat Completions (hits `/v1/chat/completions` on the buyer proxy).
 - **Best-fit services:** any service whose `protocols` array contains `openai-chat-completions` — that is what the peer advertises as natively-supported, so traffic passes through with zero translation overhead.
-- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `matchingServices[].protocols` for each model. The browse command shows the same data per peer in `providerServiceApiProtocols`.
+- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `peer.providerServiceApiProtocols[provider].services[service]` for each model. The browse command exposes the same field per peer.
 - **When protocols differ:** AntSeed's `@antseed/api-adapter` translates between OpenAI Chat Completions and the service's native protocol on the fly. So a request from OpenAI Codex CLI can still reach a service that only advertises a different protocol — just with a small transform step.
 - **Caveat:** services whose only advertised protocol is `openai-responses` require streaming. If OpenAI Codex CLI sends a non-streaming request and the proxy routes it to one of those services, the call fails with `HTTP 400: Stream must be set to true`. Pick a service whose `protocols` includes `openai-chat-completions` (or another non-responses protocol) to avoid this.
 
@@ -559,7 +571,7 @@ _Manual equivalent if you want OpenCode to keep AntSeed in its normal project or
 
 - **Wire format sent by OpenCode:** OpenAI Chat Completions (hits `/v1/chat/completions` on the buyer proxy).
 - **Best-fit services:** any service whose `protocols` array contains `openai-chat-completions` — that is what the peer advertises as natively-supported, so traffic passes through with zero translation overhead.
-- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `matchingServices[].protocols` for each model. The browse command shows the same data per peer in `providerServiceApiProtocols`.
+- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `peer.providerServiceApiProtocols[provider].services[service]` for each model. The browse command exposes the same field per peer.
 - **When protocols differ:** AntSeed's `@antseed/api-adapter` translates between OpenAI Chat Completions and the service's native protocol on the fly. So a request from OpenCode can still reach a service that only advertises a different protocol — just with a small transform step.
 - **Caveat:** services whose only advertised protocol is `openai-responses` require streaming. If OpenCode sends a non-streaming request and the proxy routes it to one of those services, the call fails with `HTTP 400: Stream must be set to true`. Pick a service whose `protocols` includes `openai-chat-completions` (or another non-responses protocol) to avoid this.
 
@@ -650,7 +662,7 @@ The extension auto-discovers from `GET /v1/models` after Pi loads, so anything y
 
 - **Wire format sent by Pi:** OpenAI Responses (hits `/v1/responses` on the buyer proxy).
 - **Best-fit services:** any service whose `protocols` array contains `openai-responses` — that is what the peer advertises as natively-supported, so traffic passes through with zero translation overhead.
-- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `matchingServices[].protocols` for each model. The browse command shows the same data per peer in `providerServiceApiProtocols`.
+- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `peer.providerServiceApiProtocols[provider].services[service]` for each model. The browse command exposes the same field per peer.
 - **When protocols differ:** AntSeed's `@antseed/api-adapter` translates between OpenAI Responses and the service's native protocol on the fly. So a request from Pi can still reach a service that only advertises a different protocol — just with a small transform step.
 
 **Links**
@@ -764,7 +776,7 @@ Each `id` under `models[]` must match a service id from `curl http://127.0.0.1:8
 
 - **Wire format sent by OpenClaw:** Anthropic Messages (hits `/v1/messages` on the buyer proxy).
 - **Best-fit services:** any service whose `protocols` array contains `anthropic-messages` — that is what the peer advertises as natively-supported, so traffic passes through with zero translation overhead.
-- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `matchingServices[].protocols` for each model. The browse command shows the same data per peer in `providerServiceApiProtocols`.
+- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `peer.providerServiceApiProtocols[provider].services[service]` for each model. The browse command exposes the same field per peer.
 - **When protocols differ:** AntSeed's `@antseed/api-adapter` translates between Anthropic Messages and the service's native protocol on the fly. So a request from OpenClaw can still reach a service that only advertises a different protocol — just with a small transform step.
 - **Caveat:** services whose only advertised protocol is `openai-responses` require streaming. If OpenClaw sends a non-streaming request and the proxy routes it to one of those services, the call fails with `HTTP 400: Stream must be set to true`. Pick a service whose `protocols` includes `anthropic-messages` (or another non-responses protocol) to avoid this.
 
@@ -872,7 +884,7 @@ Only ids listed under `models:` show up in Hermes' picker — mirror it against 
 
 - **Wire format sent by Hermes:** OpenAI Chat Completions (hits `/v1/chat/completions` on the buyer proxy).
 - **Best-fit services:** any service whose `protocols` array contains `openai-chat-completions` — that is what the peer advertises as natively-supported, so traffic passes through with zero translation overhead.
-- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `matchingServices[].protocols` for each model. The browse command shows the same data per peer in `providerServiceApiProtocols`.
+- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `peer.providerServiceApiProtocols[provider].services[service]` for each model. The browse command exposes the same field per peer.
 - **When protocols differ:** AntSeed's `@antseed/api-adapter` translates between OpenAI Chat Completions and the service's native protocol on the fly. So a request from Hermes can still reach a service that only advertises a different protocol — just with a small transform step.
 - **Caveat:** services whose only advertised protocol is `openai-responses` require streaming. If Hermes sends a non-streaming request and the proxy routes it to one of those services, the call fails with `HTTP 400: Stream must be set to true`. Pick a service whose `protocols` includes `openai-chat-completions` (or another non-responses protocol) to avoid this.
 
@@ -1002,7 +1014,7 @@ Each provider JSON file pins exactly one `model`. Studio enumerates these into t
 
 - **Wire format sent by GenLayer Studio:** OpenAI Chat Completions (hits `/v1/chat/completions` on the buyer proxy).
 - **Best-fit services:** any service whose `protocols` array contains `openai-chat-completions` — that is what the peer advertises as natively-supported, so traffic passes through with zero translation overhead.
-- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `matchingServices[].protocols` for each model. The browse command shows the same data per peer in `providerServiceApiProtocols`.
+- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `peer.providerServiceApiProtocols[provider].services[service]` for each model. The browse command exposes the same field per peer.
 - **When protocols differ:** AntSeed's `@antseed/api-adapter` translates between OpenAI Chat Completions and the service's native protocol on the fly. So a request from GenLayer Studio can still reach a service that only advertises a different protocol — just with a small transform step.
 - **Caveat:** services whose only advertised protocol is `openai-responses` require streaming. If GenLayer Studio sends a non-streaming request and the proxy routes it to one of those services, the call fails with `HTTP 400: Stream must be set to true`. Pick a service whose `protocols` includes `openai-chat-completions` (or another non-responses protocol) to avoid this.
 
@@ -1134,7 +1146,7 @@ The string you pass to `antseed('<id>')` is forwarded verbatim as `model` in the
 
 - **Wire format sent by Vercel AI SDK:** OpenAI Chat Completions (hits `/v1/chat/completions` on the buyer proxy).
 - **Best-fit services:** any service whose `protocols` array contains `openai-chat-completions` — that is what the peer advertises as natively-supported, so traffic passes through with zero translation overhead.
-- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `matchingServices[].protocols` for each model. The browse command shows the same data per peer in `providerServiceApiProtocols`.
+- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `peer.providerServiceApiProtocols[provider].services[service]` for each model. The browse command exposes the same field per peer.
 - **When protocols differ:** AntSeed's `@antseed/api-adapter` translates between OpenAI Chat Completions and the service's native protocol on the fly. So a request from Vercel AI SDK can still reach a service that only advertises a different protocol — just with a small transform step.
 - **Caveat:** services whose only advertised protocol is `openai-responses` require streaming. If Vercel AI SDK sends a non-streaming request and the proxy routes it to one of those services, the call fails with `HTTP 400: Stream must be set to true`. Pick a service whose `protocols` includes `openai-chat-completions` (or another non-responses protocol) to avoid this.
 
@@ -1272,7 +1284,7 @@ Pick services whose `protocols` array includes `openai-chat-completions` (most d
 
 - **Wire format sent by LangChain (Python):** OpenAI Chat Completions (hits `/v1/chat/completions` on the buyer proxy).
 - **Best-fit services:** any service whose `protocols` array contains `openai-chat-completions` — that is what the peer advertises as natively-supported, so traffic passes through with zero translation overhead.
-- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `matchingServices[].protocols` for each model. The browse command shows the same data per peer in `providerServiceApiProtocols`.
+- **How to check a peer:** run `antseed network peer <peerId> --json` and look at `peer.providerServiceApiProtocols[provider].services[service]` for each model. The browse command exposes the same field per peer.
 - **When protocols differ:** AntSeed's `@antseed/api-adapter` translates between OpenAI Chat Completions and the service's native protocol on the fly. So a request from LangChain (Python) can still reach a service that only advertises a different protocol — just with a small transform step.
 - **Caveat:** services whose only advertised protocol is `openai-responses` require streaming. If LangChain (Python) sends a non-streaming request and the proxy routes it to one of those services, the call fails with `HTTP 400: Stream must be set to true`. Pick a service whose `protocols` includes `openai-chat-completions` (or another non-responses protocol) to avoid this.
 
@@ -1324,7 +1336,7 @@ curl http://localhost:8377/v1/chat/completions \
 
 **How curl / raw HTTP talks to AntSeed**
 
-curl / raw HTTP can send any of AntSeed's supported wire formats. Match the request format against each service's `protocols` array (advertised per service in `providerServiceApiProtocols` / `matchingServices[].protocols`) — when it matches, the request passes through untouched; when it does not, `@antseed/api-adapter` translates on the fly.
+curl / raw HTTP can send any of AntSeed's supported wire formats. Match the request format against each service's `protocols` array (advertised per service in `providerServiceApiProtocols`) — when it matches, the request passes through untouched; when it does not, `@antseed/api-adapter` translates on the fly.
 
 | Endpoint | Wire format | Native fit (services advertising) |
 |----------|-------------|------------------------------------|

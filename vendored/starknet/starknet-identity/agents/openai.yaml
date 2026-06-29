@@ -1,0 +1,6 @@
+interface:
+  display_name: "Starknet Identity (ERC-8004)"
+  short_description: "ERC-8004 identity, reputation, and validation workflows on Starknet."
+  default_prompt: "Implement this ERC-8004 identity/reputation workflow on Starknet with explicit auth and data-model checks."
+policy:
+  allow_implicit_invocation: false

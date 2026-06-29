@@ -52,20 +52,7 @@ Output is the same shape as transaction mode, but `mode: "hash"`. Save `authoriz
 
 ## Replay
 
-```
-<original method> <original url>
-Authorization: <authorization_header>
-```
-
-Expected: `HTTP 200` with the requested content + a `Payment-Receipt` header (base64-encoded JSON). Decode with:
-
-```bash
-echo '<header value>' | base64 -d | jq .
-```
-
-关键字段：`status` / `transaction`（on-chain tx hash）/ `chainId`。Charge complete.
-
-If a fresh `HTTP 402` returns (stale challenge), re-run the original request to fetch a new `WWW-Authenticate`, then sign again from the top.
+Send `Authorization: <authorization_header>` to the original URL — the value already includes the `Payment ` prefix, do **NOT** add another (`Payment Payment …` is rejected). Expect `HTTP 200` + a `Payment-Receipt` header; decode it locally (`echo '<value>' | base64 -d | jq .`). 关键字段：`status` / `transaction`（on-chain tx hash）/ `chainId`。Charge complete. If a fresh `HTTP 402` returns (stale challenge), re-run the original request to fetch a new `WWW-Authenticate`, then sign again from the top.
 
 ## CLI Reference
 
@@ -80,19 +67,7 @@ If a fresh `HTTP 402` returns (stale challenge), re-run the original request to 
 
 ## Reading seller errors
 
-When the seller rejects, do NOT show raw JSON or just the numeric code. Extract the human-readable explanation in priority order, use the first non-empty match:
-
-1. `body.reason` (mppx, OKX TS Session)
-2. `body.detail` (RFC 9457 ProblemDetails)
-3. `body.message`
-4. `body.msg` (OKX SA API)
-5. `body.error`
-6. `body.title` (RFC 9457 short title — fallback only)
-7. fallthrough — format the whole body and add the HTTP status
-
-Format:
-
-> ❌ Seller rejected: `<reason text>` (code `<code if present>`, HTTP `<status>`)
+Use **`../SKILL.md` → "Reading seller errors"** (priority order + `❌ Seller rejected: <reason> (code <code>, HTTP <status>)` format).
 
 ## Edge cases
 

@@ -141,6 +141,27 @@ When listing or detailing a Gas Station transaction in `wallet history`:
 - **Network fee** — display the actual token used by Gas Station (e.g., `0.8 USDC`), not SOL.
 - **From address** — display the user's address, not the Relayer's.
 
+### Edge Case 8 — Transaction type not supported by Gas Station
+
+**Trigger**: `wallet send` / `wallet contract-call` bails with a message containing "Gas Station does not support this transaction type" (deposit / staking, etc. — usually via a plugin subprocess that fails on the non-zero exit).
+
+This means the transaction type is not eligible for stablecoin gas — only transfers and swaps are. The network fee must be paid in native SOL. Do NOT retry via Gas Station. The status does NOT itself imply the user's SOL balance is insufficient — only state that as a separate, conditional hint.
+
+<edge-not-supported-copy>
+**User-facing template** (render per `<output-discipline>`; substitute the one slot):
+
+```
+This transaction type isn't eligible for Gas Station — the network fee must be paid in native SOL.
+
+Gas Station currently supports only transfers and swaps. Other types such as deposits and staking can't pay gas with a stablecoin yet — they must be paid with SOL.
+
+If your SOL balance isn't enough to cover the network fee, top up first, then retry:
+  Top-up address: {fromAddr}
+```
+
+Slot fills: `{fromAddr}` = the user's Solana address — read it from the address printed in the bail message ("Top up SOL at: ..."), or use the user's known Solana address. Do NOT assert the SOL balance is insufficient; the top-up line is conditional ("if ... isn't enough").
+</edge-not-supported-copy>
+
 ---
 
 ## Failure & Backend-Bug Handling

@@ -26,6 +26,13 @@ where `<owner>` is the publishing company or protocol.
 | Tempo (`tempo/`) | `mppx/` — MPP machine payments over HTTP 402 (charges, sessions, streaming) | [tempoxyz/mpp](https://github.com/tempoxyz/mpp) |
 | AntSeed (`antseed/`) | `antseed-connect/` — P2P AI inference with USDC payment channels | [antseed.com/skill.md](https://antseed.com/skill.md) |
 | TerminalSkills (`terminalskills/`, community) | `a2a-protocol/` — A2A agent cards, task lifecycle (no official a2aproject skill exists) | [TerminalSkills/skills](https://github.com/TerminalSkills/skills) |
+| Heurist (`heurist/`) | `heurist-mesh-skill/` — decentralized AI inference + Heurist Mesh crypto agents, x402 facilitator | [heurist-network/heurist-mesh-skill](https://github.com/heurist-network/heurist-mesh-skill) |
+| Privy (`privy/`) | `privy/` — embedded + server/agentic wallets, auth, policy-gated signing (refetch the canonical URL before schema-sensitive work) | [docs.privy.io/skill.md](https://docs.privy.io/skill.md) |
+| Nansen (`nansen/`) | 7 `nansen-*` skills — token research, wallet profiler, smart-money, holders, general search, prediction markets, MPP payment (evidence/payment subset of 34) | [nansen-ai/nansen-cli](https://github.com/nansen-ai/nansen-cli) |
+| OpenServ (`openserv/`) | `openserv-{agent-sdk,client,multi-agent-workflows,launch,ideaboard-api}/` — multi-agent orchestration; mints ERC-8004 identities | [openserv-labs/skills](https://github.com/openserv-labs/skills) |
+| Humanode (`humanode/`) | `humanode-agentlink/` — human-backed on-chain agent identity (sign HTTP, on-chain registry, partner endpoints). Note: ships under personal `@techdigger` namespace | [agentlink.id/skill.md](https://agentlink.id/skill.md) |
+| Starknet (`starknet/`) | `starknet-{identity,js,defi,wallet}/` — StarkWare ZK-rollup L2 (Cairo, native AA); subset of 18-skill repo | [keep-starknet-strange/starknet-agentic](https://github.com/keep-starknet-strange/starknet-agentic) (StarkWare Exploration) |
+| Kleros (`kleros/`) | `kleros-curate/`, `kleros-ipfs-upload/` — decentralized arbitration: token-curated registries + x402 IPFS evidence upload. ⚠️ Layer-6 dispute *alternative* to GenLayer (disclose) | [kleros/kleros-skills](https://github.com/kleros/kleros-skills) (branch `master`) |
 
 Notes:
 
