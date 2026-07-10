@@ -33,6 +33,7 @@ where `<owner>` is the publishing company or protocol.
 | Humanode (`humanode/`) | `humanode-agentlink/` — human-backed on-chain agent identity (sign HTTP, on-chain registry, partner endpoints). Note: ships under personal `@techdigger` namespace | [agentlink.id/skill.md](https://agentlink.id/skill.md) |
 | Starknet (`starknet/`) | `starknet-{identity,js,defi,wallet}/` — StarkWare ZK-rollup L2 (Cairo, native AA); subset of 18-skill repo | [keep-starknet-strange/starknet-agentic](https://github.com/keep-starknet-strange/starknet-agentic) (StarkWare Exploration) |
 | Kleros (`kleros/`) | `kleros-curate/`, `kleros-ipfs-upload/` — decentralized arbitration: token-curated registries + x402 IPFS evidence upload. ⚠️ Layer-6 dispute *alternative* to GenLayer (disclose) | [kleros/kleros-skills](https://github.com/kleros/kleros-skills) (branch `master`) |
+| Tersign (`tersign/`) | `tersign-evidence/` — neutral counter-signed evidence: no-trust receipt verification, jury-ready evidence envelopes (Internet Court / Kleros ERC-1497 / UMA), EU AI Act Art-50 action records | [tersignhq/skills](https://github.com/tersignhq/skills) |
 
 Notes:
 
