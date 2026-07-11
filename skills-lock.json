@@ -981,7 +981,7 @@
       "skillPath": "tersign-evidence",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/tersign/tersign-evidence",
-      "computedHash": "07cd19d659a46734206d41a8600e615d2ca31d693210ad93b19813c28174180d",
+      "computedHash": "d10a4ec9203d360a07fffb4f9e98108ee3ff03d44e25707478d008077adcba98",
       "fetchedAt": "2026-07-10",
       "license": "MIT",
       "licenseFile": "LICENSE",

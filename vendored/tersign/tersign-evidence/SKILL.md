@@ -13,7 +13,7 @@ and chain position exist **before any dispute arises**, a Tersign record is an
 exhibit, not testimony: any court, jury, auditor, or counterparty can verify it
 without trusting the parties or Tersign itself.
 
-Base URL (hosted ledger): `https://tersign-ledger.kevinn-zhang.workers.dev`
+Base URL (hosted ledger): `https://tersign.ai`
 
 ## Trust model — read this first
 
@@ -38,10 +38,10 @@ GET /v1/receipts/{digest}/verify
 
 `chainOk: true` = the ledger recomputed `linkDigest = keccak256(canonical({artifactDigest, prevDigest, seq}))`
 and the counter-signature recovers to `ledgerSigner`. To verify fully offline,
-recompute both yourself — the `tersign` npm package ships `tersign-verify`:
+recompute both yourself — the `tersign` npm package ships a verify command:
 
 ```sh
-npx tersign-verify <receipt.json | 0xdigest> --ledger https://tersign-ledger.kevinn-zhang.workers.dev
+npx tersign verify <receipt.json | 0xdigest> --ledger https://tersign.ai
 ```
 
 ## Get dispute-ready evidence (the envelope)
@@ -76,7 +76,7 @@ import { Assure, attachToExtensions } from 'tersign';
 // issue an x402 offer-receipt + compliance record, counter-signed into your chain
 ```
 
-Or run the MCP server for any agent framework: `npx tersign-mcp`
+Or run the MCP server for any agent framework: `npx tersign`
 (env: `TERSIGN_SELLER_KEY`, `TERSIGN_LEDGER_URL`, `TERSIGN_LEDGER_API_KEY`,
 `TERSIGN_LEDGER_SELLER_ID`). Tools cover issue / verify / refund / dispute.
 
