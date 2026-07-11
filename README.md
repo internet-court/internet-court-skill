@@ -36,7 +36,7 @@ behind one skill instead of a stack the agent has to wire up itself.
 | 3 | Contracts & obligations | ERC-7710, ERC-8183, Arkhai | [`arkhai/`](vendored/arkhai/) (Alkahest escrow, natural-language agreements, git escrow), [`metamask/smart-accounts-kit/`](vendored/metamask/smart-accounts-kit/) (ERC-7710 delegations); connector [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/); ERC-8183 has no public skill yet |
 | 4 | Payment & escrow | x402, MPP, APP | [`coinbase/agentic-wallet/`](vendored/coinbase/agentic-wallet/), [`chaingpt/x402/`](vendored/chaingpt/x402/) + [`agent-wallet/`](vendored/chaingpt/agent-wallet/), [`okx/okx-agent-payments-protocol/`](vendored/okx/okx-agent-payments-protocol/), [`tempo/mppx/`](vendored/tempo/mppx/), [`nansen/nansen-mpp-payment/`](vendored/nansen/nansen-mpp-payment/), [`privy/`](vendored/privy/); connector [`integrations/x402-erc7710/`](integrations/x402-erc7710/) |
 | 5 | Execution | compute, data & value rails | [`0g/0g-compute/`](vendored/0g/0g-compute/), [`antseed/antseed-connect/`](vendored/antseed/antseed-connect/), [`lifi/`](vendored/lifi/), [`chainbase/web3-data/`](vendored/chainbase/web3-data/), [`heurist/`](vendored/heurist/), [`near/`](vendored/near/), [`starknet/`](vendored/starknet/), [`nansen/`](vendored/nansen/), OKX + AltLayer + BNB Chain packs |
-| 6 | Verification & disputes | GenLayer, Kleros, UMA | GenLayer dev skills + [`intelligent-oracle/`](vendored/intelligent-oracle/), [`kleros/`](vendored/kleros/) (curate, IPFS); connectors [`integrations/genlayer-intelligent-contracts/`](integrations/genlayer-intelligent-contracts/), [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/); UMA has no public skill yet |
+| 6 | Verification & disputes | GenLayer, Kleros, UMA | GenLayer dev skills + [`intelligent-oracle/`](vendored/intelligent-oracle/), [`kleros/`](vendored/kleros/) (curate, IPFS); connectors [`integrations/genlayer-intelligent-contracts/`](integrations/genlayer-intelligent-contracts/), [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/); UMA has no public skill yet; evidence input: [`tersign/`](vendored/tersign/) (counter-signed evidence envelopes for any venue) |
 
 The verification & disputes layer is the one Internet Court exists to add.
 Agents agree in advance who judges a dispute if one arises — GenLayer, Kleros,
@@ -103,6 +103,7 @@ Two kinds of content:
 | Intelligent Oracle | `intelligent-oracle` (web-evidence prediction markets) | [intelligentoracle.com/skill.md](https://www.intelligentoracle.com/skill.md) |
 | Tempo | `mppx` (Merchant Payment Protocol) | [tempoxyz/mpp](https://github.com/tempoxyz/mpp) |
 | TerminalSkills | `a2a-protocol` (community — no official A2A skill exists) | [TerminalSkills/skills](https://github.com/TerminalSkills/skills) |
+| Tersign | `tersign-evidence` (counter-signed receipt verification, dispute-ready evidence envelopes for Internet Court / Kleros ERC-1497 / UMA, Art-50 action records) | [tersignhq/skills](https://github.com/tersignhq/skills) |
 
 Pinned hashes and refresh commands per skill: [`skills-lock.json`](skills-lock.json)
 and [`vendored/README.md`](vendored/README.md).

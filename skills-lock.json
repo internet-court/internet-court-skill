@@ -972,6 +972,21 @@
       "licenseFile": "LICENSE",
       "licenseHolder": "Copyright (c) 2026 Keep Starknet Strange"
     },
+    "tersign-evidence": {
+      "owner": "tersign",
+      "source": "tersignhq/skills",
+      "sourceType": "github",
+      "fetch": "git",
+      "sourceCommit": "8120210206b34781994ed67352e11e7650701ad3",
+      "skillPath": "tersign-evidence",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/tersign/tersign-evidence",
+      "computedHash": "d10a4ec9203d360a07fffb4f9e98108ee3ff03d44e25707478d008077adcba98",
+      "fetchedAt": "2026-07-10",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseHolder": "Copyright (c) 2026 Tersign"
+    },
     "trustless-agents": {
       "owner": "chaingpt",
       "source": "ChainGPT-org/chaingpt-claude-skill",
