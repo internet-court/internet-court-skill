@@ -20,6 +20,7 @@ the Internet Court–authored parts (the root `SKILL.md` router and
 | chaingpt | [ChainGPT-org/chaingpt-claude-skill](https://github.com/ChainGPT-org/chaingpt-claude-skill) | MIT | Copyright (c) 2026 ChainGPT | agent-wallet, chaingpt, trustless-agents, x402 |
 | coinbase | [coinbase/agentic-wallet-skills](https://github.com/coinbase/agentic-wallet-skills) | MIT | Copyright (c) 2026 Coinbase | agentic-wallet |
 | genlayer | [genlayerlabs/skills](https://github.com/genlayerlabs/skills) | MIT | Copyright (c) 2026 GenLayer Labs | direct-tests, genlayer-cli, genvm-lint, integration-tests, write-contract |
+| gentech | [ProtoJay4789/genTech-agent-kit](https://github.com/ProtoJay4789/genTech-agent-kit) | MIT | Copyright (c) 2026 GenTech Labs | gentech-agent-kit |
 | heurist | [heurist-network/heurist-mesh-skill](https://github.com/heurist-network/heurist-mesh-skill) | LicenseRef-Permission | Copyright (c) 2026 Heurist Network | heurist-mesh-skill |
 | humanode | [https://agentlink.id/skill.md](https://agentlink.id/skill.md) | LicenseRef-Permission | Copyright (c) 2026 Humanode | humanode-agentlink |
 | intelligent-oracle | [https://www.intelligentoracle.com/skill.md](https://www.intelligentoracle.com/skill.md) | MIT | Copyright (c) 2026 GenLayer / Internet Court Consortium | intelligent-oracle |
