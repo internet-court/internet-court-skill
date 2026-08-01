@@ -218,5 +218,21 @@ JSON canonicalization must be unambiguous. **Required:**
 | SC-4 multi-source verifyUrl | `chain_proof` provenance dropped |
 | SC-5 canonical JCS | envelope invalid |
 
+### SC-6 — Algorithm & media pinning (2nd-pass hardening)
+
+Second cross-audit (MiniMax M3) flagged remaining edge cases. **Required:**
+
+- **Fixed digest algorithm**: `contentHash` MUST be SHA-256 only. Supporting
+  multiple algorithms reopens hash-ambiguity; reject any non-SHA-256 digest.
+- **Media-type binding**: the envelope MUST carry `contentType` and validators
+  MUST check it against the fetched bytes' actual media type. Hash collision
+  across different media types (e.g. HTML vs PNG with same digest) must not
+  silently pass.
+- **Witness independence**: multi-source `verifyUrl` sources MUST NOT share
+  the same DNS/CDN/cloud provider; otherwise Sybil/majority attacks and
+  single-infrastructure outages defeat multi-sourcing.
+- **Consumed-hash store**: replay registry MUST be bounded/partitioned per
+  `scopeId` (window-scoped), preventing unbounded growth and store-DoS.
+
 > Without SC-1..SC-5 the whole arbitration can be forged to `adjudicated`
 > by any party (audit score 4/10); with them, evidence is machine-verifiable.
