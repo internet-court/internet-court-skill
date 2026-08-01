@@ -151,3 +151,72 @@ Validation steps:
   IPFS `contentUri`.
 - Future: registry contract that records `envelopeId -> recursiveHash` for
   on-chain verification.
+
+## 6. Security Constraints (mandatory)
+
+Cross-audit (TriForge v3 + MiniMax M3) surfaced 5 design gaps. A conformant
+envelope MUST satisfy all of the following:
+
+### SC-1 — Role is bound to signer (fixes role spoofing, CRITICAL)
+
+`signatures[].role` is self-asserted text; an attacker could label themselves
+`adjudicator` and mint the top trust tier. **Required:**
+
+- The role MUST be included inside the signed payload (part of
+  `recursiveHash`), not just adjacent to it.
+- The signer's public key MUST be registered in a role registry
+  (on-chain or verifiable allowlist) before validation; an unregistered
+  signer is demoted to `interested_party` regardless of declared role.
+- Validator MUST reject any envelope whose `signatures[].role` conflicts
+  with the registry binding.
+
+### SC-2 — Replay resistance (fixes window replay, CRITICAL)
+
+A captured signed envelope could be resubmitted against a different
+`scopeId` inside the transaction window. **Required:**
+
+- `integrity.recursiveHash` MUST cover a monotonic `chainEpoch` / nonce
+  supplied by the chain or registry (not just `envelopeId`).
+- Validators MUST persist consumed `recursiveHash` values and reject
+  duplicates (idempotent adjudication).
+
+### SC-3 — contentUri integrity (fixes payload swap, HIGH)
+
+`contentUri` and `contentHash` are decoupled: an attacker could repoint the
+URI to different bytes that happen to match the committed hash. **Required:**
+
+- A neutral witness or adjudicator MUST fetch `contentUri` and recompute
+  `contentHash` at validation time, comparing to the committed digest.
+- Prefer content-addressed URIs (IPFS CID); if HTTP is used, the response
+  must carry a signature or TLS pin accepted by the validator.
+
+### SC-4 — verifyUrl multi-source (fixes oracle hijack, HIGH)
+
+A hostile `verifyUrl` could return forged chain state. **Required:**
+
+- `verifyUrl` SHOULD resolve through ≥2 independent sources
+  (e.g. two RPC endpoints or explorer + indexer).
+- The returned data itself must be verifiable (transaction receipt hash,
+  block inclusion proof), not trusted from a single URL.
+
+### SC-5 — Canonical serialization (fixes hash collision, MEDIUM)
+
+JSON canonicalization must be unambiguous. **Required:**
+
+- Use RFC 8785 (JCS) canonical JSON for computing `recursiveHash`
+  (key order, Unicode normalization, number formatting).
+- Validators MUST canonicalize before hashing and before verifying any
+  signature; non-canonical envelopes are rejected outright.
+
+### Compliance
+
+| Constraint | Missing ⇒ derived trust |
+|-----------|--------------------------|
+| SC-1 role registry | never above `self-reported` |
+| SC-2 replay nonce | reject duplicate envelope |
+| SC-3 content re-hash | never above `self-reported` |
+| SC-4 multi-source verifyUrl | `chain_proof` provenance dropped |
+| SC-5 canonical JCS | envelope invalid |
+
+> Without SC-1..SC-5 the whole arbitration can be forged to `adjudicated`
+> by any party (audit score 4/10); with them, evidence is machine-verifiable.
