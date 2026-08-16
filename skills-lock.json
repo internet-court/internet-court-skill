@@ -248,6 +248,20 @@
       "license": "ISC",
       "licenseFile": "LICENSE"
     },
+    "cspr-cloud": {
+      "owner": "casper",
+      "source": "https://cspr.cloud/skill.md",
+      "sourceType": "https",
+      "fetch": "curl",
+      "skillPath": "SKILL.md",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/casper/cspr-cloud",
+      "computedHash": "e52e2560ad5173352e955d48408ac0810ea9448145236758af3f2d49d824dab8",
+      "fetchedAt": "2026-08-16",
+      "license": "LicenseRef-Permission",
+      "licenseFile": "LICENSE",
+      "licenseHolder": "Copyright (c) 2026 CSPR.cloud"
+    },
     "debridge": {
       "owner": "sendaifun",
       "source": "sendaifun/skills",
