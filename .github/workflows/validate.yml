@@ -1,0 +1,108 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON files
+        run: |
+          python3 - <<'EOF'
+          import json, sys
+          files = [
+            'skills-lock.json',
+            '.claude-plugin/plugin.json',
+            '.claude-plugin/marketplace.json',
+            'openclaw.plugin.json',
+          ]
+          for f in files:
+              with open(f) as fh:
+                  json.load(fh)
+              print(f'OK {f}')
+          EOF
+
+      - name: Verify skills-lock.json integrity
+        run: |
+          python3 - <<'EOF'
+          import json, hashlib, os, sys
+          with open('skills-lock.json') as fh:
+              lock = json.load(fh)
+          errors = []
+          for name, info in lock.get('skills', {}).items():
+              path = os.path.join(info['vendoredPath'], info['entryFile'])
+              if not os.path.exists(path):
+                  errors.append(f'missing file: {path}')
+                  continue
+              with open(path, 'rb') as fh:
+                  actual = hashlib.sha256(fh.read()).hexdigest()
+              expected = info.get('computedHash', '')
+              if expected and actual != expected:
+                  errors.append(f'hash mismatch: {name} ({path})')
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print(f'OK: {len(lock.get("skills", {}))} skills verified')
+          EOF
+
+      - name: Check skill frontmatter
+        run: |
+          python3 - <<'EOF'
+          import os, re, sys
+          errors = []
+          for dirpath, _, filenames in os.walk('.'):
+              if '.git' in dirpath:
+                  continue
+              for fn in filenames:
+                  if fn.lower() == 'skill.md':
+                      p = os.path.join(dirpath, fn)
+                      with open(p, encoding='utf-8', errors='replace') as fh:
+                          content = fh.read(2000)
+                      m = re.match(r'^---\n(.*?)\n---', content, re.DOTALL)
+                      if not m:
+                          errors.append(f'missing frontmatter: {p}')
+                          continue
+                      fm = m.group(1)
+                      if 'name:' not in fm or 'description:' not in fm:
+                          errors.append(f'frontmatter missing name/description: {p}')
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print('OK: all skill files have frontmatter')
+          EOF
+
+      - name: Check for broken relative markdown links
+        run: |
+          python3 - <<'EOF'
+          import os, re, sys
+          errors = []
+          for dirpath, _, filenames in os.walk('.'):
+              if '.git' in dirpath:
+                  continue
+              for fn in filenames:
+                  if not fn.endswith('.md'):
+                      continue
+                  p = os.path.join(dirpath, fn)
+                  with open(p, encoding='utf-8', errors='replace') as fh:
+                      content = fh.read()
+                  for ref in re.findall(r'\[[^\]]*\]\(([^)]*\.md[^)]*)\)', content):
+                      if ref.startswith(('http', '/', '#')):
+                          continue
+                      clean = ref.split('#')[0].strip()
+                      if not clean.endswith('.md'):
+                          continue
+                      if any(c in clean for c in '<*{~'):
+                          continue
+                      target = os.path.normpath(os.path.join(dirpath, clean))
+                      if not os.path.exists(target):
+                          errors.append(f'{p}: broken link -> {ref}')
+          if errors:
+              print('\n'.join(sorted(set(errors))))
+              sys.exit(1)
+          print('OK: no broken relative markdown links')
+          EOF

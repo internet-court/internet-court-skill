@@ -391,7 +391,7 @@
       "skillPath": "SKILL.md",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/humanode/humanode-agentlink",
-      "computedHash": "6530623a2c2f990a3f1e920f217d91d18c613e8ff86df17626be502d849ce130",
+      "computedHash": "bc73a24bef23928c5b999b3322fb6f9ef1acffd9338d0eae73a674436c53907d",
       "fetchedAt": "2026-08-11",
       "license": "LicenseRef-Permission",
       "licenseFile": "LICENSE",
@@ -735,7 +735,7 @@
       "skillPath": "skills/near-ai-cloud",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/near/near-ai-cloud",
-      "computedHash": "be51d137635a91593baf7e67501f7a2ae25fa93fd12ffae01ce33206a2c75768",
+      "computedHash": "2acf6664acbe854516d128700216b9e25ce4fcea5ecab3de0788743b4d4a6c63",
       "fetchedAt": "2026-08-11",
       "license": "LicenseRef-Permission",
       "licenseFile": "LICENSE",
@@ -1339,6 +1339,20 @@
       "license": "MIT",
       "licenseFile": "LICENSE",
       "licenseHolder": "Copyright (c) 2026 ChainGPT"
+    },
+    "altllm-x402": {
+      "owner": "altlayer",
+      "source": "alt-research/altllm-skills",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "01457f9001f52c76aef2d4ad9d164716494ef12b",
+      "skillPath": "skills/altllm-x402",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/altlayer/altllm-x402",
+      "computedHash": "6259e338666ad977a9658a8d723b51f638706156ca1b6ff375832fe9031d1554",
+      "fetchedAt": "2026-08-11",
+      "license": "ISC",
+      "licenseFile": "LICENSE"
     }
   }
 }

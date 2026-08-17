@@ -90,7 +90,7 @@ Base URL: `https://cloud-api.near.ai`
 
 | Topic                            | File                                                                 |
 |----------------------------------|----------------------------------------------------------------------|
-| **Private vs Anonymised Models** | [references/private-vs-anonymised.md](references/model-list.md)      |
+| **Private vs Anonymised Models** | [references/private-vs-anonymised.md](references/private-vs-anonymised.md) |
 | **Model TEE verification**       | [references/model-verification.md](references/model-verification.md) |
 
 **Planned:**
