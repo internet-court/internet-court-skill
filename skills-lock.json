@@ -1152,7 +1152,7 @@
       "fetch": "skills",
       "sourceCommit": "cf86fe671fb3e26871004963c5735f73fcb7a271",
       "skillPath": "domains/web3-tools/skills/smart-accounts-kit",
-      "entryFile": "SKILL.md",
+      "entryFile": "skill.md",
       "vendoredPath": "vendored/metamask/smart-accounts-kit",
       "computedHash": "000a94e7c9e862e70a987a3924517d662f72c1a2bffa9a992f86e6d342633343",
       "fetchedAt": "2026-08-11",

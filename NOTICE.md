@@ -10,7 +10,7 @@ the Internet Court–authored parts (the root `SKILL.md` router and
 | Owner | Source | License (SPDX) | Copyright | Skills |
 |-------|--------|----------------|-----------|--------|
 | 0g | [0gfoundation/0g-compute-skills](https://github.com/0gfoundation/0g-compute-skills) | LicenseRef-Permission | Copyright (c) 2026 0G Labs | 0g-compute |
-| altlayer | [alt-research/altllm-skills](https://github.com/alt-research/altllm-skills) | ISC | — | altllm-portal-api-keys, altllm-portal-auth, altllm-portal-billing, altllm-portal-cli, altllm-portal-payments, cloud-claw, cloud-claw-launch-agent |
+| altlayer | [alt-research/altllm-skills](https://github.com/alt-research/altllm-skills) | ISC | — | altllm-portal-api-keys, altllm-portal-auth, altllm-portal-billing, altllm-portal-cli, altllm-portal-payments, altllm-x402, cloud-claw, cloud-claw-launch-agent |
 | antseed | [https://antseed.com/skill.md](https://antseed.com/skill.md) | GPL-3.0 | Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/> | antseed-connect |
 | arkhai | [arkhai-io/alkahest](https://github.com/arkhai-io/alkahest) | MIT | Copyright (c) 2026 Arkhai | alkahest-developer, alkahest-user |
 | arkhai | [arkhai-io/git-commit-trading](https://github.com/arkhai-io/git-commit-trading) | MIT | Copyright (c) 2026 Arkhai | fulfill-git-escrow, make-git-escrow |

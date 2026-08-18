@@ -65,8 +65,8 @@ set available in this repository today, and it grows as members publish.
 ```
 SKILL.md                            Master skill — start here; routes to everything below
 integrations/                       Internet Court connector & adapter skills
-vendored/                           Committed copies of official protocol skills (90 skills, 32 owners)
-skills-lock.json                    Pinned source + hash + refresh command per vendored skill
+vendored/                           Committed copies of official protocol skills (91 skills, 32 owners)
+skills-lock.json                    Pinned source + commit + hash per vendored skill
 ```
 
 Two kinds of content:
@@ -106,7 +106,7 @@ Two kinds of content:
 | Tempo | `mppx` (Merchant Payment Protocol) | [tempoxyz/mpp](https://github.com/tempoxyz/mpp) |
 | TerminalSkills | `a2a-protocol` (community — no official A2A skill exists) | [TerminalSkills/skills](https://github.com/TerminalSkills/skills) |
 
-Pinned hashes and refresh commands per skill: [`skills-lock.json`](skills-lock.json)
+Pinned hashes and upstream sources per skill: [`skills-lock.json`](skills-lock.json)
 and [`vendored/README.md`](vendored/README.md).
 
 ## Install

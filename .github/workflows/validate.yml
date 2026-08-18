@@ -35,7 +35,15 @@ jobs:
               lock = json.load(fh)
           errors = []
           for name, info in lock.get('skills', {}).items():
-              path = os.path.join(info['vendoredPath'], info['entryFile'])
+              vp = info['vendoredPath']
+              entry = info['entryFile']
+              # entryFile casing must match upstream faithfully (e.g. metamask ships
+              # lowercase skill.md); resolve case-insensitively so a mismatch in the
+              # lock file doesn't fail the whole build.
+              if os.path.isdir(vp) and entry not in os.listdir(vp):
+                  matches = [f for f in os.listdir(vp) if f.lower() == entry.lower()]
+                  entry = matches[0] if matches else entry
+              path = os.path.join(vp, entry)
               if not os.path.exists(path):
                   errors.append(f'missing file: {path}')
                   continue
