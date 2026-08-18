@@ -2,9 +2,9 @@
 
 Committed copies of publicly published agent skills, fetched from their
 official sources and pinned in `../skills-lock.json` (source, path, hash,
-fetch date, refresh command). Never edit these by hand — refresh from
-upstream with the lock file's `refreshCommand` and update the hash
-(workflow in `../CLAUDE.md`).
+fetch date). Never edit these by hand — refresh from upstream (see the
+`source` / `sourceCommit` fields in `../skills-lock.json` for what each
+skill was fetched from) and update the hash afterwards.
 
 Skills are grouped by owner: each one lives at `vendored/<owner>/<skill>/`,
 where `<owner>` is the publishing company or protocol.
@@ -17,7 +17,7 @@ where `<owner>` is the publishing company or protocol.
 | Intelligent Oracle (`intelligent-oracle/`) | `intelligent-oracle/` — web-evidence prediction markets (refetch the canonical URL before schema-sensitive work) | [intelligentoracle.com/skill.md](https://www.intelligentoracle.com/skill.md) |
 | Arkhai (`arkhai/`) | `alkahest-user/` — EAS-based conditional escrow with arbiters | [arkhai-io/alkahest](https://github.com/arkhai-io/alkahest) |
 | BNB Chain (`bnb-chain/`) | `bnbchain-mcp/` — chain ops, ERC-8004 registration, Greenfield storage | [bnb-chain/bnbchain-skills](https://github.com/bnb-chain/bnbchain-skills) |
-| OKX OnchainOS (`okx/`) | 23 `okx-*` skills — `okx-agent-payments-protocol` (unified x402/MPP/a2a-pay), DEX swap/market/strategy, agentic wallet, onchain gateway, security, discovery, … | [okx/onchainos-skills](https://github.com/okx/onchainos-skills) |
+| OKX OnchainOS (`okx/`) | 9 `okx-*` skills — `okx-agent-payments-protocol` (unified x402/MPP/a2a-pay), `okx-agentic-wallet`, `okx-dex-market`, `okx-defi`, `okx-dapp-discovery`, `okx-ai`, `okx-guide`, `okx-growth-competition`, `okx-activity` | [okx/onchainos-skills](https://github.com/okx/onchainos-skills) |
 | 0G (`0g/`) | `0g-compute/` — verifiable decentralized inference & fine-tuning | [0gfoundation/0g-compute-skills](https://github.com/0gfoundation/0g-compute-skills) |
 | AltLayer (`altlayer/`) | `altllm-portal-{cli,auth,api-keys,billing,payments}/`, `cloud-claw/`, `cloud-claw-launch-agent/` — AltLLM portal + agent VM management | [alt-research/altllm-skills](https://github.com/alt-research/altllm-skills) |
 | ChainGPT (`chaingpt/`) | `chaingpt/`, `x402/`, `trustless-agents/` (ERC-8004), `agent-wallet/` (policy-gated) — selected from the 25-skill plugin | [ChainGPT-org/chaingpt-claude-skill](https://github.com/ChainGPT-org/chaingpt-claude-skill) |
@@ -57,4 +57,5 @@ Notes:
 
 Copy (or symlink) the skill folders you need into the agent's skills
 directory (for Claude Code: `.claude/skills/` in the project), or install
-fresh from upstream with the lock file's refresh command.
+fresh from upstream using the `source` / `sourceCommit` fields in
+`../skills-lock.json`.

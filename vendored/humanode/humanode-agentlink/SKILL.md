@@ -1,3 +1,8 @@
+---
+name: humanode-agentlink
+description: Give an AI agent a verified, human-backed on-chain identity. Sign any HTTP request, appear in the on-chain registry as a trusted agent, and access free partner endpoints on Base mainnet. Use when an agent needs to prove a human stands behind it (human-backed agent identity).
+---
+
 # AgentLink Skill
 
 AgentLink gives an AI agent a verified, human-backed on-chain identity. With this skill the agent can sign any HTTP request, appear in the on-chain registry as a trusted agent, and access free partner endpoints on Base mainnet.
