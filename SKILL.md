@@ -27,7 +27,8 @@ This package contains two kinds of material. Route accordingly:
   skills from the protocols themselves. Always prefer these for protocol
   mechanics; never re-derive what they already document.
 - **Connector skills** (`integrations/genlayer-erc7710-connector/`,
-  `integrations/genlayer-intelligent-contracts/`, `integrations/x402-erc7710/`) — the Internet
+  `integrations/genlayer-intelligent-contracts/`, `integrations/x402-erc7710/`,
+  `integrations/gentech-x402-connector/`) — the Internet
   Court-specific glue that makes the protocols work together.
 
 ## Where this package lives
@@ -176,6 +177,7 @@ deciding fact is unknown, ask instead of preloading them all.
 | When you need to… | Load |
 |---|---|
 | Pay for an HTTP resource that returns **402** (pay-per-call), search x402 bazaars, or monetize your own endpoint | `vendored/coinbase/agentic-wallet/SKILL.md` — Coinbase x402 client: read the price, pay, retry with proof; start here for a one-off paid request. `vendored/chaingpt/x402/SKILL.md` — x402 discovery/monetization: find paid services or put your own endpoint behind 402. |
+| Call the **GenTech** cross-chain agentic-treasury gateway (DeFi LP analysis, token risk/rugcheck, wallet portfolio, ERC-8004 agent discovery, real-time prices, airdrop/dust defense, AI research) | `integrations/gentech-x402-connector/SKILL.md` — live x402 v2 gateway, USDC on Solana/Base/Avalanche/X Layer/Algorand, no account. Load for a specific paid GenTech endpoint; pair with `x402-erc7710` for a bounded delegated budget. |
 | Stream micropayments or run metered sessions (per-second / per-token, not per-request) | `vendored/tempo/mppx/SKILL.md` — Tempo/Stripe MPP charges, sessions, and streaming. Load when billing is continuous rather than a single call. **Not** for spending caps on per-request rails: a capped or recurring budget over x402 is `integrations/x402-erc7710/SKILL.md`, not MPP. |
 | Dispatch a payment without hard-coding the rail (x402 vs MPP vs a2a-pay) | `vendored/okx/okx-agent-payments-protocol/SKILL.md` — OKX OnchainOS unified payment dispatcher. Load when the counterparty's rail is unknown or may vary. |
 | Run a payment *through* a bounded permission (spend/subscription policy on the rail) | `integrations/x402-erc7710/SKILL.md` — connector fusing the x402 rail with an ERC-7710 delegated budget. Load for Guarded/Adjudicated paid access. |
