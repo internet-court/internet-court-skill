@@ -29,7 +29,7 @@
       "fetchedAt": "2026-08-11",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "the copyright owner that is granting the License."
+      "licenseHolder": "not stated (Apache-2.0 copyright appendix unfilled)"
     },
     "agent-wallet": {
       "owner": "chaingpt",
@@ -74,7 +74,7 @@
       "fetchedAt": "2026-08-11",
       "license": "MIT",
       "licenseFile": "LICENSE",
-      "licenseHolder": "Copyright (c) 2026 Arkhai"
+      "licenseHolder": "Copyright Contributors to Forge Standard Library"
     },
     "alkahest-user": {
       "owner": "arkhai",
@@ -89,7 +89,7 @@
       "fetchedAt": "2026-08-11",
       "license": "MIT",
       "licenseFile": "LICENSE",
-      "licenseHolder": "Copyright (c) 2026 Arkhai"
+      "licenseHolder": "Copyright Contributors to Forge Standard Library"
     },
     "altllm-portal-api-keys": {
       "owner": "altlayer",
@@ -103,7 +103,8 @@
       "computedHash": "3a264f59409d94c038ee913847580f032561f611233a65165f6a00a834a101eb",
       "fetchedAt": "2026-08-11",
       "license": "ISC",
-      "licenseFile": "LICENSE"
+      "licenseFile": "LICENSE",
+      "licenseHolder": "not stated (upstream named as authoritative in LICENSE)"
     },
     "altllm-portal-auth": {
       "owner": "altlayer",
@@ -117,7 +118,8 @@
       "computedHash": "511409592c1a4d7c384d5c5be9d0f1b05708202408eb4c2327acbc097e500d71",
       "fetchedAt": "2026-08-11",
       "license": "ISC",
-      "licenseFile": "LICENSE"
+      "licenseFile": "LICENSE",
+      "licenseHolder": "not stated (upstream named as authoritative in LICENSE)"
     },
     "altllm-portal-billing": {
       "owner": "altlayer",
@@ -131,7 +133,8 @@
       "computedHash": "135f8ffa8a756a201b1bffda9c8317addfb4416326c91fc9c62f22179d4a6db1",
       "fetchedAt": "2026-08-11",
       "license": "ISC",
-      "licenseFile": "LICENSE"
+      "licenseFile": "LICENSE",
+      "licenseHolder": "not stated (upstream named as authoritative in LICENSE)"
     },
     "altllm-portal-cli": {
       "owner": "altlayer",
@@ -145,7 +148,8 @@
       "computedHash": "0c9b8421ab3edc6861ab9008711429ac4e444c862125c69fb0ef754e8eb35dfe",
       "fetchedAt": "2026-08-11",
       "license": "ISC",
-      "licenseFile": "LICENSE"
+      "licenseFile": "LICENSE",
+      "licenseHolder": "not stated (upstream named as authoritative in LICENSE)"
     },
     "altllm-portal-payments": {
       "owner": "altlayer",
@@ -159,7 +163,8 @@
       "computedHash": "798295fdf889fdaf87e702a41d5fda71f5f0f2d9e4bf2daeb69bdc077c4a94a7",
       "fetchedAt": "2026-08-11",
       "license": "ISC",
-      "licenseFile": "LICENSE"
+      "licenseFile": "LICENSE",
+      "licenseHolder": "not stated (upstream named as authoritative in LICENSE)"
     },
     "antseed-connect": {
       "owner": "antseed",
@@ -188,7 +193,7 @@
       "fetchedAt": "2026-08-11",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "the copyright owner that is granting the License."
+      "licenseHolder": "not stated (Apache-2.0 copyright appendix unfilled)"
     },
     "bnbchain-mcp": {
       "owner": "bnb-chain",
@@ -232,7 +237,8 @@
       "computedHash": "7b62e74f356864fe2b6ddf7e54dca0bbeebefd971ebab737363b253dc1b2a455",
       "fetchedAt": "2026-08-11",
       "license": "ISC",
-      "licenseFile": "LICENSE"
+      "licenseFile": "LICENSE",
+      "licenseHolder": "not stated (upstream named as authoritative in LICENSE)"
     },
     "cloud-claw-launch-agent": {
       "owner": "altlayer",
@@ -246,7 +252,8 @@
       "computedHash": "f680ec434321dcc7f23bf8f8cb35d9b35cebd0484c7f44c99dcdbf876df1293d",
       "fetchedAt": "2026-08-11",
       "license": "ISC",
-      "licenseFile": "LICENSE"
+      "licenseFile": "LICENSE",
+      "licenseHolder": "not stated (upstream named as authoritative in LICENSE)"
     },
     "debridge": {
       "owner": "sendaifun",
@@ -261,7 +268,7 @@
       "fetchedAt": "2026-08-11",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "the copyright owner that is granting the License."
+      "licenseHolder": "not stated (Apache-2.0 copyright appendix unfilled)"
     },
     "dflow-phantom-connect": {
       "owner": "dflow",
@@ -306,7 +313,7 @@
       "fetchedAt": "2026-08-11",
       "license": "MIT",
       "licenseFile": "LICENSE",
-      "licenseHolder": "Copyright (c) 2026 Arkhai"
+      "licenseHolder": "Copyright (c) 2020 N-API for Rust"
     },
     "genlayer-cli": {
       "owner": "genlayer",
@@ -351,7 +358,7 @@
       "fetchedAt": "2026-08-11",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "the copyright owner that is granting the License."
+      "licenseHolder": "not stated (Apache-2.0 copyright appendix unfilled)"
     },
     "helius": {
       "owner": "sendaifun",
@@ -366,7 +373,7 @@
       "fetchedAt": "2026-08-11",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "the copyright owner that is granting the License."
+      "licenseHolder": "not stated (Apache-2.0 copyright appendix unfilled)"
     },
     "heurist-mesh-skill": {
       "owner": "heurist",
@@ -410,7 +417,7 @@
       "fetchedAt": "2026-08-11",
       "license": "MIT",
       "licenseFile": "LICENSE",
-      "licenseHolder": "Copyright (c) 2026"
+      "licenseHolder": "Copyright (c) 2026 (no holder named in LICENSE)"
     },
     "integration-tests": {
       "owner": "genlayer",
@@ -454,7 +461,7 @@
       "fetchedAt": "2026-08-11",
       "license": "MIT",
       "licenseFile": "LICENSE",
-      "licenseHolder": "Copyright (c) 2026"
+      "licenseHolder": "Copyright (c) 2026 (no holder named in LICENSE)"
     },
     "jupiter-swap-migration": {
       "owner": "jupiter",
@@ -469,7 +476,7 @@
       "fetchedAt": "2026-08-11",
       "license": "MIT",
       "licenseFile": "LICENSE",
-      "licenseHolder": "Copyright (c) 2026"
+      "licenseHolder": "Copyright (c) 2026 (no holder named in LICENSE)"
     },
     "jupiter-vrfd": {
       "owner": "jupiter",
@@ -484,7 +491,7 @@
       "fetchedAt": "2026-08-11",
       "license": "MIT",
       "licenseFile": "LICENSE",
-      "licenseHolder": "Copyright (c) 2026"
+      "licenseHolder": "Copyright (c) 2026 (no holder named in LICENSE)"
     },
     "kleros-curate": {
       "owner": "kleros",
@@ -559,7 +566,7 @@
       "fetchedAt": "2026-08-11",
       "license": "MIT",
       "licenseFile": "LICENSE",
-      "licenseHolder": "Copyright (c) 2026"
+      "licenseHolder": "Copyright (c) 2026 (no holder named in LICENSE)"
     },
     "make-git-escrow": {
       "owner": "arkhai",
@@ -574,7 +581,7 @@
       "fetchedAt": "2026-08-11",
       "license": "MIT",
       "licenseFile": "LICENSE",
-      "licenseHolder": "Copyright (c) 2026 Arkhai"
+      "licenseHolder": "Copyright (c) 2020 N-API for Rust"
     },
     "metaplex": {
       "owner": "metaplex",
@@ -604,7 +611,7 @@
       "fetchedAt": "2026-08-11",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "the copyright owner that is granting the License."
+      "licenseHolder": "not stated (Apache-2.0 copyright appendix unfilled)"
     },
     "mppx": {
       "owner": "tempo",
@@ -619,7 +626,7 @@
       "fetchedAt": "2026-08-11",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "the copyright owner that is granting the License."
+      "licenseHolder": "not stated (Apache-2.0 copyright appendix unfilled)"
     },
     "nansen-general-search": {
       "owner": "nansen",
@@ -1128,7 +1135,7 @@
       "fetchedAt": "2026-08-11",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "the copyright owner that is granting the License."
+      "licenseHolder": "not stated (Apache-2.0 copyright appendix unfilled)"
     },
     "quicknode-skill": {
       "owner": "quicknode",
@@ -1152,7 +1159,7 @@
       "fetch": "skills",
       "sourceCommit": "94772e7cb1ecadc19466e90f939f99849eef2493",
       "skillPath": "domains/web3-tools/skills/smart-accounts-kit",
-      "entryFile": "SKILL.md",
+      "entryFile": "skill.md",
       "vendoredPath": "vendored/metamask/smart-accounts-kit",
       "computedHash": "000a94e7c9e862e70a987a3924517d662f72c1a2bffa9a992f86e6d342633343",
       "fetchedAt": "2026-08-11",
@@ -1173,7 +1180,7 @@
       "fetchedAt": "2026-08-11",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "the copyright owner that is granting the License."
+      "licenseHolder": "not stated (Apache-2.0 copyright appendix unfilled)"
     },
     "solana-dev": {
       "owner": "solana",
@@ -1188,7 +1195,7 @@
       "fetchedAt": "2026-08-11",
       "license": "MIT",
       "licenseFile": "LICENSE",
-      "licenseHolder": "Copyright (c) 2026"
+      "licenseHolder": "Copyright (c) 2026 (no holder named in LICENSE)"
     },
     "squads": {
       "owner": "sendaifun",
@@ -1203,7 +1210,7 @@
       "fetchedAt": "2026-08-11",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "the copyright owner that is granting the License."
+      "licenseHolder": "not stated (Apache-2.0 copyright appendix unfilled)"
     },
     "starknet-defi": {
       "owner": "starknet",
@@ -1278,7 +1285,7 @@
       "fetchedAt": "2026-08-11",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "the copyright owner that is granting the License."
+      "licenseHolder": "not stated (Apache-2.0 copyright appendix unfilled)"
     },
     "trustless-agents": {
       "owner": "chaingpt",
