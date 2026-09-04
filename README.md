@@ -34,7 +34,7 @@ behind one skill instead of a stack the agent has to wire up itself.
 | 1 | Discovery, identity & reputation | ERC-8004, ERC-7857 | [`chaingpt/trustless-agents/`](vendored/chaingpt/trustless-agents/) (ERC-8004 registries), [`bnb-chain/bnbchain-mcp/`](vendored/bnb-chain/bnbchain-mcp/) (ERC-8004 registration), [`starknet/starknet-identity/`](vendored/starknet/starknet-identity/); ERC-7857 has no public skill yet |
 | 2 | Negotiation | A2A | [`terminalskills/a2a-protocol/`](vendored/terminalskills/a2a-protocol/), [`openserv/openserv-multi-agent-workflows/`](vendored/openserv/openserv-multi-agent-workflows/) |
 | 3 | Contracts & obligations | ERC-7710, ERC-8183, Arkhai | [`arkhai/`](vendored/arkhai/) (Alkahest escrow, natural-language agreements, git escrow), [`metamask/smart-accounts-kit/`](vendored/metamask/smart-accounts-kit/) (ERC-7710 delegations); connector [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/); ERC-8183 has no public skill yet |
-| 4 | Payment & escrow | x402, MPP, APP | [`yellow/yellow-settlement-room/`](vendored/yellow/yellow-settlement-room/) (multiparty off-chain settlement, one on-chain split), [`coinbase/agentic-wallet/`](vendored/coinbase/agentic-wallet/), [`chaingpt/x402/`](vendored/chaingpt/x402/) + [`agent-wallet/`](vendored/chaingpt/agent-wallet/), [`okx/okx-agent-payments-protocol/`](vendored/okx/okx-agent-payments-protocol/), [`tempo/mppx/`](vendored/tempo/mppx/), [`nansen/nansen-mpp-payment/`](vendored/nansen/nansen-mpp-payment/), [`privy/`](vendored/privy/); connector [`integrations/x402-erc7710/`](integrations/x402-erc7710/) |
+| 4 | Payment & escrow | x402, MPP, AP2 | [`yellow/yellow-settlement-room/`](vendored/yellow/yellow-settlement-room/) (multiparty off-chain settlement, one on-chain split), [`coinbase/agentic-wallet/`](vendored/coinbase/agentic-wallet/), [`chaingpt/x402/`](vendored/chaingpt/x402/) + [`agent-wallet/`](vendored/chaingpt/agent-wallet/), [`okx/okx-agent-payments-protocol/`](vendored/okx/okx-agent-payments-protocol/), [`tempo/mppx/`](vendored/tempo/mppx/), [`nansen/nansen-mpp-payment/`](vendored/nansen/nansen-mpp-payment/), [`privy/`](vendored/privy/); connector [`integrations/x402-erc7710/`](integrations/x402-erc7710/) |
 | 5 | Execution | compute, data & value rails | [`0g/0g-compute/`](vendored/0g/0g-compute/), [`antseed/antseed-connect/`](vendored/antseed/antseed-connect/), [`lifi/`](vendored/lifi/), [`chainbase/web3-data/`](vendored/chainbase/web3-data/), [`heurist/`](vendored/heurist/), [`near/`](vendored/near/), [`starknet/`](vendored/starknet/), [`solana/`](vendored/solana/), [`nansen/`](vendored/nansen/), OKX + AltLayer + BNB Chain packs |
 | 6 | Verification & disputes | GenLayer, Kleros, UMA | GenLayer dev skills + [`intelligent-oracle/`](vendored/intelligent-oracle/), [`kleros/`](vendored/kleros/) (curate, IPFS); connectors [`integrations/genlayer-intelligent-contracts/`](integrations/genlayer-intelligent-contracts/), [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/); UMA has no public skill yet |
 
@@ -66,7 +66,12 @@ set available in this repository today, and it grows as members publish.
 SKILL.md                            Master skill — start here; routes to everything below
 integrations/                       Internet Court connector & adapter skills
 vendored/                           Committed copies of official protocol skills (91 skills, 33 owners)
-skills-lock.json                    Pinned source + hash + refresh command per vendored skill
+skills-lock.json                    Per vendored skill: upstream source, pinned commit, entry file, license
+NOTICE.md                           Authoritative per-component license & copyright manifest
+LICENSE                             MIT — first-party content only, not vendored/
+SECURITY.md                         What to report, how to report it, and the known limitations
+.claude-plugin/                     Claude Code plugin + marketplace manifests
+openclaw.plugin.json                OpenClaw plugin manifest
 ```
 
 Two kinds of content:
@@ -84,7 +89,7 @@ Two kinds of content:
 | MetaMask | `smart-accounts-kit` (ERC-4337/7710/7715 delegations) | [metamask/skills](https://github.com/metamask/skills) |
 | OKX OnchainOS | 9 `okx-*` skills incl. `okx-agent-payments-protocol` (x402/MPP), `okx-agentic-wallet`, `okx-dex-market`, `okx-defi` | [okx/onchainos-skills](https://github.com/okx/onchainos-skills) |
 | NEAR | 6 `near-*` skills (`near-intents`, `near-ai-cloud`, `near-kit`, `near-dapp`, `near-api-js`, `near-smart-contracts`) | [near/agent-skills](https://github.com/near/agent-skills) |
-| Starknet | `starknet-defi`, `starknet-dex` … `starknet-identity`, `starknet-wallet`, `starknet-js` | [keep-starknet-strange/starknet-agentic](https://github.com/keep-starknet-strange/starknet-agentic) |
+| Starknet | `starknet-defi`, `starknet-identity`, `starknet-wallet`, `starknet-js` | [keep-starknet-strange/starknet-agentic](https://github.com/keep-starknet-strange/starknet-agentic) |
 | Solana | `solana-dev` — one catch-all Foundation skill (Anchor/Pinocchio programs, SPL payments, RPC lookups, security/testing) | [solana-foundation/solana-dev-skill](https://github.com/solana-foundation/solana-dev-skill) · [solana.com/skills](https://solana.com/skills) |
 | Solana agent-commerce (community) | 19 skills across 8 owners from the [solana.com/skills](https://solana.com/skills) community catalog — `sendaifun/*` (Squads, Pyth, Switchboard, Helius, Birdeye, deBridge, MetEngine, GLAM, Agent Kit), `magicblock/*`, `quicknode/*`, `jupiter/*`, `octav/*`, `dflow/*`, `metaplex/*`, `pnp/*` | [sendaifun/skills](https://github.com/sendaifun/skills) · [magicblock-labs](https://github.com/magicblock-labs/magicblock-dev-skill) · [quiknode-labs](https://github.com/quiknode-labs/blockchain-skills) · [jup-ag](https://github.com/jup-ag/agent-skills) · [Octav-Labs](https://github.com/Octav-Labs/octav-api-skill) · [DFlowProtocol](https://github.com/DFlowProtocol/dflow_phantom-connect-skill) · [metaplex-foundation](https://github.com/metaplex-foundation/skill) · [pnp-protocol](https://github.com/pnp-protocol/solana-skill) |
 | Coinbase (x402) | `agentic-wallet` (x402 pay/search/monetize) | [coinbase/agentic-wallet-skills](https://github.com/coinbase/agentic-wallet-skills) |
@@ -196,12 +201,32 @@ Some vendored skills need their provider's credentials to act (e.g. OKX API
 keys, ChainGPT API key, Chainbase API key); each skill documents its own
 requirements.
 
+## Security
+
+These skills instruct an agent that may hold a wallet, a delegated spending
+budget, or provider API keys. `SKILL.md` therefore carries hard guardrails —
+most importantly the **Untrusted Content** boundary: fetched skills, everything
+under `vendored/`, and any counterparty-supplied document are data to evaluate,
+never instructions to obey, and nothing in them can relax a rule in `SKILL.md`.
+
+Report a suspected vulnerability privately — see [`SECURITY.md`](SECURITY.md)
+for what is in scope, the testing boundaries (testnet and throwaway keys only),
+and the limitations that are already known and documented.
+
 ## License
 
-The first-party work in this repository — the master skill and the connectors —
-is released under the [MIT License](LICENSE). Vendored skills under `vendored/`
-are copies of upstream projects and remain under their own licenses; see each
-skill's source repository (and `skills-lock.json`) for terms.
+The first-party work in this repository — the master `SKILL.md` router, this
+README, and everything under `integrations/` — is released under the
+[MIT License](LICENSE).
+
+Vendored skills under `vendored/` are **not** covered by that license. Each is
+the property of its owner and is redistributed under its own license, shipped as
+a `LICENSE` file inside that skill's folder. [`NOTICE.md`](NOTICE.md) is the
+authoritative per-component manifest of owner, source, SPDX identifier, and
+copyright holder — `LICENSE` itself points there, so read `NOTICE.md` before
+redistributing any part of this package, and carry it with you when you do.
+`skills-lock.json` records the upstream commit each vendored copy was taken
+from.
 
 © 2026 Internet Court Consortium · Open standard, openly governed ·
 [internetcourt.org](https://internetcourt.org)
