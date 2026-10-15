@@ -34,3 +34,4 @@ the Internet Court–authored parts (the root `SKILL.md` router and
 | starknet | [keep-starknet-strange/starknet-agentic](https://github.com/keep-starknet-strange/starknet-agentic) | MIT | Copyright (c) 2026 Keep Starknet Strange | starknet-defi, starknet-identity, starknet-js, starknet-wallet |
 | tempo | [tempoxyz/mpp](https://github.com/tempoxyz/mpp) | Apache-2.0 | the copyright owner that is granting the License. | mppx |
 | terminalskills | [TerminalSkills/skills](https://github.com/TerminalSkills/skills) | Apache-2.0 | the copyright owner that is granting the License. | a2a-protocol |
+| tersign | [tersignhq/skills](https://github.com/tersignhq/skills) | Apache-2.0 | Copyright 2026 The Tersign Authors | tersign-evidence |

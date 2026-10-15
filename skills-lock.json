@@ -977,15 +977,15 @@
       "source": "tersignhq/skills",
       "sourceType": "github",
       "fetch": "git",
-      "sourceCommit": "8120210206b34781994ed67352e11e7650701ad3",
-      "skillPath": "tersign-evidence",
+      "sourceCommit": "4f98035d03d784aca2b165b11587b7e1bcbe811d",
+      "skillPath": "skills/tersign-evidence",
       "entryFile": "SKILL.md",
       "vendoredPath": "vendored/tersign/tersign-evidence",
-      "computedHash": "d10a4ec9203d360a07fffb4f9e98108ee3ff03d44e25707478d008077adcba98",
-      "fetchedAt": "2026-07-10",
-      "license": "MIT",
+      "computedHash": "c0ba51157a6e9f2957d8b8e190e3111fce79c6a892e17445f60efa2f62bb38c0",
+      "fetchedAt": "2026-10-15",
+      "license": "Apache-2.0",
       "licenseFile": "LICENSE",
-      "licenseHolder": "Copyright (c) 2026 Tersign"
+      "licenseHolder": "Copyright 2026 The Tersign Authors"
     },
     "trustless-agents": {
       "owner": "chaingpt",

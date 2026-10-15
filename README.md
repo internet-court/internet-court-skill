@@ -103,7 +103,7 @@ Two kinds of content:
 | Intelligent Oracle | `intelligent-oracle` (web-evidence prediction markets) | [intelligentoracle.com/skill.md](https://www.intelligentoracle.com/skill.md) |
 | Tempo | `mppx` (Merchant Payment Protocol) | [tempoxyz/mpp](https://github.com/tempoxyz/mpp) |
 | TerminalSkills | `a2a-protocol` (community — no official A2A skill exists) | [TerminalSkills/skills](https://github.com/TerminalSkills/skills) |
-| Tersign | `tersign-evidence` (counter-signed receipt verification, dispute-ready evidence envelopes for Internet Court / Kleros ERC-1497 / UMA, Art-50 action records) | [tersignhq/skills](https://github.com/tersignhq/skills) |
+| Tersign | `tersign-evidence` (counter-signed receipt verification, venue-formatted evidence envelopes for Internet Court / Kleros ERC-1497 / UMA, agent action and disclosure records) | [tersignhq/skills](https://github.com/tersignhq/skills) |
 
 Pinned hashes and refresh commands per skill: [`skills-lock.json`](skills-lock.json)
 and [`vendored/README.md`](vendored/README.md).
