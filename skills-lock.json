@@ -205,6 +205,21 @@
       "licenseFile": "LICENSE",
       "licenseHolder": "Copyright (c) 2025 BNB Chain"
     },
+    "certisyn-independent-verification": {
+      "owner": "certisyn",
+      "source": "certisyn/genlayer-attestation",
+      "sourceType": "github",
+      "fetch": "skills",
+      "sourceCommit": "75571a6311dba89996811fe715d798db11a13be5",
+      "skillPath": "skills/certisyn-independent-verification",
+      "entryFile": "SKILL.md",
+      "vendoredPath": "vendored/certisyn/certisyn-independent-verification",
+      "computedHash": "c1db7dcb056b12881e1cc07a9b9ab15f8c58a2e99abd34ccc3a9670a143ef01d",
+      "fetchedAt": "2026-10-26",
+      "license": "LicenseRef-Certisyn-Skill-1.0",
+      "licenseFile": "LICENSE",
+      "licenseHolder": "Copyright (c) 2026 Certisyn, Inc."
+    },
     "chaingpt": {
       "owner": "chaingpt",
       "source": "ChainGPT-org/chaingpt-claude-skill",

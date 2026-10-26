@@ -16,6 +16,7 @@ the Internet Court–authored parts (the root `SKILL.md` router and
 | arkhai | [arkhai-io/git-commit-trading](https://github.com/arkhai-io/git-commit-trading) | MIT | Copyright (c) 2026 Arkhai | fulfill-git-escrow, make-git-escrow |
 | arkhai | [arkhai-io/natural-language-agreements](https://github.com/arkhai-io/natural-language-agreements) | MIT | Copyright (c) 2026 Arkhai | nla-arbitrate, nla-create, nla-fulfill |
 | bnb-chain | [bnb-chain/bnbchain-skills](https://github.com/bnb-chain/bnbchain-skills) | MIT | Copyright (c) 2025 BNB Chain | bnbchain-mcp |
+| certisyn | [certisyn/genlayer-attestation](https://github.com/certisyn/genlayer-attestation) | LicenseRef-Certisyn-Skill-1.0 | Copyright (c) 2026 Certisyn, Inc. | certisyn-independent-verification |
 | chainbase | [lxcong/web3-data-skill](https://github.com/lxcong/web3-data-skill) | MIT | Copyright (c) 2026 lxcong | web3-data |
 | chaingpt | [ChainGPT-org/chaingpt-claude-skill](https://github.com/ChainGPT-org/chaingpt-claude-skill) | MIT | Copyright (c) 2026 ChainGPT | agent-wallet, chaingpt, trustless-agents, x402 |
 | coinbase | [coinbase/agentic-wallet-skills](https://github.com/coinbase/agentic-wallet-skills) | MIT | Copyright (c) 2026 Coinbase | agentic-wallet |

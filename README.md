@@ -31,12 +31,12 @@ behind one skill instead of a stack the agent has to wire up itself.
 
 | # | Layer | Standards | In this repo |
 |---|---|---|---|
-| 1 | Discovery, identity & reputation | ERC-8004, ERC-7857 | [`chaingpt/trustless-agents/`](vendored/chaingpt/trustless-agents/) (ERC-8004 registries), [`bnb-chain/bnbchain-mcp/`](vendored/bnb-chain/bnbchain-mcp/) (ERC-8004 registration), [`starknet/starknet-identity/`](vendored/starknet/starknet-identity/); ERC-7857 has no public skill yet |
+| 1 | Discovery, identity & reputation | ERC-8004, ERC-7857 | [`chaingpt/trustless-agents/`](vendored/chaingpt/trustless-agents/) (ERC-8004 registries), [`bnb-chain/bnbchain-mcp/`](vendored/bnb-chain/bnbchain-mcp/) (ERC-8004 registration), [`starknet/starknet-identity/`](vendored/starknet/starknet-identity/), [`certisyn/certisyn-independent-verification/`](vendored/certisyn/certisyn-independent-verification/) (vet a counterparty's own claim before relying on it); ERC-7857 has no public skill yet |
 | 2 | Negotiation | A2A | [`terminalskills/a2a-protocol/`](vendored/terminalskills/a2a-protocol/), [`openserv/openserv-multi-agent-workflows/`](vendored/openserv/openserv-multi-agent-workflows/) |
 | 3 | Contracts & obligations | ERC-7710, ERC-8183, Arkhai | [`arkhai/`](vendored/arkhai/) (Alkahest escrow, natural-language agreements, git escrow), [`metamask/smart-accounts-kit/`](vendored/metamask/smart-accounts-kit/) (ERC-7710 delegations); connector [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/); ERC-8183 has no public skill yet |
 | 4 | Payment & escrow | x402, MPP, APP | [`yellow/yellow-settlement-room/`](vendored/yellow/yellow-settlement-room/) (multiparty off-chain settlement, one on-chain split), [`coinbase/agentic-wallet/`](vendored/coinbase/agentic-wallet/), [`chaingpt/x402/`](vendored/chaingpt/x402/) + [`agent-wallet/`](vendored/chaingpt/agent-wallet/), [`okx/okx-agent-payments-protocol/`](vendored/okx/okx-agent-payments-protocol/), [`tempo/mppx/`](vendored/tempo/mppx/), [`nansen/nansen-mpp-payment/`](vendored/nansen/nansen-mpp-payment/), [`privy/`](vendored/privy/); connector [`integrations/x402-erc7710/`](integrations/x402-erc7710/) |
 | 5 | Execution | compute, data & value rails | [`0g/0g-compute/`](vendored/0g/0g-compute/), [`antseed/antseed-connect/`](vendored/antseed/antseed-connect/), [`lifi/`](vendored/lifi/), [`chainbase/web3-data/`](vendored/chainbase/web3-data/), [`heurist/`](vendored/heurist/), [`near/`](vendored/near/), [`starknet/`](vendored/starknet/), [`solana/`](vendored/solana/), [`nansen/`](vendored/nansen/), OKX + AltLayer + BNB Chain packs |
-| 6 | Verification & disputes | GenLayer, Kleros, UMA | GenLayer dev skills + [`intelligent-oracle/`](vendored/intelligent-oracle/), [`kleros/`](vendored/kleros/) (curate, IPFS); connectors [`integrations/genlayer-intelligent-contracts/`](integrations/genlayer-intelligent-contracts/), [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/); UMA has no public skill yet |
+| 6 | Verification & disputes | GenLayer, Kleros, UMA | GenLayer dev skills + [`intelligent-oracle/`](vendored/intelligent-oracle/), [`kleros/`](vendored/kleros/) (curate, IPFS), [`certisyn/certisyn-independent-verification/`](vendored/certisyn/certisyn-independent-verification/) (pre-transaction verification, not adjudication); connectors [`integrations/genlayer-intelligent-contracts/`](integrations/genlayer-intelligent-contracts/), [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/); UMA has no public skill yet |
 
 The verification & disputes layer is the one Internet Court exists to add.
 Agents agree in advance who judges a dispute if one arises — GenLayer, Kleros,
@@ -65,7 +65,7 @@ set available in this repository today, and it grows as members publish.
 ```
 SKILL.md                            Master skill — start here; routes to everything below
 integrations/                       Internet Court connector & adapter skills
-vendored/                           Committed copies of official protocol skills (91 skills, 33 owners)
+vendored/                           Committed copies of official protocol skills (92 skills, 34 owners)
 skills-lock.json                    Pinned source + hash + refresh command per vendored skill
 ```
 
@@ -91,6 +91,7 @@ Two kinds of content:
 | Yellow | `yellow-settlement-room` (Yellow Network app sessions: N agents pool funds, reallocate off-chain, co-sign one final settlement) | [layer-3/nitrolite](https://github.com/layer-3/nitrolite) (`agent-skills/`) |
 | 0G | `0g-compute` (verifiable decentralized inference) | [0gfoundation/0g-compute-skills](https://github.com/0gfoundation/0g-compute-skills) |
 | Nansen | 7 `nansen-*` skills (token research, wallet profiler, smart-money, holder analysis, prediction markets, MPP payment, search) | [nansen-ai/nansen-cli](https://github.com/nansen-ai/nansen-cli) |
+| Certisyn | `certisyn-independent-verification` (independent, pre-transaction verification of counterparty claims: four outcomes incl. `UNDETERMINED`, mandatory `could_not_determine`; declared coverage is vehicle telemetry and orbital node claims) | [certisyn/genlayer-attestation](https://github.com/certisyn/genlayer-attestation) (`skills/`) |
 | Kleros | `kleros-curate`, `kleros-ipfs-upload` (curated registries, evidence pinning) | [kleros/kleros-skills](https://github.com/kleros/kleros-skills) |
 | Privy | `privy` (embedded agent wallets) | [docs.privy.io/skill.md](https://docs.privy.io/skill.md) |
 | AntSeed | `antseed-connect` (P2P inference, USDC channels) | [antseed.com/skill.md](https://antseed.com/skill.md) |

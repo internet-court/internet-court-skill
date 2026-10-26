@@ -1,0 +1,44 @@
+LicenseRef-Certisyn-Skill-1.0
+
+Copyright (c) 2026 Certisyn, Inc.
+
+The terms below are reproduced verbatim from the skill itself:
+skills/certisyn-independent-verification/SKILL.md in
+https://github.com/certisyn/genlayer-attestation at commit
+75571a6311dba89996811fe715d798db11a13be5. They are the terms Certisyn put next
+to this skill, and they take precedence over the repository root LICENSE (plain
+MIT, which covers the repository's source code). The upstream SKILL.md is
+authoritative; if it changes, its current text governs.
+
+---------------------------------------------------------------------------
+From "## For other verifiers" (the format grant the Notice refers to):
+
+**Certisyn grants a royalty-free, worldwide licence to implement this coverage-document shape**,
+including under any patent rights Certisyn now holds or later obtains that would otherwise be
+infringed by implementing it. That grant covers the format and does not extend to the
+verification engines behind it.
+
+From "### Publish a floor, not a pass rate" (the floor-test format):
+
+The working scheme and the checker are at
+`github.com/certisyn/genlayer-attestation`, MIT, and **the same royalty-free grant above applies
+to this shape.** Take it and point it at your own registers.
+
+---------------------------------------------------------------------------
+From "## Notice":
+
+Copyright (c) 2026 Certisyn, Inc.
+
+**This file** is licensed under the MIT License: permission is hereby granted, free of charge, to
+any person obtaining a copy of this file to deal in it without restriction, including without
+limitation the rights to use, copy, modify, merge, publish, distribute, sublicense and sell copies
+of it, subject to this notice being included in all copies or substantial portions. THE FILE IS
+PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+**The coverage-document format** is separately granted royalty-free as stated above.
+
+**Not granted:** the Certisyn and AIGVS names and marks; any right to represent output as a
+Certisyn determination or to claim conformance with the Certisyn specification; and, beyond the
+format grant above, any licence under Certisyn's patent rights in the verification engines. IETF
+IPR disclosure for the Internet-Draft is handled under BCP 79. Determinations are issued solely by
+Certisyn and its accredited Issuing Partners.
