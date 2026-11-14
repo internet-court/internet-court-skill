@@ -1,3 +1,16 @@
+---
+name: humanode-agentlink
+description: AgentLink gives an AI agent a verified, human-backed on-chain identity. Use when an agent needs to sign HTTP requests, appear in an on-chain registry as a trusted agent, or access free partner endpoints on Base mainnet.
+tags:
+  - agent-identity
+  - humanode
+  - agentlink
+  - biomapped
+  - base
+  - on-chain-identity
+  - verified-agent
+---
+
 # AgentLink Skill
 
 AgentLink gives an AI agent a verified, human-backed on-chain identity. With this skill the agent can sign any HTTP request, appear in the on-chain registry as a trusted agent, and access free partner endpoints on Base mainnet.
@@ -87,6 +100,8 @@ const { fetch: agentFetch } = createAgentLinkClient({
 **Option B — external signer.** Use this when the key lives in a KMS, HSM, or secret manager and you never want it in your process — pass the agent's public address plus a `sign` callback:
 
 ```typescript
+import { createAgentLinkClient } from '@techdigger/humanode-agentlink'
+
 const { fetch: agentFetch } = createAgentLinkClient({
   network: 'base',
   address: agentAddress, // your agent's public address

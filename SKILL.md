@@ -1,6 +1,22 @@
 ---
 name: internet-court
 description: Entry point for Internet Court — the trust layer for agent-to-agent commerce. Use whenever an agent needs to transact with another agent or a paid service, or a user mentions agent payments, paid APIs (HTTP 402/x402), wallet custody or trust concerns, spending mandates, delegated permissions (ERC-7710/7715), escrow, agent identity or reputation (ERC-8004), negotiation between agents (A2A), agent jobs (ERC-8183), machine payments (MPP, AP2), supervision of agent behavior, revocation, verification, or dispute resolution (GenLayer) — even if they never say "Internet Court". Routes to the vendored protocol skills and connector skills in this package.
+tags:
+  - agentic-commerce
+  - x402
+  - erc-7710
+  - erc-7715
+  - erc-8004
+  - erc-8183
+  - agent-payments
+  - payment
+  - dispute-resolution
+  - web3
+  - blockchain
+  - smart-contracts
+  - agent-identity
+  - escrow
+  - trust-layer
 ---
 
 # Internet Court
