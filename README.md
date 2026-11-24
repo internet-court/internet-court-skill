@@ -35,7 +35,7 @@ behind one skill instead of a stack the agent has to wire up itself.
 | 2 | Negotiation | A2A | [`terminalskills/a2a-protocol/`](vendored/terminalskills/a2a-protocol/), [`openserv/openserv-multi-agent-workflows/`](vendored/openserv/openserv-multi-agent-workflows/) |
 | 3 | Contracts & obligations | ERC-7710, ERC-8183, Arkhai | [`arkhai/`](vendored/arkhai/) (Alkahest escrow, natural-language agreements, git escrow), [`metamask/smart-accounts-kit/`](vendored/metamask/smart-accounts-kit/) (ERC-7710 delegations); connector [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/); ERC-8183 has no public skill yet |
 | 4 | Payment & escrow | x402, MPP, APP | [`yellow/yellow-settlement-room/`](vendored/yellow/yellow-settlement-room/) (multiparty off-chain settlement, one on-chain split), [`coinbase/agentic-wallet/`](vendored/coinbase/agentic-wallet/), [`chaingpt/x402/`](vendored/chaingpt/x402/) + [`agent-wallet/`](vendored/chaingpt/agent-wallet/), [`okx/okx-agent-payments-protocol/`](vendored/okx/okx-agent-payments-protocol/), [`tempo/mppx/`](vendored/tempo/mppx/), [`nansen/nansen-mpp-payment/`](vendored/nansen/nansen-mpp-payment/), [`privy/`](vendored/privy/); connector [`integrations/x402-erc7710/`](integrations/x402-erc7710/) |
-| 5 | Execution | compute, data & value rails | [`0g/0g-compute/`](vendored/0g/0g-compute/), [`antseed/antseed-connect/`](vendored/antseed/antseed-connect/), [`lifi/`](vendored/lifi/), [`chainbase/web3-data/`](vendored/chainbase/web3-data/), [`heurist/`](vendored/heurist/), [`near/`](vendored/near/), [`starknet/`](vendored/starknet/), [`solana/`](vendored/solana/), [`nansen/`](vendored/nansen/), OKX + AltLayer + BNB Chain packs |
+| 5 | Execution | compute, data & value rails | [`0g/0g-compute/`](vendored/0g/0g-compute/), [`antseed/antseed-connect/`](vendored/antseed/antseed-connect/), [`lifi/`](vendored/lifi/), [`1inch/`](vendored/1inch/) (token swaps, limit orders, bridge-less cross-chain via the hosted 1inch MCP server), [`chainbase/web3-data/`](vendored/chainbase/web3-data/), [`heurist/`](vendored/heurist/), [`near/`](vendored/near/), [`starknet/`](vendored/starknet/), [`solana/`](vendored/solana/), [`nansen/`](vendored/nansen/), OKX + AltLayer + BNB Chain packs |
 | 6 | Verification & disputes | GenLayer, Kleros, UMA | GenLayer dev skills + [`intelligent-oracle/`](vendored/intelligent-oracle/), [`kleros/`](vendored/kleros/) (curate, IPFS), [`certisyn/certisyn-independent-verification/`](vendored/certisyn/certisyn-independent-verification/) (pre-transaction verification, not adjudication); connectors [`integrations/genlayer-intelligent-contracts/`](integrations/genlayer-intelligent-contracts/), [`integrations/genlayer-erc7710-connector/`](integrations/genlayer-erc7710-connector/); UMA has no public skill yet |
 
 The verification & disputes layer is the one Internet Court exists to add.
@@ -54,7 +54,8 @@ the standard.
 **Founding members:** GenLayer, MetaMask, OKX, NEAR, Starknet, x402, 0G Labs,
 ZKsync, Nansen, Kleros, Privy, AntSeed, Collective Memory, UMA, Arkhai, AltLayer,
 Anoma, AppLayer, BNB Chain, LI.FI, Chainbase, io.net, Heurist, Chutes, ChainGPT,
-OpenServ, Humanode, Humanity Protocol.
+OpenServ, Humanode, Humanity Protocol, Yellow, Certisyn,
+1inch.
 
 The standard is open and openly governed — any agent can adopt it now. Not every
 founding member ships a public agent skill yet; the vendored table below is the
@@ -65,7 +66,7 @@ set available in this repository today, and it grows as members publish.
 ```
 SKILL.md                            Master skill — start here; routes to everything below
 integrations/                       Internet Court connector & adapter skills
-vendored/                           Committed copies of official protocol skills (92 skills, 34 owners)
+vendored/                           Committed copies of official protocol skills (101 skills, 35 owners)
 skills-lock.json                    Pinned source + hash + refresh command per vendored skill
 ```
 
@@ -99,6 +100,7 @@ Two kinds of content:
 | AltLayer | 7 `altllm-portal-*` / `cloud-claw*` skills (autonomous agent hosting) | [alt-research/altllm-skills](https://github.com/alt-research/altllm-skills) |
 | BNB Chain | `bnbchain-mcp` (chain ops, ERC-8004 registration, Greenfield) | [bnb-chain/bnbchain-skills](https://github.com/bnb-chain/bnbchain-skills) |
 | LI.FI | `lifi`, `lifi-stablecoin-swap` (cross-chain routing) | [lifinance/lifi-agent-skills](https://github.com/lifinance/lifi-agent-skills) |
+| 1inch | 9 `1inch-*` skills: `1inch-mcp-server` (hub), `1inch-swap` (Classic, Fusion, cross-chain), `1inch-orderbook` (limit orders), `1inch-walletconnect`, `1inch-market-data`, `1inch-wallet-data`, `1inch-infrastructure`, `1inch-aqua`, `1inch-debug`. All drive the hosted 1inch MCP server; execution needs a 1inch Business login and the wallet signs | [1inch/1inch-ai](https://github.com/1inch/1inch-ai) (`skills/`) |
 | Chainbase | `web3-data` (90-chain data, x402 pay-per-call) | [lxcong/web3-data-skill](https://github.com/lxcong/web3-data-skill) (officially documented) |
 | Heurist | `heurist-mesh-skill` (hosted agent-mesh MCP + x402 facilitator) | [heurist-network/heurist-mesh-skill](https://github.com/heurist-network/heurist-mesh-skill) |
 | ChainGPT | `chaingpt`, `x402`, `trustless-agents` (ERC-8004), `agent-wallet` | [ChainGPT-org/chaingpt-claude-skill](https://github.com/ChainGPT-org/chaingpt-claude-skill) |

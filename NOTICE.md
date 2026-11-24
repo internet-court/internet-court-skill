@@ -10,6 +10,7 @@ the Internet Court–authored parts (the root `SKILL.md` router and
 | Owner | Source | License (SPDX) | Copyright | Skills |
 |-------|--------|----------------|-----------|--------|
 | 0g | [0gfoundation/0g-compute-skills](https://github.com/0gfoundation/0g-compute-skills) | LicenseRef-Permission | Copyright (c) 2026 0G Labs | 0g-compute |
+| 1inch | [1inch/1inch-ai](https://github.com/1inch/1inch-ai) | MIT | Copyright (c) 2026 1inch | 1inch-aqua, 1inch-debug, 1inch-infrastructure, 1inch-market-data, 1inch-mcp-server, 1inch-orderbook, 1inch-swap, 1inch-wallet-data, 1inch-walletconnect |
 | altlayer | [alt-research/altllm-skills](https://github.com/alt-research/altllm-skills) | ISC | — | altllm-portal-api-keys, altllm-portal-auth, altllm-portal-billing, altllm-portal-cli, altllm-portal-payments, cloud-claw, cloud-claw-launch-agent |
 | antseed | [https://antseed.com/skill.md](https://antseed.com/skill.md) | GPL-3.0 | Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/> | antseed-connect |
 | arkhai | [arkhai-io/alkahest](https://github.com/arkhai-io/alkahest) | MIT | Copyright (c) 2026 Arkhai | alkahest-developer, alkahest-user |
